@@ -38,6 +38,9 @@ namespace EditPOPUserDefinedAfterPost
         static EditPOPUserDefined EditPOPUserDefinedForm;
 
         // Create a reference to the Receiving Inquiry Alternate Form
+		// I am using an Alternate Form hereby
+		// If you are using Original GP Form change to
+		// static PopInquiryReceivingsEntryForm POPInquiryReceivingsEntryForm = Dynamics.Forms.PopInquiryReceivingsEntry;
         static PopInquiryReceivingsEntryForm POPInquiryReceivingsEntryForm = PurchaseRequisition.Forms.PopInquiryReceivingsEntry;
 
        
