@@ -48,12 +48,7 @@ namespace EditPOPUserDefinedAfterPost
 
             //Get the UserDefined Label from POP_Setup
             err = DataAccessHelper.GetPOPSetup(out UserDefLabels);
-            if (err != TableError.NoError)
-            {
-                GPAddIn.CloseEditPOPUserDefinedForm = true;
-                this.Close();
-            }
-            else
+            if (err == TableError.NoError)
             {
                 lblUserDef1.Text = UserDefLabels[0];
                 lblUserDef2.Text = UserDefLabels[1];
