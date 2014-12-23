@@ -99,7 +99,7 @@ namespace InventoryUserDefined
             }
 
             lastError = IVUDefTable.Remove();
-
+            IVUDefTable.Close();
             return lastError;
         }
 

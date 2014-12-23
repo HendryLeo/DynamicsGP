@@ -97,7 +97,7 @@ namespace EditPOPUserDefinedAfterPost
             }
 
             lastError = POPUserDefinedTable.Remove();
-
+			POPUserDefinedTable.Close();
             return lastError;
         }
 

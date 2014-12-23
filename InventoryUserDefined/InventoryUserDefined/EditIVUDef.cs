@@ -374,7 +374,7 @@ namespace InventoryUserDefined
 
         private void EditIVUDef_Deactivate(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
     }
 }
