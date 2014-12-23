@@ -28,6 +28,7 @@ using System.Windows.Forms;
 using Microsoft.Dexterity.Bridge;
 using Microsoft.Dexterity.Applications;
 using Microsoft.Dexterity.Applications.DynamicsDictionary;
+using Microsoft.Dexterity.Applications.VvfDictionary;
 
 namespace InventoryUserDefined
 {
@@ -36,7 +37,10 @@ namespace InventoryUserDefined
         // IDexterityAddIn interface
         static IvBinToBinTransferInquiryForm IVBinToBinTransferInquiryForm = Dynamics.Forms.IvBinToBinTransferInquiry;
         public static IvBinToBinTransferInquiryForm.IvBinToBinTransferInquiryWindow IVBinToBinTransferInquiryWindow = IVBinToBinTransferInquiryForm.IvBinToBinTransferInquiry;
-        
+
+        static Microsoft.Dexterity.Applications.VvfDictionary.IvTransactionInquiryForm IVTransactionInquiryForm = Vvf.Forms.IvTransactionInquiry;
+        public static Microsoft.Dexterity.Applications.VvfDictionary.IvTransactionInquiryForm.IvTransactionInquiryWindow IVTransactionInquiryWindow = IVTransactionInquiryForm.IvTransactionInquiry;
+
         // Keep a reference to the EditIVUDef form
         static EditIVUDef EditIVUDefForm;
         
@@ -45,11 +49,14 @@ namespace InventoryUserDefined
 
         public void Initialize()
         {
-            IVBinToBinTransferInquiryForm.AddMenuHandler(OpenIVUDef, "User Defined", "N");
-            IVBinToBinTransferInquiryForm.CloseAfterOriginal += new EventHandler (IVBinToBinTransferInquiryForm_CloseAfterOriginal);
+            IVBinToBinTransferInquiryForm.AddMenuHandler(OpenIVUDef1, "User Defined", "N");
+            IVBinToBinTransferInquiryForm.CloseAfterOriginal += new EventHandler (WinForm_CloseAfterOriginal);
+
+            IVTransactionInquiryForm.AddMenuHandler(OpenIVUDef2, "User Defined", "N");
+            IVTransactionInquiryForm.CloseAfterOriginal += new EventHandler(WinForm_CloseAfterOriginal);
 
         }
-        void OpenIVUDef(object sender,EventArgs e )
+        void OpenIVUDef1(object sender,EventArgs e )
         {
             if (EditIVUDefForm == null)
             {
@@ -65,6 +72,30 @@ namespace InventoryUserDefined
             }
 
             // Always show and activate the WinForm
+            EditIVUDefForm.Caller = 1;
+            EditIVUDefForm.Show();
+            EditIVUDefForm.Activate();
+
+            // Set the flag to indicate that the form shouldn't be closed
+            CloseEditIVUDefForm = false;
+        }
+        void OpenIVUDef2(object sender, EventArgs e)
+        {
+            if (EditIVUDefForm == null)
+            {
+                try
+                {
+                    EditIVUDefForm = new EditIVUDef();
+
+                }
+                catch (Exception ex)
+                {
+                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                }
+            }
+
+            // Always show and activate the WinForm
+            EditIVUDefForm.Caller = 2;
             EditIVUDefForm.Show();
             EditIVUDefForm.Activate();
 
@@ -72,7 +103,7 @@ namespace InventoryUserDefined
             CloseEditIVUDefForm = false;
         }
 
-        void IVBinToBinTransferInquiryForm_CloseAfterOriginal(object sender, EventArgs e)
+        void WinForm_CloseAfterOriginal(object sender, EventArgs e)
         {
             // Close the WinForm
             CloseEditIVUDefForm = true;

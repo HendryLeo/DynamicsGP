@@ -13,8 +13,24 @@ I created a new dexterity dictionary for 3 tables
 
 The chunk file is included in this repo. If bandwidth allow, I will also upload the modified Dynamics.dic
 
-I am using the modified GP Windows, so create the assembly by
-dag 0 <your dynamics.set> /F /N:Dynamics
+InventoryUDef will record UserDefined values for transaction in IV30200 (Inventory Transaction History) and IV30004 (BinToBin Transfer History)
+
+IVDocType used for InventoryUDef are
+1 = Adjustment (IN/OUT/BinTransfer)
+2 = Variance
+3 = Transfer
+
+from http://victoriayudin.com/gp-tables/inventory-tables/
+Inventory Transaction Document Types:
+1 – Inventory Adjustment
+2 – Variance
+3 – Inventory Transfer
+4 – Purchase Receipt
+5 – Sales Returns
+6 – Sales Invoices
+7 – Assembly
+8 – Inventory cost adjustment from POP Shipment (transaction source GLTRX)
+11 – Inventory cost adjustment from POP Invoice (transaction source POIVC)
 
 
  

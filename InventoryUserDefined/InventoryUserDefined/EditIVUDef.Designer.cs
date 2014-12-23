@@ -206,6 +206,7 @@
             // 
             // cboUserDefList1
             // 
+            this.cboUserDefList1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUserDefList1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboUserDefList1.FormattingEnabled = true;
             this.cboUserDefList1.Location = new System.Drawing.Point(146, 79);
@@ -231,6 +232,7 @@
             // 
             // cboUserDefList2
             // 
+            this.cboUserDefList2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUserDefList2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboUserDefList2.FormattingEnabled = true;
             this.cboUserDefList2.Location = new System.Drawing.Point(146, 103);
@@ -248,6 +250,7 @@
             // 
             // cboUserDefList3
             // 
+            this.cboUserDefList3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUserDefList3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboUserDefList3.FormattingEnabled = true;
             this.cboUserDefList3.Location = new System.Drawing.Point(146, 127);
@@ -265,6 +268,7 @@
             // 
             // cboUserDefList4
             // 
+            this.cboUserDefList4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUserDefList4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboUserDefList4.FormattingEnabled = true;
             this.cboUserDefList4.Location = new System.Drawing.Point(146, 151);
@@ -282,6 +286,7 @@
             // 
             // cboUserDefList5
             // 
+            this.cboUserDefList5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUserDefList5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboUserDefList5.FormattingEnabled = true;
             this.cboUserDefList5.Location = new System.Drawing.Point(146, 175);
@@ -848,6 +853,7 @@
             this.StatusArea = false;
             this.Text = "EditIVUDef";
             this.Activated += new System.EventHandler(this.EditIVUDef_Activated);
+            this.Deactivate += new System.EventHandler(this.EditIVUDef_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditIVUDef_FormClosing);
             this.Load += new System.EventHandler(this.EditIVUDef_Load);
             this.ResumeLayout(false);
