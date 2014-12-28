@@ -34,7 +34,7 @@ using Microsoft.Dexterity.Applications.InventoryUserDefinedDictionary;
 namespace InventoryUserDefined
 {
 
-    class DataAccessHelper
+    static class DataAccessHelper
     {
         static InventoryUserDefinedTable IVUDefTable = Microsoft.Dexterity.Applications.InventoryUserDefined.Tables.InventoryUserDefined ;
         static InventoryUserDefinedSetupTable IVUDefSetupTable = Microsoft.Dexterity.Applications.InventoryUserDefined.Tables.InventoryUserDefinedSetup;
@@ -43,10 +43,12 @@ namespace InventoryUserDefined
         const byte ROW_NOT_FOUND = 1;
         const byte TABLE_ERROR = 2;
 
-        static public TableError GetIVUDefListSetup(byte idx, out string[] strs)
+        static public TableError GetIVUDefListSetup(byte idx, out List<string> list)
         {
             TableError lastError, err;
-            List<string> list = new List<string>();
+            list = new List<string>();
+           
+            list.Clear();
 
             IVUDefListSetupTable.Key = 1;
             IVUDefListSetupTable.Clear();
@@ -69,9 +71,77 @@ namespace InventoryUserDefined
                 }
             }
 
-            strs = list.ToArray();
+            //strs = list.ToArray();
 
             IVUDefListSetupTable.Close();
+            return lastError;
+        }
+
+        static public TableError SetIVUDefListSetup(byte idx, List<string> list)
+        {
+            TableError lastError;
+            byte checkExist;
+
+            foreach (string listItem in list)
+            {
+                checkExist = IVUDefListSetupExist(idx, listItem, out lastError);
+                switch (checkExist)
+                {
+                    case TABLE_ERROR:
+                        return lastError;
+
+                    case ROW_FOUND:
+                        IVUDefListSetupTable.Key = 1;
+                        IVUDefListSetupTable.Index.Value = idx;
+                        IVUDefListSetupTable.Description.Value = listItem;
+                        lastError = IVUDefListSetupTable.Change();
+                        break;
+
+                    case ROW_NOT_FOUND:
+                        lastError = IVUDefListSetupTable.Clear();
+                        break;
+
+                }
+                if (lastError != TableError.NoError)
+                {
+                    //error retrieving/locking/clearing record
+                    return lastError;
+                }
+                IVUDefListSetupTable.Key = 1;
+                IVUDefListSetupTable.Index.Value = idx;
+                IVUDefListSetupTable.Description.Value = listItem;
+                lastError = IVUDefListSetupTable.Save();
+                if (lastError != TableError.NoError)
+                {
+                    //error saving 1 record
+                    return lastError;
+                }
+            }
+
+            IVUDefListSetupTable.Close();
+            return TableError.NoError;
+        }
+
+        static public TableError DeleteIVUDefListValues(byte idx)
+        {
+            TableError lastError;
+            byte checkExist;
+
+            checkExist = IVUDefListSetupExist(idx, out lastError);
+            if (checkExist == ROW_FOUND)
+            {
+                IVUDefListSetupTable.Key = 1;
+                IVUDefListSetupTable.Clear();
+                IVUDefListSetupTable.Index.Value = idx++;
+                IVUDefListSetupTable.RangeStart();
+                IVUDefListSetupTable.Clear();
+                IVUDefListSetupTable.Index.Value = idx;
+                IVUDefListSetupTable.RangeEnd();
+
+                lastError = IVUDefListSetupTable.RangeRemove();
+                IVUDefListSetupTable.Close();
+            }
+            
             return lastError;
         }
 
@@ -81,25 +151,15 @@ namespace InventoryUserDefined
             byte checkExist;
 
             checkExist = UserDefinedExist(IVTrx, IVTrxType, out lastError);
-            switch (checkExist)
+            if (checkExist == ROW_FOUND)
             {
-                case TABLE_ERROR:
-                    return lastError;
-
-                case ROW_FOUND:
-                    IVUDefTable.Key = 1;
-                    IVUDefTable.DocumentNumber.Value = IVTrx;
-                    IVUDefTable.DocumentType.Value = Convert.ToInt16(IVTrxType);
-                    lastError = IVUDefTable.Change();
-                    break;
-
-                case ROW_NOT_FOUND:
-                    return lastError;
-
+                IVUDefTable.Key = 1;
+                IVUDefTable.DocumentNumber.Value = IVTrx;
+                IVUDefTable.DocumentType.Value = Convert.ToInt16(IVTrxType);
+                IVUDefTable.Change();
+                lastError = IVUDefTable.Remove();
+                IVUDefTable.Close();
             }
-
-            lastError = IVUDefTable.Remove();
-            IVUDefTable.Close();
             return lastError;
         }
 
@@ -299,6 +359,79 @@ namespace InventoryUserDefined
             return lastError;
         }
 
+        static public TableError SetIVUDefSetup(string[] strs)
+        {
+            byte checkExist;
+            TableError lastError;
+            
+            checkExist = IVUDefSetupExist(1, out lastError);
+            switch (checkExist)
+            {
+                case TABLE_ERROR:
+                    return lastError;
+
+                case ROW_FOUND:
+                    IVUDefSetupTable.Key = 1;
+                    IVUDefSetupTable.Index.Value = 1;
+                    lastError = IVUDefSetupTable.Change();
+                    break;
+
+                case ROW_NOT_FOUND:
+                    lastError = IVUDefSetupTable.Clear();
+                    break;
+
+            }
+            if (lastError != TableError.NoError)
+            {
+                //error retrieving/locking/clearing record
+                return lastError;
+            }
+
+
+            IVUDefSetupTable.Index.Value = 1;
+            //There must be better way to do this in loop
+            IVUDefSetupTable.UserDefinedPrompt01.Value = strs[0];
+            IVUDefSetupTable.UserDefinedPrompt02.Value = strs[1];
+            IVUDefSetupTable.UserDefinedPrompt03.Value = strs[2];
+            IVUDefSetupTable.UserDefinedPrompt04.Value = strs[3];
+            IVUDefSetupTable.UserDefinedPrompt05.Value = strs[4];
+            IVUDefSetupTable.UserDefinedPrompt06.Value = strs[5];
+            IVUDefSetupTable.UserDefinedPrompt07.Value = strs[6];
+            IVUDefSetupTable.UserDefinedPrompt08.Value = strs[7];
+            IVUDefSetupTable.UserDefinedPrompt09.Value = strs[8];
+            IVUDefSetupTable.UserDefinedPrompt10.Value = strs[9];
+            IVUDefSetupTable.UserDefinedPrompt11.Value = strs[10];
+            IVUDefSetupTable.UserDefinedPrompt12.Value = strs[11];
+            IVUDefSetupTable.UserDefinedPrompt13.Value = strs[12];
+            IVUDefSetupTable.UserDefinedPrompt14.Value = strs[13];
+            IVUDefSetupTable.UserDefinedPrompt15.Value = strs[14];
+            IVUDefSetupTable.UserDefinedPrompt16.Value = strs[15];
+            IVUDefSetupTable.UserDefinedPrompt17.Value = strs[16];
+            IVUDefSetupTable.UserDefinedPrompt18.Value = strs[17];
+            IVUDefSetupTable.UserDefinedPrompt19.Value = strs[18];
+            IVUDefSetupTable.UserDefinedPrompt20.Value = strs[19];
+            IVUDefSetupTable.UserDefinedPrompt21.Value = strs[20];
+            IVUDefSetupTable.UserDefinedPrompt22.Value = strs[21];
+            IVUDefSetupTable.UserDefinedPrompt23.Value = strs[22];
+            IVUDefSetupTable.UserDefinedPrompt24.Value = strs[23];
+            IVUDefSetupTable.UserDefinedPrompt25.Value = strs[24];
+            IVUDefSetupTable.UserDefinedPrompt26.Value = strs[25];
+            IVUDefSetupTable.UserDefinedPrompt27.Value = strs[26];
+            IVUDefSetupTable.UserDefinedPrompt28.Value = strs[27];
+            IVUDefSetupTable.UserDefinedPrompt29.Value = strs[28];
+            IVUDefSetupTable.UserDefinedPrompt30.Value = strs[29];
+            IVUDefSetupTable.UserDefinedPrompt31.Value = strs[30];
+            IVUDefSetupTable.UserDefinedPrompt32.Value = strs[31];
+            IVUDefSetupTable.UserDefinedPrompt33.Value = strs[32];
+            IVUDefSetupTable.UserDefinedPrompt34.Value = strs[33];
+            IVUDefSetupTable.UserDefinedPrompt35.Value = strs[34];
+
+            lastError = IVUDefSetupTable.Save();
+
+            IVUDefSetupTable.Close();
+            return lastError;
+        }
+
         static byte UserDefinedExist(string IVTrx, string IVTrxType, out TableError lastError)
         {
             //TableError lastError;
@@ -313,7 +446,7 @@ namespace InventoryUserDefined
                 {
                     //Microsoft.Dexterity.Applications.Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(lastError.ToString());
                     IVUDefTable.Close();
-                    return TABLE_ERROR; 
+                    return TABLE_ERROR;
                 }
                 else //NotFound
                 {
@@ -323,6 +456,91 @@ namespace InventoryUserDefined
             }
 
             IVUDefTable.Close();
+            return ROW_FOUND;
+        }
+
+        static byte IVUDefSetupExist(short idx, out TableError lastError)
+        {
+            //TableError lastError;
+            IVUDefSetupTable.Key = 1;
+            IVUDefSetupTable.Index.Value = idx;
+            lastError = IVUDefSetupTable.Get();
+
+            if (lastError != TableError.NoError)
+            {
+                if (lastError != TableError.NotFound) //error other than NotFound
+                {
+                    //Microsoft.Dexterity.Applications.Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(lastError.ToString());
+                    IVUDefSetupTable.Close();
+                    return TABLE_ERROR;
+                }
+                else //NotFound
+                {
+                    IVUDefSetupTable.Close();
+                    return ROW_NOT_FOUND;
+                }
+            }
+
+            IVUDefSetupTable.Close();
+            return ROW_FOUND;
+        }
+
+        static byte IVUDefListSetupExist(short idx, out TableError lastError)
+        {
+            //TableError lastError;
+            IVUDefListSetupTable.Key = 2;
+            IVUDefListSetupTable.Clear();
+            IVUDefListSetupTable.Index.Value = idx++;
+            IVUDefListSetupTable.RangeStart();
+            IVUDefListSetupTable.Clear();
+            IVUDefListSetupTable.Index.Value = idx;
+            IVUDefListSetupTable.RangeEnd();
+
+            lastError = IVUDefListSetupTable.GetFirst();
+
+            if (lastError != TableError.NoError)
+            {
+                if (lastError == TableError.NotFound |  lastError == TableError.EndOfTable) //NotFound or EndOfTable
+                {
+                    IVUDefListSetupTable.Close();
+                    return ROW_NOT_FOUND;
+                }
+                else 
+                {
+                    //Microsoft.Dexterity.Applications.Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(lastError.ToString());
+                    IVUDefListSetupTable.Close();
+                    return TABLE_ERROR;
+                }
+            }
+
+            IVUDefListSetupTable.Close();
+            return ROW_FOUND;
+        }
+
+        static byte IVUDefListSetupExist(short idx, string desc, out TableError lastError)
+        {
+            //TableError lastError;
+            IVUDefListSetupTable.Key = 1;
+            IVUDefListSetupTable.Index.Value = idx;
+            IVUDefListSetupTable.Description.Value = desc;
+            lastError = IVUDefListSetupTable.Get();
+
+            if (lastError != TableError.NoError)
+            {
+                if (lastError != TableError.NotFound) //error other than NotFound
+                {
+                    //Microsoft.Dexterity.Applications.Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(lastError.ToString());
+                    IVUDefListSetupTable.Close();
+                    return TABLE_ERROR;
+                }
+                else //NotFound
+                {
+                    IVUDefListSetupTable.Close();
+                    return ROW_NOT_FOUND;
+                }
+            }
+
+            IVUDefListSetupTable.Close();
             return ROW_FOUND;
         }
     }

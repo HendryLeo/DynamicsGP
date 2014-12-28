@@ -13,6 +13,9 @@ I created a new dexterity dictionary for 3 tables
 
 The chunk file is included in this repo. If bandwidth allow, I will also upload the modified Dynamics.dic
 
+Create  the assembly by
+dag 22888 <your DYNAMICS.SET> /M
+
 InventoryUDef will record UserDefined values for transaction in IV30200 (Inventory Transaction History) and IV30004 (BinToBin Transfer History)
 
 IVDocType used for InventoryUDef are

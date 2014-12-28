@@ -48,8 +48,9 @@ namespace InventoryUserDefined
             InitializeComponent();
             
             TableError err;
-            string[] UserDefLabels;
-            string[] UserDefSetups;
+            string[] UserDefLabels, arrUserDefSetups;
+            List<string> UserDefSetups;
+
             //byte err;
 
             //Get the UserDefined Label from IVUDefSetup
@@ -97,7 +98,8 @@ namespace InventoryUserDefined
             cboUserDefList1.Items.Add("");
             if (err == TableError.NoError)
             {
-                foreach (string UserDefSetup in UserDefSetups)
+                arrUserDefSetups = UserDefSetups.ToArray();
+                foreach (string UserDefSetup in arrUserDefSetups)
                 {
                     cboUserDefList1.Items.Add(UserDefSetup);
                 }
@@ -106,7 +108,8 @@ namespace InventoryUserDefined
             cboUserDefList2.Items.Add("");
             if (err == TableError.NoError)
             {
-                foreach (string UserDefSetup in UserDefSetups)
+                arrUserDefSetups = UserDefSetups.ToArray();
+                foreach (string UserDefSetup in arrUserDefSetups)
                 {
                     cboUserDefList2.Items.Add(UserDefSetup);
                 }
@@ -115,7 +118,8 @@ namespace InventoryUserDefined
             cboUserDefList3.Items.Add("");
             if (err == TableError.NoError)
             {
-                foreach (string UserDefSetup in UserDefSetups)
+                arrUserDefSetups = UserDefSetups.ToArray();
+                foreach (string UserDefSetup in arrUserDefSetups)
                 {
                     cboUserDefList3.Items.Add(UserDefSetup);
                 }
@@ -124,7 +128,8 @@ namespace InventoryUserDefined
             cboUserDefList4.Items.Add("");
             if (err == TableError.NoError)
             {
-                foreach (string UserDefSetup in UserDefSetups)
+                arrUserDefSetups = UserDefSetups.ToArray();
+                foreach (string UserDefSetup in arrUserDefSetups)
                 {
                     cboUserDefList4.Items.Add(UserDefSetup);
                 }
@@ -133,7 +138,8 @@ namespace InventoryUserDefined
             cboUserDefList5.Items.Add("");
             if (err == TableError.NoError)
             {
-                foreach (string UserDefSetup in UserDefSetups)
+                arrUserDefSetups = UserDefSetups.ToArray();
+                foreach (string UserDefSetup in arrUserDefSetups)
                 {
                     cboUserDefList5.Items.Add(UserDefSetup);
                 }

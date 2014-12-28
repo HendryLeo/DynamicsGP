@@ -41,22 +41,53 @@ namespace InventoryUserDefined
         static Microsoft.Dexterity.Applications.VvfDictionary.IvTransactionInquiryForm IVTransactionInquiryForm = Vvf.Forms.IvTransactionInquiry;
         public static Microsoft.Dexterity.Applications.VvfDictionary.IvTransactionInquiryForm.IvTransactionInquiryWindow IVTransactionInquiryWindow = IVTransactionInquiryForm.IvTransactionInquiry;
 
+        static Microsoft.Dexterity.Applications.VvfDictionary.IvSetupForm IVSetupForm = Vvf.Forms.IvSetup;
+        static Microsoft.Dexterity.Applications.VvfDictionary.IvSetupForm.IvSetupWindow IVSetupWindow = IVSetupForm.IvSetup;
+        
         // Keep a reference to the EditIVUDef form
         static EditIVUDef EditIVUDefForm;
+        static IVUDefSetup IVUDefSetupForm;
         
         // Indicate whether the EditIVUDef form should be closed
         public static Boolean CloseEditIVUDefForm = false;
+        public static Boolean CloseIVUDefSetupForm = false;
 
         public void Initialize()
         {
             IVBinToBinTransferInquiryForm.AddMenuHandler(OpenIVUDef1, "User Defined", "N");
-            IVBinToBinTransferInquiryForm.CloseAfterOriginal += new EventHandler (WinForm_CloseAfterOriginal);
+            IVBinToBinTransferInquiryForm.CloseAfterOriginal += new EventHandler (EditIVUDefForm_CloseAfterOriginal);
 
             IVTransactionInquiryForm.AddMenuHandler(OpenIVUDef2, "User Defined", "N");
-            IVTransactionInquiryForm.CloseAfterOriginal += new EventHandler(WinForm_CloseAfterOriginal);
+            IVTransactionInquiryForm.CloseAfterOriginal += new EventHandler(EditIVUDefForm_CloseAfterOriginal);
 
+            IVSetupForm.AddMenuHandler(OpenIVUDefSetup, "User Defined Setup", "N");
+            IVSetupForm.CloseAfterOriginal += new EventHandler(IVUDefSetupForm_CloseAfterOriginal);
         }
-        void OpenIVUDef1(object sender,EventArgs e )
+
+        void OpenIVUDefSetup(object sender,EventArgs e)
+        {
+            if (IVUDefSetupForm == null)
+            {
+                try
+                {
+                    IVUDefSetupForm = new IVUDefSetup();
+
+                }
+                catch (Exception ex)
+                {
+                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                }
+            }
+
+            // Always show and activate the WinForm
+            IVUDefSetupForm.Show();
+            IVUDefSetupForm.Activate();
+
+            // Set the flag to indicate that the form shouldn't be closed
+            CloseIVUDefSetupForm = false;
+        }
+
+        void OpenIVUDef1(object sender,EventArgs e)
         {
             if (EditIVUDefForm == null)
             {
@@ -79,6 +110,7 @@ namespace InventoryUserDefined
             // Set the flag to indicate that the form shouldn't be closed
             CloseEditIVUDefForm = false;
         }
+
         void OpenIVUDef2(object sender, EventArgs e)
         {
             if (EditIVUDefForm == null)
@@ -103,12 +135,21 @@ namespace InventoryUserDefined
             CloseEditIVUDefForm = false;
         }
 
-        void WinForm_CloseAfterOriginal(object sender, EventArgs e)
+        void EditIVUDefForm_CloseAfterOriginal(object sender, EventArgs e)
         {
             // Close the WinForm
             CloseEditIVUDefForm = true;
             EditIVUDefForm.Close();
             EditIVUDefForm = null;
         }
+
+        void IVUDefSetupForm_CloseAfterOriginal(object sender, EventArgs e)
+        {
+            // Close the WinForm
+            CloseIVUDefSetupForm = true;
+            IVUDefSetupForm.Close();
+            IVUDefSetupForm = null;
+        }
+
     }
 }

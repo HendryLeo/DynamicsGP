@@ -56,6 +56,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataAccessHelper.cs" />
+    <Compile Include="IVUDefListSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IVUDefListSetup.Designer.cs">
+      <DependentUpon>IVUDefListSetup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IVUDefSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IVUDefSetup.Designer.cs">
+      <DependentUpon>IVUDefSetup.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditIVUDef.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +78,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="EditIVUDef.resx">
       <DependentUpon>EditIVUDef.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IVUDefListSetup.resx">
+      <DependentUpon>IVUDefListSetup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IVUDefSetup.resx">
+      <DependentUpon>IVUDefSetup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

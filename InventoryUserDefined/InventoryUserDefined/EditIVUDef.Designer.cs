@@ -172,7 +172,7 @@
             // 
             this.txtDocNumber.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.txtDocNumber.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtDocNumber.Location = new System.Drawing.Point(148, 38);
+            this.txtDocNumber.Location = new System.Drawing.Point(158, 38);
             this.txtDocNumber.Name = "txtDocNumber";
             this.txtDocNumber.ReadOnly = true;
             this.txtDocNumber.Size = new System.Drawing.Size(117, 13);
@@ -182,7 +182,7 @@
             // 
             this.lblDocNumber.Location = new System.Drawing.Point(12, 38);
             this.lblDocNumber.Name = "lblDocNumber";
-            this.lblDocNumber.Size = new System.Drawing.Size(130, 13);
+            this.lblDocNumber.Size = new System.Drawing.Size(140, 13);
             this.lblDocNumber.TabIndex = 4;
             this.lblDocNumber.Text = "Doc Number";
             // 
@@ -190,7 +190,7 @@
             // 
             this.lblDocType.Location = new System.Drawing.Point(12, 58);
             this.lblDocType.Name = "lblDocType";
-            this.lblDocType.Size = new System.Drawing.Size(130, 17);
+            this.lblDocType.Size = new System.Drawing.Size(140, 17);
             this.lblDocType.TabIndex = 76;
             this.lblDocType.Text = "Doc Type";
             // 
@@ -198,7 +198,7 @@
             // 
             this.txtDocType.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.txtDocType.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtDocType.Location = new System.Drawing.Point(148, 59);
+            this.txtDocType.Location = new System.Drawing.Point(158, 59);
             this.txtDocType.Name = "txtDocType";
             this.txtDocType.ReadOnly = true;
             this.txtDocType.Size = new System.Drawing.Size(117, 13);
@@ -209,7 +209,7 @@
             this.cboUserDefList1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUserDefList1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboUserDefList1.FormattingEnabled = true;
-            this.cboUserDefList1.Location = new System.Drawing.Point(146, 79);
+            this.cboUserDefList1.Location = new System.Drawing.Point(156, 79);
             this.cboUserDefList1.Name = "cboUserDefList1";
             this.cboUserDefList1.Size = new System.Drawing.Size(121, 21);
             this.cboUserDefList1.TabIndex = 5;
@@ -218,7 +218,7 @@
             // 
             this.lblUserDef1.Location = new System.Drawing.Point(12, 82);
             this.lblUserDef1.Name = "lblUserDef1";
-            this.lblUserDef1.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef1.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef1.TabIndex = 6;
             this.lblUserDef1.Text = "POP Number";
             // 
@@ -226,7 +226,7 @@
             // 
             this.lblUserDef2.Location = new System.Drawing.Point(12, 106);
             this.lblUserDef2.Name = "lblUserDef2";
-            this.lblUserDef2.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef2.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef2.TabIndex = 8;
             this.lblUserDef2.Text = "POP Number";
             // 
@@ -235,7 +235,7 @@
             this.cboUserDefList2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUserDefList2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboUserDefList2.FormattingEnabled = true;
-            this.cboUserDefList2.Location = new System.Drawing.Point(146, 103);
+            this.cboUserDefList2.Location = new System.Drawing.Point(156, 103);
             this.cboUserDefList2.Name = "cboUserDefList2";
             this.cboUserDefList2.Size = new System.Drawing.Size(121, 21);
             this.cboUserDefList2.TabIndex = 7;
@@ -244,7 +244,7 @@
             // 
             this.lblUserDef3.Location = new System.Drawing.Point(12, 130);
             this.lblUserDef3.Name = "lblUserDef3";
-            this.lblUserDef3.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef3.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef3.TabIndex = 10;
             this.lblUserDef3.Text = "POP Number";
             // 
@@ -253,7 +253,7 @@
             this.cboUserDefList3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUserDefList3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboUserDefList3.FormattingEnabled = true;
-            this.cboUserDefList3.Location = new System.Drawing.Point(146, 127);
+            this.cboUserDefList3.Location = new System.Drawing.Point(156, 127);
             this.cboUserDefList3.Name = "cboUserDefList3";
             this.cboUserDefList3.Size = new System.Drawing.Size(121, 21);
             this.cboUserDefList3.TabIndex = 9;
@@ -262,7 +262,7 @@
             // 
             this.lblUserDef4.Location = new System.Drawing.Point(12, 154);
             this.lblUserDef4.Name = "lblUserDef4";
-            this.lblUserDef4.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef4.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef4.TabIndex = 12;
             this.lblUserDef4.Text = "POP Number";
             // 
@@ -271,7 +271,7 @@
             this.cboUserDefList4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUserDefList4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboUserDefList4.FormattingEnabled = true;
-            this.cboUserDefList4.Location = new System.Drawing.Point(146, 151);
+            this.cboUserDefList4.Location = new System.Drawing.Point(156, 151);
             this.cboUserDefList4.Name = "cboUserDefList4";
             this.cboUserDefList4.Size = new System.Drawing.Size(121, 21);
             this.cboUserDefList4.TabIndex = 11;
@@ -280,7 +280,7 @@
             // 
             this.lblUserDef5.Location = new System.Drawing.Point(12, 178);
             this.lblUserDef5.Name = "lblUserDef5";
-            this.lblUserDef5.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef5.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef5.TabIndex = 14;
             this.lblUserDef5.Text = "POP Number";
             // 
@@ -289,7 +289,7 @@
             this.cboUserDefList5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUserDefList5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cboUserDefList5.FormattingEnabled = true;
-            this.cboUserDefList5.Location = new System.Drawing.Point(146, 175);
+            this.cboUserDefList5.Location = new System.Drawing.Point(156, 175);
             this.cboUserDefList5.Name = "cboUserDefList5";
             this.cboUserDefList5.Size = new System.Drawing.Size(121, 21);
             this.cboUserDefList5.TabIndex = 13;
@@ -298,7 +298,7 @@
             // 
             this.lblUserDef6.Location = new System.Drawing.Point(12, 202);
             this.lblUserDef6.Name = "lblUserDef6";
-            this.lblUserDef6.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef6.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef6.TabIndex = 15;
             this.lblUserDef6.Text = "POP Number";
             // 
@@ -306,7 +306,7 @@
             // 
             this.txtUserDefText1.BackColor = System.Drawing.SystemColors.Window;
             this.txtUserDefText1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserDefText1.Location = new System.Drawing.Point(148, 202);
+            this.txtUserDefText1.Location = new System.Drawing.Point(158, 202);
             this.txtUserDefText1.Name = "txtUserDefText1";
             this.txtUserDefText1.Size = new System.Drawing.Size(117, 13);
             this.txtUserDefText1.TabIndex = 16;
@@ -315,7 +315,7 @@
             // 
             this.txtUserDefText2.BackColor = System.Drawing.SystemColors.Window;
             this.txtUserDefText2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserDefText2.Location = new System.Drawing.Point(148, 223);
+            this.txtUserDefText2.Location = new System.Drawing.Point(158, 223);
             this.txtUserDefText2.Name = "txtUserDefText2";
             this.txtUserDefText2.Size = new System.Drawing.Size(117, 13);
             this.txtUserDefText2.TabIndex = 18;
@@ -324,7 +324,7 @@
             // 
             this.lblUserDef7.Location = new System.Drawing.Point(12, 223);
             this.lblUserDef7.Name = "lblUserDef7";
-            this.lblUserDef7.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef7.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef7.TabIndex = 17;
             this.lblUserDef7.Text = "POP Number";
             // 
@@ -332,7 +332,7 @@
             // 
             this.txtUserDefText4.BackColor = System.Drawing.SystemColors.Window;
             this.txtUserDefText4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserDefText4.Location = new System.Drawing.Point(148, 265);
+            this.txtUserDefText4.Location = new System.Drawing.Point(158, 265);
             this.txtUserDefText4.Name = "txtUserDefText4";
             this.txtUserDefText4.Size = new System.Drawing.Size(117, 13);
             this.txtUserDefText4.TabIndex = 22;
@@ -341,7 +341,7 @@
             // 
             this.lblUserDef9.Location = new System.Drawing.Point(12, 265);
             this.lblUserDef9.Name = "lblUserDef9";
-            this.lblUserDef9.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef9.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef9.TabIndex = 21;
             this.lblUserDef9.Text = "POP Number";
             // 
@@ -349,7 +349,7 @@
             // 
             this.txtUserDefText3.BackColor = System.Drawing.SystemColors.Window;
             this.txtUserDefText3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserDefText3.Location = new System.Drawing.Point(148, 244);
+            this.txtUserDefText3.Location = new System.Drawing.Point(158, 244);
             this.txtUserDefText3.Name = "txtUserDefText3";
             this.txtUserDefText3.Size = new System.Drawing.Size(117, 13);
             this.txtUserDefText3.TabIndex = 20;
@@ -358,7 +358,7 @@
             // 
             this.lblUserDef8.Location = new System.Drawing.Point(12, 244);
             this.lblUserDef8.Name = "lblUserDef8";
-            this.lblUserDef8.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef8.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef8.TabIndex = 19;
             this.lblUserDef8.Text = "POP Number";
             // 
@@ -366,7 +366,7 @@
             // 
             this.txtUserDefText8.BackColor = System.Drawing.SystemColors.Window;
             this.txtUserDefText8.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserDefText8.Location = new System.Drawing.Point(148, 349);
+            this.txtUserDefText8.Location = new System.Drawing.Point(158, 349);
             this.txtUserDefText8.Name = "txtUserDefText8";
             this.txtUserDefText8.Size = new System.Drawing.Size(117, 13);
             this.txtUserDefText8.TabIndex = 30;
@@ -375,7 +375,7 @@
             // 
             this.lblUserDef13.Location = new System.Drawing.Point(12, 349);
             this.lblUserDef13.Name = "lblUserDef13";
-            this.lblUserDef13.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef13.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef13.TabIndex = 29;
             this.lblUserDef13.Text = "POP Number";
             // 
@@ -383,7 +383,7 @@
             // 
             this.txtUserDefText7.BackColor = System.Drawing.SystemColors.Window;
             this.txtUserDefText7.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserDefText7.Location = new System.Drawing.Point(148, 328);
+            this.txtUserDefText7.Location = new System.Drawing.Point(158, 328);
             this.txtUserDefText7.Name = "txtUserDefText7";
             this.txtUserDefText7.Size = new System.Drawing.Size(117, 13);
             this.txtUserDefText7.TabIndex = 28;
@@ -392,7 +392,7 @@
             // 
             this.lblUserDef12.Location = new System.Drawing.Point(12, 328);
             this.lblUserDef12.Name = "lblUserDef12";
-            this.lblUserDef12.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef12.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef12.TabIndex = 27;
             this.lblUserDef12.Text = "POP Number";
             // 
@@ -400,7 +400,7 @@
             // 
             this.txtUserDefText6.BackColor = System.Drawing.SystemColors.Window;
             this.txtUserDefText6.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserDefText6.Location = new System.Drawing.Point(148, 307);
+            this.txtUserDefText6.Location = new System.Drawing.Point(158, 307);
             this.txtUserDefText6.Name = "txtUserDefText6";
             this.txtUserDefText6.Size = new System.Drawing.Size(117, 13);
             this.txtUserDefText6.TabIndex = 26;
@@ -409,7 +409,7 @@
             // 
             this.lblUserDef11.Location = new System.Drawing.Point(12, 307);
             this.lblUserDef11.Name = "lblUserDef11";
-            this.lblUserDef11.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef11.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef11.TabIndex = 25;
             this.lblUserDef11.Text = "POP Number";
             // 
@@ -417,7 +417,7 @@
             // 
             this.txtUserDefText5.BackColor = System.Drawing.SystemColors.Window;
             this.txtUserDefText5.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserDefText5.Location = new System.Drawing.Point(148, 286);
+            this.txtUserDefText5.Location = new System.Drawing.Point(158, 286);
             this.txtUserDefText5.Name = "txtUserDefText5";
             this.txtUserDefText5.Size = new System.Drawing.Size(117, 13);
             this.txtUserDefText5.TabIndex = 24;
@@ -426,7 +426,7 @@
             // 
             this.lblUserDef10.Location = new System.Drawing.Point(12, 286);
             this.lblUserDef10.Name = "lblUserDef10";
-            this.lblUserDef10.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef10.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef10.TabIndex = 23;
             this.lblUserDef10.Text = "POP Number";
             // 
@@ -434,7 +434,7 @@
             // 
             this.txtUserDefText10.BackColor = System.Drawing.SystemColors.Window;
             this.txtUserDefText10.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserDefText10.Location = new System.Drawing.Point(148, 391);
+            this.txtUserDefText10.Location = new System.Drawing.Point(158, 391);
             this.txtUserDefText10.Name = "txtUserDefText10";
             this.txtUserDefText10.Size = new System.Drawing.Size(117, 13);
             this.txtUserDefText10.TabIndex = 34;
@@ -443,7 +443,7 @@
             // 
             this.lblUserDef15.Location = new System.Drawing.Point(12, 391);
             this.lblUserDef15.Name = "lblUserDef15";
-            this.lblUserDef15.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef15.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef15.TabIndex = 33;
             this.lblUserDef15.Text = "POP Number";
             // 
@@ -451,7 +451,7 @@
             // 
             this.txtUserDefText9.BackColor = System.Drawing.SystemColors.Window;
             this.txtUserDefText9.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtUserDefText9.Location = new System.Drawing.Point(148, 370);
+            this.txtUserDefText9.Location = new System.Drawing.Point(158, 370);
             this.txtUserDefText9.Name = "txtUserDefText9";
             this.txtUserDefText9.Size = new System.Drawing.Size(117, 13);
             this.txtUserDefText9.TabIndex = 32;
@@ -460,15 +460,15 @@
             // 
             this.lblUserDef14.Location = new System.Drawing.Point(12, 370);
             this.lblUserDef14.Name = "lblUserDef14";
-            this.lblUserDef14.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef14.Size = new System.Drawing.Size(140, 13);
             this.lblUserDef14.TabIndex = 31;
             this.lblUserDef14.Text = "POP Number";
             // 
             // lblUserDef16
             // 
-            this.lblUserDef16.Location = new System.Drawing.Point(321, 38);
+            this.lblUserDef16.Location = new System.Drawing.Point(308, 38);
             this.lblUserDef16.Name = "lblUserDef16";
-            this.lblUserDef16.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef16.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef16.TabIndex = 35;
             this.lblUserDef16.Text = "POP Number";
             // 
@@ -488,9 +488,9 @@
             // 
             // lblUserDef17
             // 
-            this.lblUserDef17.Location = new System.Drawing.Point(321, 59);
+            this.lblUserDef17.Location = new System.Drawing.Point(308, 59);
             this.lblUserDef17.Name = "lblUserDef17";
-            this.lblUserDef17.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef17.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef17.TabIndex = 37;
             this.lblUserDef17.Text = "POP Number";
             // 
@@ -503,9 +503,9 @@
             // 
             // lblUserDef19
             // 
-            this.lblUserDef19.Location = new System.Drawing.Point(321, 103);
+            this.lblUserDef19.Location = new System.Drawing.Point(308, 103);
             this.lblUserDef19.Name = "lblUserDef19";
-            this.lblUserDef19.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef19.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef19.TabIndex = 41;
             this.lblUserDef19.Text = "POP Number";
             // 
@@ -518,9 +518,9 @@
             // 
             // lblUserDef18
             // 
-            this.lblUserDef18.Location = new System.Drawing.Point(321, 82);
+            this.lblUserDef18.Location = new System.Drawing.Point(308, 82);
             this.lblUserDef18.Name = "lblUserDef18";
-            this.lblUserDef18.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef18.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef18.TabIndex = 39;
             this.lblUserDef18.Text = "POP Number";
             // 
@@ -533,9 +533,9 @@
             // 
             // lblUserDef23
             // 
-            this.lblUserDef23.Location = new System.Drawing.Point(321, 187);
+            this.lblUserDef23.Location = new System.Drawing.Point(308, 187);
             this.lblUserDef23.Name = "lblUserDef23";
-            this.lblUserDef23.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef23.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef23.TabIndex = 49;
             this.lblUserDef23.Text = "POP Number";
             // 
@@ -548,9 +548,9 @@
             // 
             // lblUserDef22
             // 
-            this.lblUserDef22.Location = new System.Drawing.Point(321, 166);
+            this.lblUserDef22.Location = new System.Drawing.Point(308, 166);
             this.lblUserDef22.Name = "lblUserDef22";
-            this.lblUserDef22.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef22.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef22.TabIndex = 47;
             this.lblUserDef22.Text = "POP Number";
             // 
@@ -563,9 +563,9 @@
             // 
             // lblUserDef21
             // 
-            this.lblUserDef21.Location = new System.Drawing.Point(321, 145);
+            this.lblUserDef21.Location = new System.Drawing.Point(308, 145);
             this.lblUserDef21.Name = "lblUserDef21";
-            this.lblUserDef21.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef21.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef21.TabIndex = 45;
             this.lblUserDef21.Text = "POP Number";
             // 
@@ -578,9 +578,9 @@
             // 
             // lblUserDef20
             // 
-            this.lblUserDef20.Location = new System.Drawing.Point(321, 124);
+            this.lblUserDef20.Location = new System.Drawing.Point(308, 124);
             this.lblUserDef20.Name = "lblUserDef20";
-            this.lblUserDef20.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef20.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef20.TabIndex = 43;
             this.lblUserDef20.Text = "POP Number";
             // 
@@ -593,9 +593,9 @@
             // 
             // lblUserDef31
             // 
-            this.lblUserDef31.Location = new System.Drawing.Point(321, 354);
+            this.lblUserDef31.Location = new System.Drawing.Point(308, 354);
             this.lblUserDef31.Name = "lblUserDef31";
-            this.lblUserDef31.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef31.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef31.TabIndex = 65;
             this.lblUserDef31.Text = "POP Number";
             // 
@@ -608,9 +608,9 @@
             // 
             // lblUserDef30
             // 
-            this.lblUserDef30.Location = new System.Drawing.Point(321, 332);
+            this.lblUserDef30.Location = new System.Drawing.Point(308, 332);
             this.lblUserDef30.Name = "lblUserDef30";
-            this.lblUserDef30.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef30.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef30.TabIndex = 63;
             this.lblUserDef30.Text = "POP Number";
             // 
@@ -623,9 +623,9 @@
             // 
             // lblUserDef29
             // 
-            this.lblUserDef29.Location = new System.Drawing.Point(321, 312);
+            this.lblUserDef29.Location = new System.Drawing.Point(308, 312);
             this.lblUserDef29.Name = "lblUserDef29";
-            this.lblUserDef29.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef29.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef29.TabIndex = 61;
             this.lblUserDef29.Text = "POP Number";
             // 
@@ -638,9 +638,9 @@
             // 
             // lblUserDef28
             // 
-            this.lblUserDef28.Location = new System.Drawing.Point(321, 290);
+            this.lblUserDef28.Location = new System.Drawing.Point(308, 290);
             this.lblUserDef28.Name = "lblUserDef28";
-            this.lblUserDef28.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef28.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef28.TabIndex = 59;
             this.lblUserDef28.Text = "POP Number";
             // 
@@ -653,9 +653,9 @@
             // 
             // lblUserDef27
             // 
-            this.lblUserDef27.Location = new System.Drawing.Point(321, 270);
+            this.lblUserDef27.Location = new System.Drawing.Point(308, 270);
             this.lblUserDef27.Name = "lblUserDef27";
-            this.lblUserDef27.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef27.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef27.TabIndex = 57;
             this.lblUserDef27.Text = "POP Number";
             // 
@@ -668,9 +668,9 @@
             // 
             // lblUserDef26
             // 
-            this.lblUserDef26.Location = new System.Drawing.Point(321, 248);
+            this.lblUserDef26.Location = new System.Drawing.Point(308, 248);
             this.lblUserDef26.Name = "lblUserDef26";
-            this.lblUserDef26.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef26.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef26.TabIndex = 55;
             this.lblUserDef26.Text = "POP Number";
             // 
@@ -683,9 +683,9 @@
             // 
             // lblUserDef25
             // 
-            this.lblUserDef25.Location = new System.Drawing.Point(321, 228);
+            this.lblUserDef25.Location = new System.Drawing.Point(308, 228);
             this.lblUserDef25.Name = "lblUserDef25";
-            this.lblUserDef25.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef25.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef25.TabIndex = 53;
             this.lblUserDef25.Text = "POP Number";
             // 
@@ -698,9 +698,9 @@
             // 
             // lblUserDef24
             // 
-            this.lblUserDef24.Location = new System.Drawing.Point(321, 207);
+            this.lblUserDef24.Location = new System.Drawing.Point(308, 207);
             this.lblUserDef24.Name = "lblUserDef24";
-            this.lblUserDef24.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef24.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef24.TabIndex = 51;
             this.lblUserDef24.Text = "POP Number";
             // 
@@ -713,9 +713,9 @@
             // 
             // lblUserDef35
             // 
-            this.lblUserDef35.Location = new System.Drawing.Point(321, 437);
+            this.lblUserDef35.Location = new System.Drawing.Point(308, 437);
             this.lblUserDef35.Name = "lblUserDef35";
-            this.lblUserDef35.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef35.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef35.TabIndex = 73;
             this.lblUserDef35.Text = "POP Number";
             // 
@@ -728,9 +728,9 @@
             // 
             // lblUserDef34
             // 
-            this.lblUserDef34.Location = new System.Drawing.Point(321, 417);
+            this.lblUserDef34.Location = new System.Drawing.Point(308, 417);
             this.lblUserDef34.Name = "lblUserDef34";
-            this.lblUserDef34.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef34.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef34.TabIndex = 71;
             this.lblUserDef34.Text = "POP Number";
             // 
@@ -743,9 +743,9 @@
             // 
             // lblUserDef33
             // 
-            this.lblUserDef33.Location = new System.Drawing.Point(321, 397);
+            this.lblUserDef33.Location = new System.Drawing.Point(308, 397);
             this.lblUserDef33.Name = "lblUserDef33";
-            this.lblUserDef33.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef33.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef33.TabIndex = 69;
             this.lblUserDef33.Text = "POP Number";
             // 
@@ -758,9 +758,9 @@
             // 
             // lblUserDef32
             // 
-            this.lblUserDef32.Location = new System.Drawing.Point(321, 375);
+            this.lblUserDef32.Location = new System.Drawing.Point(308, 375);
             this.lblUserDef32.Name = "lblUserDef32";
-            this.lblUserDef32.Size = new System.Drawing.Size(130, 13);
+            this.lblUserDef32.Size = new System.Drawing.Size(142, 13);
             this.lblUserDef32.TabIndex = 67;
             this.lblUserDef32.Text = "POP Number";
             // 
