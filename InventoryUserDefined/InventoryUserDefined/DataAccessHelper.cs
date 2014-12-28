@@ -82,6 +82,8 @@ namespace InventoryUserDefined
             TableError lastError;
             byte checkExist;
 
+            lastError = new TableError();
+
             foreach (string listItem in list)
             {
                 checkExist = IVUDefListSetupExist(idx, listItem, out lastError);
@@ -111,15 +113,10 @@ namespace InventoryUserDefined
                 IVUDefListSetupTable.Index.Value = idx;
                 IVUDefListSetupTable.Description.Value = listItem;
                 lastError = IVUDefListSetupTable.Save();
-                if (lastError != TableError.NoError)
-                {
-                    //error saving 1 record
-                    return lastError;
-                }
             }
 
             IVUDefListSetupTable.Close();
-            return TableError.NoError;
+            return lastError;
         }
 
         static public TableError DeleteIVUDefListValues(byte idx)
@@ -130,12 +127,10 @@ namespace InventoryUserDefined
             checkExist = IVUDefListSetupExist(idx, out lastError);
             if (checkExist == ROW_FOUND)
             {
-                IVUDefListSetupTable.Key = 1;
-                IVUDefListSetupTable.Clear();
-                IVUDefListSetupTable.Index.Value = idx++;
-                IVUDefListSetupTable.RangeStart();
+                IVUDefListSetupTable.Key = 2;
                 IVUDefListSetupTable.Clear();
                 IVUDefListSetupTable.Index.Value = idx;
+                IVUDefListSetupTable.RangeStart();
                 IVUDefListSetupTable.RangeEnd();
 
                 lastError = IVUDefListSetupTable.RangeRemove();
@@ -490,10 +485,10 @@ namespace InventoryUserDefined
             //TableError lastError;
             IVUDefListSetupTable.Key = 2;
             IVUDefListSetupTable.Clear();
-            IVUDefListSetupTable.Index.Value = idx++;
-            IVUDefListSetupTable.RangeStart();
-            IVUDefListSetupTable.Clear();
             IVUDefListSetupTable.Index.Value = idx;
+            IVUDefListSetupTable.RangeStart();
+            //IVUDefListSetupTable.Clear();
+            //IVUDefListSetupTable.Index.Value = idx;
             IVUDefListSetupTable.RangeEnd();
 
             lastError = IVUDefListSetupTable.GetFirst();
