@@ -1,0 +1,1337 @@
+<Component Name="GL_Transaction_Entry" ProductId="9001" Object="Form" >
+= Form	"GL_Transaction_Entry"
+{
+	Datatypes
+	{
+		Datatype	"CustomerID_Lookup"		
+		{
+			Control	"PushButton"
+			DefaultDown	"00000"
+			DefaultMouseOver	"00000"
+			DefaultUp	"00000"
+			Prompt	"Lookup"
+			PromptDown	""
+			PromptMouseOver	""
+			StaticType	"Picture"
+			~ItemImages
+			{
+			}
+		}
+		Datatype	"VendorID_Lookup"		
+		{
+			Control	"PushButton"
+			DefaultDown	"00000"
+			DefaultMouseOver	"00000"
+			DefaultUp	"00000"
+			Prompt	"Lookup"
+			PromptDown	""
+			PromptMouseOver	""
+			StaticType	"Picture"
+			~ItemImages
+			{
+			}
+		}
+		Datatype	"strCustomerID"		
+		{
+			AllowOddLength	"false"
+			Control	"String"
+			Format	""
+			KeyableLength	"15"
+			StorageLength	"32"
+		}
+		Datatype	"strCustomerName"		
+		{
+			AllowOddLength	"false"
+			Control	"String"
+			Format	""
+			KeyableLength	"64"
+			StorageLength	"66"
+		}
+		Datatype	"strVendorID"		
+		{
+			AllowOddLength	"false"
+			Control	"String"
+			Format	""
+			KeyableLength	"15"
+			StorageLength	"32"
+		}
+		Datatype	"strVendorName"		
+		{
+			AllowOddLength	"false"
+			Control	"String"
+			Format	""
+			KeyableLength	"64"
+			StorageLength	"66"
+		}
+	}
+	Fields
+	{
+		Field	"CustomerID_Lookup"		
+		{
+			ArraySize	"0"
+			Datatype	"(L) CustomerID_Lookup"
+			LookupForm	""
+			PhysicalName	""
+		}
+		Field	"VendorID_Lookup"		
+		{
+			ArraySize	"0"
+			Datatype	"(L) VendorID_Lookup"
+			LookupForm	""
+			PhysicalName	""
+		}
+		Field	"strCustomerID"		
+		{
+			ArraySize	"0"
+			Datatype	"(L) strCustomerID"
+			LookupForm	""
+			PhysicalName	""
+		}
+		Field	"strCustomerName"		
+		{
+			ArraySize	"0"
+			Datatype	"(L) strCustomerName"
+			LookupForm	""
+			PhysicalName	""
+		}
+		Field	"strVendorID"		
+		{
+			ArraySize	"0"
+			Datatype	"(L) strVendorID"
+			LookupForm	""
+			PhysicalName	""
+		}
+		Field	"strVendorName"		
+		{
+			ArraySize	"0"
+			Datatype	"(L) strVendorName"
+			LookupForm	""
+			PhysicalName	""
+		}
+	}
+	Windows
+	{
+		= Window	"DateEntry"
+		{
+			LastTag	"10000"
+		}
+		= Window	"GL_Transaction_Entry"
+		{
+			Fields
+			{
+				= WindowControl	"(L) AccountIsFocused"
+				{
+					PositionTop	"584"
+				}
+				= WindowControl	"(L) Already Displayed"
+				{
+					PositionTop	"601"
+				}
+				= WindowControl	"(L) Browse Batch"
+				{
+					PositionTop	"618"
+				}
+				= WindowControl	"(L) Browse Journal"
+				{
+					PositionTop	"635"
+				}
+				WindowControl	"(L) CustomerID_Lookup"				
+				{
+					Alignment	"center"
+					Appearance	"2D Border"
+					BackColor	"System - Button Face"
+					Border	"true"
+					ButtonStyle	"TextOnly"
+					Cancel	"false"
+					ControlType	"PushButton"
+					Default	"false"
+					Editable	"true"
+					EndTransaction	"false"
+					Field	"(L) CustomerID_Lookup"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Button Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					HyperSpace	"false"
+					LinkedLookup	"0"
+					LinkedPrompt	"0"
+					Pattern	"(none)"
+					PatternColor	"Black"
+					PositionLeft	"263"
+					PositionTop	"243"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SizeHeight	"20"
+					SizeWidth	"50"
+					TabStop	"true"
+					Tag	"10014"
+					Tooltip	"Customer Lookup"
+					UseUniqueHelp	"true"
+					Visible	"true"
+					ZOrder	"238"
+					Zoom	"false"
+				}
+				= WindowControl	"(L) Date Changed"
+				{
+					PositionTop	"652"
+				}
+				= WindowControl	"(L) Date Verified"
+				{
+					PositionTop	"669"
+				}
+				= WindowControl	"(L) Dummy Batch"
+				{
+					PositionTop	"686"
+				}
+				= WindowControl	"(L) EmptyTotalCredits"
+				{
+					PositionTop	"459"
+				}
+				= WindowControl	"(L) EmptyTotalDebits"
+				{
+					PositionTop	"459"
+				}
+				= WindowControl	"(L) EmptyTotalDifference"
+				{
+					PositionTop	"478"
+				}
+				= WindowControl	"(L) EnableNegative"
+				{
+					PositionTop	"703"
+				}
+				= WindowControl	"(L) EnableTaxDate"
+				{
+					PositionTop	"720"
+				}
+				= WindowControl	"(L) ExchangeRateChanged"
+				{
+					PositionTop	"754"
+				}
+				= WindowControl	"(L) F-Difference"
+				{
+					PositionTop	"478"
+				}
+				= WindowControl	"(L) From View Flip"
+				{
+					PositionTop	"788"
+				}
+				= WindowControl	"(L) Get Next Journal Entry"
+				{
+					PositionTop	"805"
+				}
+				= WindowControl	"(L) Journal Entry Validated"
+				{
+					PositionTop	"822"
+				}
+				= WindowControl	"(L) Line Inserted"
+				{
+					PositionTop	"584"
+				}
+				= WindowControl	"(L) LoadCorrectingTrx"
+				{
+					PositionTop	"860"
+				}
+				= WindowControl	"(L) MDA Exists"
+				{
+					PositionTop	"601"
+				}
+				= WindowControl	"(L) New Record"
+				{
+					PositionTop	"686"
+				}
+				= WindowControl	"(L) NewCurrency"
+				{
+					PositionTop	"652"
+				}
+				= WindowControl	"(L) NewDate"
+				{
+					PositionTop	"669"
+				}
+				= WindowControl	"(L) Next Journal Entry"
+				{
+					PositionTop	"618"
+				}
+				= WindowControl	"(L) Next Sequence DLR"
+				{
+					PositionTop	"635"
+				}
+				= WindowControl	"(L) Note Index[1]"
+				{
+					PositionTop	"703"
+				}
+				= WindowControl	"(L) O-Difference"
+				{
+					PositionTop	"478"
+				}
+				= WindowControl	"(L) Old TRX Total"
+				{
+					PositionTop	"737"
+				}
+				= WindowControl	"(L) Old Trx Date"
+				{
+					PositionTop	"720"
+				}
+				= WindowControl	"(L) OrigHdrSeqLine"
+				{
+					PositionTop	"862"
+				}
+				= WindowControl	"(L) OrigOriginatingTrxSrc"
+				{
+					PositionTop	"920"
+				}
+				= WindowControl	"(L) OrigRevDate"
+				{
+					PositionTop	"901"
+				}
+				= WindowControl	"(L) OrigSeries"
+				{
+					PositionTop	"939"
+				}
+				= WindowControl	"(L) OrigTrxDate"
+				{
+					PositionTop	"882"
+				}
+				= WindowControl	"(L) Override Exchange Info"
+				{
+					PositionTop	"771"
+				}
+				= WindowControl	"(L) Posted Real Time TRX"
+				{
+					PositionTop	"788"
+				}
+				= WindowControl	"(L) Posting To History"
+				{
+					PositionTop	"754"
+				}
+				= WindowControl	"(L) Prev Currency"
+				{
+					PositionTop	"805"
+				}
+				= WindowControl	"(L) Prev Currency Index"
+				{
+					PositionTop	"822"
+				}
+				= WindowControl	"(L) Prev Decimal Places"
+				{
+					PositionTop	"584"
+				}
+				= WindowControl	"(L) Prev Rate Calc Method"
+				{
+					PositionTop	"601"
+				}
+				= WindowControl	"(L) Prev Rate Type ID"
+				{
+					PositionTop	"618"
+				}
+				= WindowControl	"(L) Prev Time"
+				{
+					PositionTop	"635"
+				}
+				= WindowControl	"(L) Prev X Date"
+				{
+					PositionTop	"652"
+				}
+				= WindowControl	"(L) Prev X Rate"
+				{
+					PositionTop	"669"
+				}
+				= WindowControl	"(L) Prev X Table ID"
+				{
+					PositionTop	"686"
+				}
+				= WindowControl	"(L) Returned Currency"
+				{
+					PositionTop	"703"
+				}
+				= WindowControl	"(L) Reversing Date Verified"
+				{
+					PositionTop	"720"
+				}
+				= WindowControl	"(L) StartingSequenceLine"
+				{
+					PositionTop	"737"
+				}
+				= WindowControl	"(L) Status"
+				{
+					PositionTop	"512"
+				}
+				= WindowControl	"(L) SuppressViewFlip"
+				{
+					PositionTop	"754"
+				}
+				= WindowControl	"(L) Total F-Credits"
+				{
+					PositionTop	"459"
+				}
+				= WindowControl	"(L) Total F-Debits"
+				{
+					PositionTop	"459"
+				}
+				= WindowControl	"(L) Total O-Credits"
+				{
+					PositionTop	"459"
+				}
+				= WindowControl	"(L) Total O-Debits"
+				{
+					PositionTop	"459"
+				}
+				= WindowControl	"(L) VAT Account Number"
+				{
+					PositionTop	"771"
+				}
+				= WindowControl	"(L) VAT Button"
+				{
+					PositionTop	"477"
+				}
+				= WindowControl	"(L) VAT Tax Detail ID"
+				{
+					PositionTop	"788"
+				}
+				WindowControl	"(L) VendorID_Lookup"				
+				{
+					Alignment	"center"
+					Appearance	"2D Border"
+					BackColor	"System - Button Face"
+					Border	"true"
+					ButtonStyle	"TextOnly"
+					Cancel	"false"
+					ControlType	"PushButton"
+					Default	"false"
+					Editable	"true"
+					EndTransaction	"false"
+					Field	"(L) VendorID_Lookup"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Button Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					HyperSpace	"false"
+					LinkedLookup	"10005"
+					LinkedPrompt	"0"
+					Pattern	"(none)"
+					PatternColor	"Black"
+					PositionLeft	"263"
+					PositionTop	"205"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SizeHeight	"20"
+					SizeWidth	"50"
+					TabStop	"true"
+					Tag	"10008"
+					Tooltip	"Vendor Lookup"
+					UseUniqueHelp	"true"
+					Visible	"true"
+					ZOrder	"233"
+					Zoom	"false"
+				}
+				= WindowControl	"(L) Warning_Called"
+				{
+					PositionTop	"841"
+				}
+				= WindowControl	"(L) fDidPreFormFinish"
+				{
+					PositionTop	"771"
+				}
+				WindowControl	"(L) strCustomerID"				
+				{
+					Alignment	"left"
+					Appearance	"2D Border"
+					AutoComplete	"false"
+					AutoCopy	"false"
+					BackColor	"System - Window Background"
+					Border	"true"
+					ControlType	"String"
+					DisableLookup	"false"
+					Editable	"false"
+					Field	"(L) strCustomerID"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Window Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					LinkedFormat	"0"
+					LinkedLookup	"0"
+					LinkedPrompt	"0"
+					Password	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"144"
+					PositionTop	"243"
+					ReadingOrder	"LeftToRight"
+					Required	"false"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SavedOnRestart	"false"
+					SetChangeFlag	"true"
+					SizeHeight	"20"
+					SizeWidth	"120"
+					TabStop	"true"
+					Tag	"10012"
+					Tooltip	""
+					UseUniqueHelp	"true"
+					Visible	"true"
+					ZOrder	"236"
+					Zoom	"false"
+				}
+				WindowControl	"(L) strCustomerName"				
+				{
+					Alignment	"left"
+					Appearance	"2D Border"
+					AutoComplete	"false"
+					AutoCopy	"false"
+					BackColor	"System - Window Background"
+					Border	"true"
+					ControlType	"String"
+					DisableLookup	"false"
+					Editable	"false"
+					Field	"(L) strCustomerName"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Window Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					LinkedFormat	"0"
+					LinkedLookup	"0"
+					LinkedPrompt	"0"
+					Password	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"144"
+					PositionTop	"262"
+					ReadingOrder	"LeftToRight"
+					Required	"false"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SavedOnRestart	"false"
+					SetChangeFlag	"true"
+					SizeHeight	"20"
+					SizeWidth	"222"
+					TabStop	"true"
+					Tag	"10013"
+					Tooltip	""
+					UseUniqueHelp	"true"
+					Visible	"true"
+					ZOrder	"237"
+					Zoom	"false"
+				}
+				WindowControl	"(L) strVendorID"				
+				{
+					Alignment	"left"
+					Appearance	"2D Border"
+					AutoComplete	"false"
+					AutoCopy	"false"
+					BackColor	"System - Window Background"
+					Border	"true"
+					ControlType	"String"
+					DisableLookup	"false"
+					Editable	"false"
+					Field	"(L) strVendorID"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Window Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					LinkedFormat	"0"
+					LinkedLookup	"0"
+					LinkedPrompt	"10003"
+					Password	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"144"
+					PositionTop	"205"
+					ReadingOrder	"LeftToRight"
+					Required	"false"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SavedOnRestart	"false"
+					SetChangeFlag	"true"
+					SizeHeight	"20"
+					SizeWidth	"120"
+					TabStop	"true"
+					Tag	"10005"
+					Tooltip	""
+					UseUniqueHelp	"true"
+					Visible	"true"
+					ZOrder	"231"
+					Zoom	"false"
+				}
+				WindowControl	"(L) strVendorName"				
+				{
+					Alignment	"left"
+					Appearance	"2D Border"
+					AutoComplete	"false"
+					AutoCopy	"false"
+					BackColor	"System - Window Background"
+					Border	"true"
+					ControlType	"String"
+					DisableLookup	"false"
+					Editable	"false"
+					Field	"(L) strVendorName"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Window Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					LinkedFormat	"0"
+					LinkedLookup	"0"
+					LinkedPrompt	"10004"
+					Password	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"144"
+					PositionTop	"224"
+					ReadingOrder	"LeftToRight"
+					Required	"false"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SavedOnRestart	"false"
+					SetChangeFlag	"true"
+					SizeHeight	"20"
+					SizeWidth	"222"
+					TabStop	"true"
+					Tag	"10006"
+					Tooltip	""
+					UseUniqueHelp	"true"
+					Visible	"true"
+					ZOrder	"232"
+					Zoom	"false"
+				}
+				= ScrollingWindow	"0033-Transaction_Scroll"
+				{
+					LastTag	"10000"
+					PositionTop	"344"
+				}
+				WindowPrompt	"10003"				
+				{
+					Alignment	"left"
+					Appearance	"3D Highlight"
+					BackColor	"System - Button Face"
+					Border	"true"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Button Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"8"
+					PositionTop	"205"
+					ReadingOrder	"LeftToRight"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SizeHeight	"20"
+					SizeWidth	"137"
+					Text	"Vendor ID"
+					Visible	"true"
+					ZOrder	"229"
+					Zoom	"false"
+				}
+				WindowPrompt	"10004"				
+				{
+					Alignment	"left"
+					Appearance	"3D Highlight"
+					BackColor	"System - Button Face"
+					Border	"true"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Button Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"8"
+					PositionTop	"224"
+					ReadingOrder	"LeftToRight"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SizeHeight	"20"
+					SizeWidth	"137"
+					Text	"Vendor Name"
+					Visible	"true"
+					ZOrder	"230"
+					Zoom	"false"
+				}
+				WindowPrompt	"10010"				
+				{
+					Alignment	"left"
+					Appearance	"3D Highlight"
+					BackColor	"System - Button Face"
+					Border	"true"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Button Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"8"
+					PositionTop	"243"
+					ReadingOrder	"LeftToRight"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SizeHeight	"20"
+					SizeWidth	"137"
+					Text	"Customer ID"
+					Visible	"true"
+					ZOrder	"234"
+					Zoom	"false"
+				}
+				WindowPrompt	"10011"				
+				{
+					Alignment	"left"
+					Appearance	"3D Highlight"
+					BackColor	"System - Button Face"
+					Border	"true"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Button Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"8"
+					PositionTop	"262"
+					ReadingOrder	"LeftToRight"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SizeHeight	"20"
+					SizeWidth	"137"
+					Text	"Customer Name"
+					Visible	"true"
+					ZOrder	"235"
+					Zoom	"false"
+				}
+				= WindowLine	"150"
+				{
+					PositionTop	"287"
+				}
+				= WindowPrompt	"205"
+				{
+					PositionTop	"287"
+				}
+				= WindowPrompt	"206"
+				{
+					PositionTop	"459"
+				}
+				= WindowPrompt	"207"
+				{
+					PositionTop	"287"
+				}
+				= WindowPrompt	"208"
+				{
+					PositionTop	"287"
+				}
+				= WindowLine	"221"
+				{
+					PositionTop	"306"
+				}
+				= WindowPrompt	"222"
+				{
+					PositionTop	"306"
+				}
+				= WindowLine	"295"
+				{
+					PositionTop	"325"
+				}
+				= WindowPrompt	"308"
+				{
+					PositionTop	"325"
+				}
+				= WindowPrompt	"470"
+				{
+					PositionTop	"512"
+				}
+				= WindowPrompt	"479"
+				{
+					PositionTop	"287"
+				}
+				= WindowPrompt	"542"
+				{
+					PositionTop	"306"
+				}
+				= WindowLine	"564"
+				{
+					PositionTop	"325"
+				}
+				= WindowPrompt	"566"
+				{
+					PositionTop	"325"
+				}
+				= WindowLine	"575"
+				{
+					PositionTop	"504"
+				}
+				= WindowPrompt	"98"
+				{
+					PositionTop	"478"
+				}
+				= WindowShape	"99"
+				{
+					PositionTop	"287"
+				}
+				= WindowControl	"AA Button"
+				{
+					PositionTop	"287"
+				}
+				= WindowControl	"Added Rate"
+				{
+					PositionTop	"584"
+				}
+				= WindowControl	"Array of Audit Trails[1]"
+				{
+					PositionTop	"601"
+				}
+				= WindowControl	"Array of Audit Trails[2]"
+				{
+					PositionTop	"618"
+				}
+				= WindowControl	"Array of Audit Trails[3]"
+				{
+					PositionTop	"635"
+				}
+				= WindowControl	"Array of Audit Trails[4]"
+				{
+					PositionTop	"652"
+				}
+				= WindowControl	"Batch Source"
+				{
+					PositionTop	"669"
+				}
+				= WindowControl	"BrowseBox"
+				{
+					PositionTop	"512"
+				}
+				= WindowControl	"Changed"
+				{
+					PositionTop	"686"
+				}
+				= WindowControl	"Closed Year"
+				{
+					PositionTop	"703"
+				}
+				= WindowControl	"Correcting Trx Type"
+				{
+					PositionTop	"786"
+				}
+				= WindowControl	"Currency Index"
+				{
+					PositionTop	"720"
+				}
+				= WindowControl	"Currency View"
+				{
+					PositionTop	"737"
+				}
+				= WindowControl	"Currency View Button Reference"
+				{
+					PositionTop	"754"
+				}
+				= WindowControl	"CustomLinks Zoom Button[1]"
+				{
+					PositionTop	"306"
+				}
+				= WindowControl	"DTA Index"
+				{
+					PositionTop	"805"
+				}
+				= WindowControl	"Decimal Places Currency"
+				{
+					PositionTop	"771"
+				}
+				= WindowControl	"Denomination Exchange Rate"
+				{
+					PositionTop	"788"
+				}
+				= WindowControl	"End of File Button - Toolbar"
+				{
+					PositionTop	"513"
+				}
+				= WindowControl	"Exchange Date"
+				{
+					PositionTop	"618"
+				}
+				= WindowControl	"Exchange Rate"
+				{
+					PositionTop	"652"
+				}
+				= WindowControl	"Exchange Table ID"
+				{
+					PositionTop	"635"
+				}
+				= WindowControl	"Expansion Button 2"
+				{
+					PositionTop	"287"
+				}
+				= WindowControl	"Expansion Button 4"
+				{
+					PositionTop	"287"
+				}
+				= WindowControl	"Functional Currency Index"
+				{
+					PositionTop	"669"
+				}
+				= WindowControl	"GL Header Valid"
+				{
+					PositionTop	"686"
+				}
+				= WindowControl	"History TRX"
+				{
+					PositionTop	"703"
+				}
+				= WindowControl	"ICEREnabled"
+				{
+					PositionTop	"720"
+				}
+				= WindowControl	"Lookup Button 10"
+				{
+					PositionTop	"325"
+				}
+				= WindowControl	"Lookup Button 4"
+				{
+					PositionTop	"287"
+				}
+				= WindowControl	"Lookup Button 6"
+				{
+					PositionTop	"287"
+				}
+				= WindowControl	"Lookup Button 8"
+				{
+					PositionTop	"306"
+				}
+				= WindowControl	"MC Transaction State"
+				{
+					PositionTop	"737"
+				}
+				= WindowControl	"MDA Expansion Button"
+				{
+					PositionTop	"287"
+				}
+				= WindowControl	"Next Button - Toolbar"
+				{
+					PositionTop	"513"
+				}
+				= WindowControl	"Note Absent Button - Toolbar "
+				{
+					PositionTop	"509"
+				}
+				= WindowControl	"Note Index"
+				{
+					PositionTop	"754"
+				}
+				= WindowControl	"Note Present Button - Toolbar"
+				{
+					PositionTop	"509"
+				}
+				= WindowControl	"Open Year"
+				{
+					PositionTop	"771"
+				}
+				= WindowControl	"Origin"
+				{
+					PositionTop	"788"
+				}
+				= WindowControl	"Original JE"
+				{
+					PositionTop	"805"
+				}
+				= WindowControl	"Original JE Seq Num"
+				{
+					PositionTop	"843"
+				}
+				= WindowControl	"Original JE Year"
+				{
+					PositionTop	"824"
+				}
+				= WindowControl	"Originating TRX Source"
+				{
+					PositionTop	"805"
+				}
+				= WindowControl	"Period ID"
+				{
+					PositionTop	"584"
+				}
+				= WindowControl	"Posting Status"
+				{
+					PositionTop	"601"
+				}
+				= WindowControl	"Previous Button - Toolbar"
+				{
+					PositionTop	"513"
+				}
+				= WindowControl	"Rate Calculation Method"
+				{
+					PositionTop	"650"
+				}
+				= WindowControl	"Rate Type ID"
+				{
+					PositionTop	"635"
+				}
+				= WindowControl	"Reversing Closed Year"
+				{
+					PositionTop	"616"
+				}
+				= WindowControl	"Reversing History TRX"
+				{
+					PositionTop	"669"
+				}
+				= WindowControl	"Reversing Period ID"
+				{
+					PositionTop	"686"
+				}
+				= WindowControl	"Reversing Year"
+				{
+					PositionTop	"703"
+				}
+				= WindowControl	"Scroll Expand Switch"
+				{
+					PositionTop	"306"
+				}
+				= WindowControl	"Scroll Shrink Switch"
+				{
+					PositionTop	"287"
+				}
+				= WindowControl	"Scrolling Window Expand Button"
+				{
+					PositionTop	"287"
+				}
+				= WindowControl	"Scrolling Window Shrink"
+				{
+					PositionTop	"306"
+				}
+				= WindowControl	"Sort By"
+				{
+					PositionTop	"512"
+				}
+				= WindowControl	"Time"
+				{
+					PositionTop	"720"
+				}
+				= WindowControl	"Top of File Button - Toolbar"
+				{
+					PositionTop	"513"
+				}
+				= WindowControl	"View Changed To Originating"
+				{
+					PositionTop	"737"
+				}
+				= WindowControl	"View Menu Reference"
+				{
+					PositionTop	"754"
+				}
+				= WindowControl	"WindowHelp"
+				{
+					PositionTop	"509"
+				}
+				= WindowControl	"Zoom Button"
+				{
+					PositionTop	"287"
+				}
+				= WindowControl	"Zoom Buttons[1]"
+				{
+					PositionTop	"306"
+				}
+				= WindowControl	"dtaTrxCodesState"
+				{
+					PositionTop	"601"
+				}
+				= WindowControl	"dtaTrxGroupsState"
+				{
+					PositionTop	"584"
+				}
+			}
+			LastTag	"10014"
+			SizeHeight	"558"
+		}
+	}
+}
+</Component>
+<Component Name="GL_Transaction_Entry" ProductId="9001" Object="VBAForm" >
+VBAForm	"GL_Transaction_Entry"
+{
+	Windows
+	{
+		Window	"GL_Transaction_Entry"		
+		{
+			Code	"Public Deleting As Boolean
+Public WanttoDelete As Boolean
+Public OktoDelete As Boolean
+Dim JEtoDelete As String
+'Dim Opening As Boolean
+Dim CN As New ADODB.Connection
+Dim rst As New ADODB.Recordset
+Dim cmd As New ADODB.Command
+
+Private Sub Delete_AfterUserChanged()
+Dim JE_Collection As DUOSObjects
+Dim JE_Entry As DUOSObject
+    
+    
+    If WanttoDelete And OktoDelete Then
+        Set JE_Collection = DUOSObjectsGet(\"JE_Collection\")
+        Set JE_Entry = JE_Collection.Item(JEtoDelete)
+        
+        JE_Collection.Remove (JEtoDelete)
+        
+    End If
+    Deleting = False
+End Sub
+
+Private Sub Delete_BeforeUserChanged(KeepFocus As Boolean, CancelLogic As Boolean)
+    Deleting = True
+End Sub
+
+Private Sub JournalEntry_AfterGotFocus()
+    'If Opening Then Opening = False
+End Sub
+
+Private Sub JournalEntry_Changed()
+Dim JE_Collection As DUOSObjects
+Dim JE_Entry As DUOSObject
+Dim JE As String
+
+    'If Opening Then Exit Sub
+    If Not JournalEntry.Empty And Not Deleting Then
+        JEtoDelete = JournalEntry
+        OktoDelete = True
+        WanttoDelete = False
+    End If
+    Set JE_Collection = DUOSObjectsGet(\"JE_Collection\")
+    
+    If Not JournalEntry.Empty And Not Posting Then
+        
+        Set JE_Entry = JE_Collection.Item(JournalEntry)
+        
+        If JE_Entry.Properties(\"VendorID\") = \"\" Then
+            
+            JE = Replace(JournalEntry.Value, \",\", \"\")
+            JE = Replace(JE, \".\", \"\")
+            
+            'build T-SQL statement for select and execute it to populate recordset object
+            cmd.CommandText = \"SELECT ORMSTRID, ORMSTRNM FROM GL10001 WHERE(JRNENTRY=\" & JE & \")\"
+            
+            Set rst = cmd.Execute
+            
+            strVendorID = \"\"
+            strVendorName = \"\"
+            
+            If rst.EOF Or rst.BOF Then
+                Me.Changed = False
+                Exit Sub
+            End If
+            'set field values from value in retrieved recordset
+            strVendorName = Trim(rst!ORMSTRNM)
+            strVendorID = Trim(rst!ORMSTRID)
+        Else
+            strVendorID = JE_Entry.Properties(\"VendorID\")
+            strVendorName = JE_Entry.Properties(\"VendorName\")
+        End If
+        Me.Changed = False
+        
+    End If
+    
+End Sub
+
+Private Sub Lookup_BeforeUserChanged(KeepFocus As Boolean, CancelLogic As Boolean)
+    'Set the lookup window reference to the field we want to return back to
+    'Notice the keyword \\\"set\\\".  You must use that when you are setting an
+    'instance of an object
+    Set SmartList.Vendors.ReturnField = strVendorID
+    Set SmartList.Vendors.ReturnField2 = strVendorName
+    'Set SmartList.Vendors.returnfield2 = strVendorName
+    'open the lookup and set the hidden sortby field which will fill the window for us
+    SmartList.Vendors.Open
+    SmartList.Vendors.a.Caption = \"Vendor Name\"
+    SmartList.Vendors.a1.Caption = \"Vendor ID\"
+    SmartList.Vendors.a.Value = 1
+    
+
+End Sub
+
+
+Private Sub Post_BeforeUserChanged(KeepFocus As Boolean, CancelLogic As Boolean)
+Dim CN As New ADODB.Connection
+Dim rst As New ADODB.Recordset
+Dim cmd As New ADODB.Command
+Dim recAffected As Long
+Dim JE_Collection As DUOSObjects
+Dim JE_Entry As DUOSObject
+
+    If strVendorID = \"\" Then
+        If MsgBox(\"VendorID tidak diisi, Mau dilanjutkan?\", vbYesNo, \"Vendor tidak diisi\") = vbNo Then
+            CancelLogic = True
+            Exit Sub
+        End If
+    End If
+
+
+    ' ADO Connection
+    Set CN = UserInfoGet.CreateADOConnection
+    'Use a client-side cursor so that a recordset count can be obtained later.
+    CN.CursorLocation = 3
+    'set the database to the currently logged in db
+    CN.DefaultDatabase = UserInfoGet.IntercompanyID
+    
+    cmd.ActiveConnection = CN
+    cmd.CommandType = adCmdText
+    
+    cmd.CommandText = \"UPDATE GL10001 SET ORMSTRID='\" & strVendorID & \"', ORMSTRNM='\" & strVendorName & \"' WHERE JRNENTRY=\" & Replace(JournalEntry, \",\", \"\")
+    
+    Set rst = cmd.Execute(recAffected)
+    'MsgBox recAffected
+    'Close the recordset and connection objects
+    If rst.State = adStateOpen Then rst.Close
+    If CN.State = adStateOpen Then CN.Close
+    Set rst = Nothing
+    Set CN = Nothing
+    Set cmd = Nothing
+    
+        Set JE_Collection = DUOSObjectsGet(\"JE_Collection\")
+        Set JE_Entry = JE_Collection.Item(JournalEntry)
+        
+        JE_Collection.Remove (JournalEntry)
+        
+    
+
+    
+End Sub
+
+Private Sub Save_BeforeUserChanged(KeepFocus As Boolean, CancelLogic As Boolean)
+Dim JE_Collection As DUOSObjects
+Dim JE_Entry As DUOSObject
+
+    If Me.Required And strVendorID <> \"\" And strVendorName <> \"\" Then 'all required fields are filled
+        Set JE_Collection = DUOSObjectsGet(\"JE_Collection\")
+        Set JE_Entry = JE_Collection.Item(JournalEntry)
+        
+        JE_Entry.Properties(\"VendorID\") = strVendorID
+        JE_Entry.Properties(\"VendorName\") = strVendorName
+    
+        
+    End If
+End Sub
+
+Private Sub Window_AfterClose()
+    'Close the recordset and connection objects
+    If rst.State = adStateOpen Then rst.Close
+    If CN.State = adStateOpen Then CN.Close
+    Set rst = Nothing
+    Set CN = Nothing
+    Set cmd = Nothing
+
+End Sub
+
+Private Sub Window_AfterModalDialog(ByVal DlgType As DialogType, PromptString As String, Control1String As String, Control2String As String, Control3String As String, Answer As DialogCtrl)
+Dim JE_Collection As DUOSObjects
+Dim JE_Entry As DUOSObject
+
+    If PromptString = \"Do you want to save changes or delete this transaction?\" Then
+        'The save dialog appeared, asking if the user wants to save changes
+        If Answer = dcButton1 And strVendorID <> \"\" And strVendorName <> \"\" Then
+            'The user clicked Save. Get the collection
+            Set JE_Collection = DUOSObjectsGet(\"JE_Collection\")
+            Set JE_Entry = JE_Collection.Item(JournalEntry)
+            
+            JE_Entry.Properties(\"VendorID\") = strVendorID
+            JE_Entry.Properties(\"VendorName\") = strVendorName
+        
+        End If
+    End If
+    
+    If PromptString = \"Are you sure you want to delete this transaction?\" Then
+        If Answer = dcButton1 Then
+            'The user clicked Delete on the delete dialog message
+            WanttoDelete = True
+        End If
+    End If
+End Sub
+
+Private Sub Window_BeforeOpen(OpenVisible As Boolean)
+    'Opening = True
+    ' ADO Connection
+    Set CN = UserInfoGet.CreateADOConnection
+    'Use a client-side cursor so that a recordset count can be obtained later.
+    CN.CursorLocation = 3
+    'set the database to the currently logged in db
+    CN.DefaultDatabase = UserInfoGet.IntercompanyID
+    
+    cmd.ActiveConnection = CN
+    cmd.CommandType = adCmdText
+
+        
+End Sub
+
+"
+			EventMode	"1"
+			Fields
+			{
+				WindowField	"(L) VendorID_Lookup"				
+				{
+					ArrayIndex	"0"
+					DisplayName	"Lookup"
+					Local	"true"
+					ProgrammerName	"VendorID_Lookup"
+				}
+				WindowField	"(L) strVendorID"				
+				{
+					ArrayIndex	"0"
+					DisplayName	"strVendorID"
+					Local	"true"
+					ProgrammerName	"strVendorID"
+				}
+				WindowField	"(L) strVendorName"				
+				{
+					ArrayIndex	"0"
+					DisplayName	"strVendorName"
+					Local	"true"
+					ProgrammerName	"strVendorName"
+				}
+				WindowField	"Delete Button"				
+				{
+					ArrayIndex	"0"
+					DisplayName	"Delete"
+					Local	"false"
+					ProgrammerName	"Delete Button"
+				}
+				WindowField	"Journal Entry"				
+				{
+					ArrayIndex	"0"
+					DisplayName	"JournalEntry"
+					Local	"false"
+					ProgrammerName	"Journal Entry"
+				}
+				WindowField	"Post Button"				
+				{
+					ArrayIndex	"0"
+					DisplayName	"Post"
+					Local	"false"
+					ProgrammerName	"Post Button"
+				}
+				WindowField	"Save Button"				
+				{
+					ArrayIndex	"0"
+					DisplayName	"Save"
+					Local	"false"
+					ProgrammerName	"Save Button"
+				}
+				WindowField	"Source Document"				
+				{
+					ArrayIndex	"0"
+					DisplayName	"SourceDocument"
+					Local	"false"
+					ProgrammerName	"Source Document"
+				}
+			}
+			Title	"TransactionEntry"
+		}
+		Grid	"Transaction_Scroll"		
+		{
+			Code	""
+			EventMode	"1"
+			Fields
+			{
+			}
+			Title	"TransactionEntryDetail"
+		}
+	}
+}
+</Component>
