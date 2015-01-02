@@ -9,7 +9,7 @@
 			DefaultDown	"00000"
 			DefaultMouseOver	"00000"
 			DefaultUp	"00000"
-			Prompt	"Lookup"
+			Prompt	"Customer"
 			PromptDown	""
 			PromptMouseOver	""
 			StaticType	"Picture"
@@ -23,7 +23,7 @@
 			DefaultDown	"00000"
 			DefaultMouseOver	"00000"
 			DefaultUp	"00000"
-			Prompt	"Lookup"
+			Prompt	"Vendor"
 			PromptDown	""
 			PromptMouseOver	""
 			StaticType	"Picture"
@@ -121,19 +121,19 @@
 			{
 				= WindowControl	"(L) AccountIsFocused"
 				{
-					PositionTop	"584"
+					PositionTop	"527"
 				}
 				= WindowControl	"(L) Already Displayed"
 				{
-					PositionTop	"601"
+					PositionTop	"544"
 				}
 				= WindowControl	"(L) Browse Batch"
 				{
-					PositionTop	"618"
+					PositionTop	"561"
 				}
 				= WindowControl	"(L) Browse Journal"
 				{
-					PositionTop	"635"
+					PositionTop	"578"
 				}
 				WindowControl	"(L) CustomerID_Lookup"				
 				{
@@ -158,8 +158,8 @@
 					LinkedPrompt	"0"
 					Pattern	"(none)"
 					PatternColor	"Black"
-					PositionLeft	"263"
-					PositionTop	"243"
+					PositionLeft	"311"
+					PositionTop	"205"
 					ResizeHoriz	"StayLeft"
 					ResizeVert	"StayTop"
 					SizeHeight	"20"
@@ -169,224 +169,224 @@
 					Tooltip	"Customer Lookup"
 					UseUniqueHelp	"true"
 					Visible	"true"
-					ZOrder	"238"
+					ZOrder	"232"
 					Zoom	"false"
 				}
 				= WindowControl	"(L) Date Changed"
 				{
-					PositionTop	"652"
+					PositionTop	"595"
 				}
 				= WindowControl	"(L) Date Verified"
 				{
-					PositionTop	"669"
+					PositionTop	"612"
 				}
 				= WindowControl	"(L) Dummy Batch"
 				{
-					PositionTop	"686"
+					PositionTop	"629"
 				}
 				= WindowControl	"(L) EmptyTotalCredits"
 				{
-					PositionTop	"459"
+					PositionTop	"424"
 				}
 				= WindowControl	"(L) EmptyTotalDebits"
 				{
-					PositionTop	"459"
+					PositionTop	"424"
 				}
 				= WindowControl	"(L) EmptyTotalDifference"
 				{
-					PositionTop	"478"
+					PositionTop	"443"
 				}
 				= WindowControl	"(L) EnableNegative"
 				{
-					PositionTop	"703"
+					PositionTop	"646"
 				}
 				= WindowControl	"(L) EnableTaxDate"
 				{
-					PositionTop	"720"
+					PositionTop	"663"
 				}
 				= WindowControl	"(L) ExchangeRateChanged"
 				{
-					PositionTop	"754"
+					PositionTop	"697"
 				}
 				= WindowControl	"(L) F-Difference"
 				{
-					PositionTop	"478"
+					PositionTop	"443"
 				}
 				= WindowControl	"(L) From View Flip"
 				{
-					PositionTop	"788"
+					PositionTop	"731"
 				}
 				= WindowControl	"(L) Get Next Journal Entry"
 				{
-					PositionTop	"805"
+					PositionTop	"748"
 				}
 				= WindowControl	"(L) Journal Entry Validated"
 				{
-					PositionTop	"822"
+					PositionTop	"765"
 				}
 				= WindowControl	"(L) Line Inserted"
 				{
-					PositionTop	"584"
+					PositionTop	"527"
 				}
 				= WindowControl	"(L) LoadCorrectingTrx"
 				{
-					PositionTop	"860"
+					PositionTop	"803"
 				}
 				= WindowControl	"(L) MDA Exists"
 				{
-					PositionTop	"601"
+					PositionTop	"544"
 				}
 				= WindowControl	"(L) New Record"
 				{
-					PositionTop	"686"
+					PositionTop	"629"
 				}
 				= WindowControl	"(L) NewCurrency"
 				{
-					PositionTop	"652"
+					PositionTop	"595"
 				}
 				= WindowControl	"(L) NewDate"
 				{
-					PositionTop	"669"
+					PositionTop	"612"
 				}
 				= WindowControl	"(L) Next Journal Entry"
 				{
-					PositionTop	"618"
+					PositionTop	"561"
 				}
 				= WindowControl	"(L) Next Sequence DLR"
 				{
-					PositionTop	"635"
+					PositionTop	"578"
 				}
 				= WindowControl	"(L) Note Index[1]"
 				{
-					PositionTop	"703"
+					PositionTop	"646"
 				}
 				= WindowControl	"(L) O-Difference"
 				{
-					PositionTop	"478"
+					PositionTop	"443"
 				}
 				= WindowControl	"(L) Old TRX Total"
 				{
-					PositionTop	"737"
+					PositionTop	"680"
 				}
 				= WindowControl	"(L) Old Trx Date"
 				{
-					PositionTop	"720"
+					PositionTop	"663"
 				}
 				= WindowControl	"(L) OrigHdrSeqLine"
 				{
-					PositionTop	"862"
+					PositionTop	"805"
 				}
 				= WindowControl	"(L) OrigOriginatingTrxSrc"
 				{
-					PositionTop	"920"
+					PositionTop	"863"
 				}
 				= WindowControl	"(L) OrigRevDate"
 				{
-					PositionTop	"901"
+					PositionTop	"844"
 				}
 				= WindowControl	"(L) OrigSeries"
 				{
-					PositionTop	"939"
+					PositionTop	"882"
 				}
 				= WindowControl	"(L) OrigTrxDate"
 				{
-					PositionTop	"882"
+					PositionTop	"825"
 				}
 				= WindowControl	"(L) Override Exchange Info"
 				{
-					PositionTop	"771"
+					PositionTop	"714"
 				}
 				= WindowControl	"(L) Posted Real Time TRX"
 				{
-					PositionTop	"788"
+					PositionTop	"731"
 				}
 				= WindowControl	"(L) Posting To History"
 				{
-					PositionTop	"754"
+					PositionTop	"697"
 				}
 				= WindowControl	"(L) Prev Currency"
 				{
-					PositionTop	"805"
+					PositionTop	"748"
 				}
 				= WindowControl	"(L) Prev Currency Index"
 				{
-					PositionTop	"822"
+					PositionTop	"765"
 				}
 				= WindowControl	"(L) Prev Decimal Places"
 				{
-					PositionTop	"584"
+					PositionTop	"527"
 				}
 				= WindowControl	"(L) Prev Rate Calc Method"
 				{
-					PositionTop	"601"
+					PositionTop	"544"
 				}
 				= WindowControl	"(L) Prev Rate Type ID"
 				{
-					PositionTop	"618"
+					PositionTop	"561"
 				}
 				= WindowControl	"(L) Prev Time"
 				{
-					PositionTop	"635"
+					PositionTop	"578"
 				}
 				= WindowControl	"(L) Prev X Date"
 				{
-					PositionTop	"652"
+					PositionTop	"595"
 				}
 				= WindowControl	"(L) Prev X Rate"
 				{
-					PositionTop	"669"
+					PositionTop	"612"
 				}
 				= WindowControl	"(L) Prev X Table ID"
 				{
-					PositionTop	"686"
+					PositionTop	"629"
 				}
 				= WindowControl	"(L) Returned Currency"
 				{
-					PositionTop	"703"
+					PositionTop	"646"
 				}
 				= WindowControl	"(L) Reversing Date Verified"
 				{
-					PositionTop	"720"
+					PositionTop	"663"
 				}
 				= WindowControl	"(L) StartingSequenceLine"
 				{
-					PositionTop	"737"
+					PositionTop	"680"
 				}
 				= WindowControl	"(L) Status"
 				{
-					PositionTop	"512"
+					PositionTop	"477"
 				}
 				= WindowControl	"(L) SuppressViewFlip"
 				{
-					PositionTop	"754"
+					PositionTop	"697"
 				}
 				= WindowControl	"(L) Total F-Credits"
 				{
-					PositionTop	"459"
+					PositionTop	"424"
 				}
 				= WindowControl	"(L) Total F-Debits"
 				{
-					PositionTop	"459"
+					PositionTop	"424"
 				}
 				= WindowControl	"(L) Total O-Credits"
 				{
-					PositionTop	"459"
+					PositionTop	"424"
 				}
 				= WindowControl	"(L) Total O-Debits"
 				{
-					PositionTop	"459"
+					PositionTop	"424"
 				}
 				= WindowControl	"(L) VAT Account Number"
 				{
-					PositionTop	"771"
+					PositionTop	"714"
 				}
 				= WindowControl	"(L) VAT Button"
 				{
-					PositionTop	"477"
+					PositionTop	"442"
 				}
 				= WindowControl	"(L) VAT Tax Detail ID"
 				{
-					PositionTop	"788"
+					PositionTop	"731"
 				}
 				WindowControl	"(L) VendorID_Lookup"				
 				{
@@ -422,98 +422,16 @@
 					Tooltip	"Vendor Lookup"
 					UseUniqueHelp	"true"
 					Visible	"true"
-					ZOrder	"233"
+					ZOrder	"231"
 					Zoom	"false"
 				}
 				= WindowControl	"(L) Warning_Called"
 				{
-					PositionTop	"841"
+					PositionTop	"784"
 				}
 				= WindowControl	"(L) fDidPreFormFinish"
 				{
-					PositionTop	"771"
-				}
-				WindowControl	"(L) strCustomerID"				
-				{
-					Alignment	"left"
-					Appearance	"2D Border"
-					AutoComplete	"false"
-					AutoCopy	"false"
-					BackColor	"System - Window Background"
-					Border	"true"
-					ControlType	"String"
-					DisableLookup	"false"
-					Editable	"false"
-					Field	"(L) strCustomerID"
-					Font	"System (generic)"
-					FontBold	"false"
-					FontColor	"System - Window Text"
-					FontItalic	"false"
-					FontUnderline	"false"
-					LinkedFormat	"0"
-					LinkedLookup	"0"
-					LinkedPrompt	"0"
-					Password	"false"
-					Pattern	"(none)"
-					PatternColor	"White"
-					PositionLeft	"144"
-					PositionTop	"243"
-					ReadingOrder	"LeftToRight"
-					Required	"false"
-					ResizeHoriz	"StayLeft"
-					ResizeVert	"StayTop"
-					SavedOnRestart	"false"
-					SetChangeFlag	"true"
-					SizeHeight	"20"
-					SizeWidth	"120"
-					TabStop	"true"
-					Tag	"10012"
-					Tooltip	""
-					UseUniqueHelp	"true"
-					Visible	"true"
-					ZOrder	"236"
-					Zoom	"false"
-				}
-				WindowControl	"(L) strCustomerName"				
-				{
-					Alignment	"left"
-					Appearance	"2D Border"
-					AutoComplete	"false"
-					AutoCopy	"false"
-					BackColor	"System - Window Background"
-					Border	"true"
-					ControlType	"String"
-					DisableLookup	"false"
-					Editable	"false"
-					Field	"(L) strCustomerName"
-					Font	"System (generic)"
-					FontBold	"false"
-					FontColor	"System - Window Text"
-					FontItalic	"false"
-					FontUnderline	"false"
-					LinkedFormat	"0"
-					LinkedLookup	"0"
-					LinkedPrompt	"0"
-					Password	"false"
-					Pattern	"(none)"
-					PatternColor	"White"
-					PositionLeft	"144"
-					PositionTop	"262"
-					ReadingOrder	"LeftToRight"
-					Required	"false"
-					ResizeHoriz	"StayLeft"
-					ResizeVert	"StayTop"
-					SavedOnRestart	"false"
-					SetChangeFlag	"true"
-					SizeHeight	"20"
-					SizeWidth	"222"
-					TabStop	"true"
-					Tag	"10013"
-					Tooltip	""
-					UseUniqueHelp	"true"
-					Visible	"true"
-					ZOrder	"237"
-					Zoom	"false"
+					PositionTop	"714"
 				}
 				WindowControl	"(L) strVendorID"				
 				{
@@ -553,7 +471,7 @@
 					Tooltip	""
 					UseUniqueHelp	"true"
 					Visible	"true"
-					ZOrder	"231"
+					ZOrder	"229"
 					Zoom	"false"
 				}
 				WindowControl	"(L) strVendorName"				
@@ -594,15 +512,15 @@
 					Tooltip	""
 					UseUniqueHelp	"true"
 					Visible	"true"
-					ZOrder	"232"
+					ZOrder	"230"
 					Zoom	"false"
 				}
 				= ScrollingWindow	"0033-Transaction_Scroll"
 				{
 					LastTag	"10000"
-					PositionTop	"344"
+					PositionTop	"309"
 				}
-				WindowPrompt	"10003"				
+				WindowPrompt	"10015"				
 				{
 					Alignment	"left"
 					Appearance	"3D Highlight"
@@ -622,12 +540,12 @@
 					ResizeVert	"StayTop"
 					SizeHeight	"20"
 					SizeWidth	"137"
-					Text	"Vendor ID"
+					Text	"Vendor/Customer ID"
 					Visible	"true"
-					ZOrder	"229"
+					ZOrder	"233"
 					Zoom	"false"
 				}
-				WindowPrompt	"10004"				
+				WindowPrompt	"10016"				
 				{
 					Alignment	"left"
 					Appearance	"3D Highlight"
@@ -647,400 +565,350 @@
 					ResizeVert	"StayTop"
 					SizeHeight	"20"
 					SizeWidth	"137"
-					Text	"Vendor Name"
-					Visible	"true"
-					ZOrder	"230"
-					Zoom	"false"
-				}
-				WindowPrompt	"10010"				
-				{
-					Alignment	"left"
-					Appearance	"3D Highlight"
-					BackColor	"System - Button Face"
-					Border	"true"
-					Font	"System (generic)"
-					FontBold	"false"
-					FontColor	"System - Button Text"
-					FontItalic	"false"
-					FontUnderline	"false"
-					Pattern	"(none)"
-					PatternColor	"White"
-					PositionLeft	"8"
-					PositionTop	"243"
-					ReadingOrder	"LeftToRight"
-					ResizeHoriz	"StayLeft"
-					ResizeVert	"StayTop"
-					SizeHeight	"20"
-					SizeWidth	"137"
-					Text	"Customer ID"
+					Text	"Vendor/Customer Name"
 					Visible	"true"
 					ZOrder	"234"
 					Zoom	"false"
 				}
-				WindowPrompt	"10011"				
-				{
-					Alignment	"left"
-					Appearance	"3D Highlight"
-					BackColor	"System - Button Face"
-					Border	"true"
-					Font	"System (generic)"
-					FontBold	"false"
-					FontColor	"System - Button Text"
-					FontItalic	"false"
-					FontUnderline	"false"
-					Pattern	"(none)"
-					PatternColor	"White"
-					PositionLeft	"8"
-					PositionTop	"262"
-					ReadingOrder	"LeftToRight"
-					ResizeHoriz	"StayLeft"
-					ResizeVert	"StayTop"
-					SizeHeight	"20"
-					SizeWidth	"137"
-					Text	"Customer Name"
-					Visible	"true"
-					ZOrder	"235"
-					Zoom	"false"
-				}
 				= WindowLine	"150"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowPrompt	"205"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowPrompt	"206"
 				{
-					PositionTop	"459"
+					PositionTop	"424"
 				}
 				= WindowPrompt	"207"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowPrompt	"208"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowLine	"221"
 				{
-					PositionTop	"306"
+					PositionTop	"271"
 				}
 				= WindowPrompt	"222"
 				{
-					PositionTop	"306"
+					PositionTop	"271"
 				}
 				= WindowLine	"295"
 				{
-					PositionTop	"325"
+					PositionTop	"290"
 				}
 				= WindowPrompt	"308"
 				{
-					PositionTop	"325"
+					PositionTop	"290"
 				}
 				= WindowPrompt	"470"
 				{
-					PositionTop	"512"
+					PositionTop	"477"
 				}
 				= WindowPrompt	"479"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowPrompt	"542"
 				{
-					PositionTop	"306"
+					PositionTop	"271"
 				}
 				= WindowLine	"564"
 				{
-					PositionTop	"325"
+					PositionTop	"290"
 				}
 				= WindowPrompt	"566"
 				{
-					PositionTop	"325"
+					PositionTop	"290"
 				}
 				= WindowLine	"575"
 				{
-					PositionTop	"504"
+					PositionTop	"469"
 				}
 				= WindowPrompt	"98"
 				{
-					PositionTop	"478"
+					PositionTop	"443"
 				}
 				= WindowShape	"99"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowControl	"AA Button"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowControl	"Added Rate"
 				{
-					PositionTop	"584"
+					PositionTop	"527"
 				}
 				= WindowControl	"Array of Audit Trails[1]"
 				{
-					PositionTop	"601"
+					PositionTop	"544"
 				}
 				= WindowControl	"Array of Audit Trails[2]"
 				{
-					PositionTop	"618"
+					PositionTop	"561"
 				}
 				= WindowControl	"Array of Audit Trails[3]"
 				{
-					PositionTop	"635"
+					PositionTop	"578"
 				}
 				= WindowControl	"Array of Audit Trails[4]"
 				{
-					PositionTop	"652"
+					PositionTop	"595"
 				}
 				= WindowControl	"Batch Source"
 				{
-					PositionTop	"669"
+					PositionTop	"612"
 				}
 				= WindowControl	"BrowseBox"
 				{
-					PositionTop	"512"
+					PositionTop	"477"
 				}
 				= WindowControl	"Changed"
 				{
-					PositionTop	"686"
+					PositionTop	"629"
 				}
 				= WindowControl	"Closed Year"
 				{
-					PositionTop	"703"
+					PositionTop	"646"
 				}
 				= WindowControl	"Correcting Trx Type"
 				{
-					PositionTop	"786"
+					PositionTop	"729"
 				}
 				= WindowControl	"Currency Index"
 				{
-					PositionTop	"720"
+					PositionTop	"663"
 				}
 				= WindowControl	"Currency View"
 				{
-					PositionTop	"737"
+					PositionTop	"680"
 				}
 				= WindowControl	"Currency View Button Reference"
 				{
-					PositionTop	"754"
+					PositionTop	"697"
 				}
 				= WindowControl	"CustomLinks Zoom Button[1]"
 				{
-					PositionTop	"306"
+					PositionTop	"271"
 				}
 				= WindowControl	"DTA Index"
 				{
-					PositionTop	"805"
+					PositionTop	"748"
 				}
 				= WindowControl	"Decimal Places Currency"
 				{
-					PositionTop	"771"
+					PositionTop	"714"
 				}
 				= WindowControl	"Denomination Exchange Rate"
 				{
-					PositionTop	"788"
+					PositionTop	"731"
 				}
 				= WindowControl	"End of File Button - Toolbar"
 				{
-					PositionTop	"513"
+					PositionTop	"478"
 				}
 				= WindowControl	"Exchange Date"
 				{
-					PositionTop	"618"
+					PositionTop	"561"
 				}
 				= WindowControl	"Exchange Rate"
 				{
-					PositionTop	"652"
+					PositionTop	"595"
 				}
 				= WindowControl	"Exchange Table ID"
 				{
-					PositionTop	"635"
+					PositionTop	"578"
 				}
 				= WindowControl	"Expansion Button 2"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowControl	"Expansion Button 4"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowControl	"Functional Currency Index"
 				{
-					PositionTop	"669"
+					PositionTop	"612"
 				}
 				= WindowControl	"GL Header Valid"
 				{
-					PositionTop	"686"
+					PositionTop	"629"
 				}
 				= WindowControl	"History TRX"
 				{
-					PositionTop	"703"
+					PositionTop	"646"
 				}
 				= WindowControl	"ICEREnabled"
 				{
-					PositionTop	"720"
+					PositionTop	"663"
 				}
 				= WindowControl	"Lookup Button 10"
 				{
-					PositionTop	"325"
+					PositionTop	"290"
 				}
 				= WindowControl	"Lookup Button 4"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowControl	"Lookup Button 6"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowControl	"Lookup Button 8"
 				{
-					PositionTop	"306"
+					PositionTop	"271"
 				}
 				= WindowControl	"MC Transaction State"
 				{
-					PositionTop	"737"
+					PositionTop	"680"
 				}
 				= WindowControl	"MDA Expansion Button"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowControl	"Next Button - Toolbar"
 				{
-					PositionTop	"513"
+					PositionTop	"478"
 				}
 				= WindowControl	"Note Absent Button - Toolbar "
 				{
-					PositionTop	"509"
+					PositionTop	"474"
 				}
 				= WindowControl	"Note Index"
 				{
-					PositionTop	"754"
+					PositionTop	"697"
 				}
 				= WindowControl	"Note Present Button - Toolbar"
 				{
-					PositionTop	"509"
+					PositionTop	"474"
 				}
 				= WindowControl	"Open Year"
 				{
-					PositionTop	"771"
+					PositionTop	"714"
 				}
 				= WindowControl	"Origin"
 				{
-					PositionTop	"788"
+					PositionTop	"731"
 				}
 				= WindowControl	"Original JE"
 				{
-					PositionTop	"805"
+					PositionTop	"748"
 				}
 				= WindowControl	"Original JE Seq Num"
 				{
-					PositionTop	"843"
+					PositionTop	"786"
 				}
 				= WindowControl	"Original JE Year"
 				{
-					PositionTop	"824"
+					PositionTop	"767"
 				}
 				= WindowControl	"Originating TRX Source"
 				{
-					PositionTop	"805"
+					PositionTop	"748"
 				}
 				= WindowControl	"Period ID"
 				{
-					PositionTop	"584"
+					PositionTop	"527"
 				}
 				= WindowControl	"Posting Status"
 				{
-					PositionTop	"601"
+					PositionTop	"544"
 				}
 				= WindowControl	"Previous Button - Toolbar"
 				{
-					PositionTop	"513"
+					PositionTop	"478"
 				}
 				= WindowControl	"Rate Calculation Method"
 				{
-					PositionTop	"650"
+					PositionTop	"593"
 				}
 				= WindowControl	"Rate Type ID"
 				{
-					PositionTop	"635"
+					PositionTop	"578"
 				}
 				= WindowControl	"Reversing Closed Year"
 				{
-					PositionTop	"616"
+					PositionTop	"559"
 				}
 				= WindowControl	"Reversing History TRX"
 				{
-					PositionTop	"669"
+					PositionTop	"612"
 				}
 				= WindowControl	"Reversing Period ID"
 				{
-					PositionTop	"686"
+					PositionTop	"629"
 				}
 				= WindowControl	"Reversing Year"
 				{
-					PositionTop	"703"
+					PositionTop	"646"
 				}
 				= WindowControl	"Scroll Expand Switch"
 				{
-					PositionTop	"306"
+					PositionTop	"271"
 				}
 				= WindowControl	"Scroll Shrink Switch"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowControl	"Scrolling Window Expand Button"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowControl	"Scrolling Window Shrink"
 				{
-					PositionTop	"306"
+					PositionTop	"271"
 				}
 				= WindowControl	"Sort By"
 				{
-					PositionTop	"512"
+					PositionTop	"477"
 				}
 				= WindowControl	"Time"
 				{
-					PositionTop	"720"
+					PositionTop	"663"
 				}
 				= WindowControl	"Top of File Button - Toolbar"
 				{
-					PositionTop	"513"
+					PositionTop	"478"
 				}
 				= WindowControl	"View Changed To Originating"
 				{
-					PositionTop	"737"
+					PositionTop	"680"
 				}
 				= WindowControl	"View Menu Reference"
 				{
-					PositionTop	"754"
+					PositionTop	"697"
 				}
 				= WindowControl	"WindowHelp"
 				{
-					PositionTop	"509"
+					PositionTop	"474"
 				}
 				= WindowControl	"Zoom Button"
 				{
-					PositionTop	"287"
+					PositionTop	"252"
 				}
 				= WindowControl	"Zoom Buttons[1]"
 				{
-					PositionTop	"306"
+					PositionTop	"271"
 				}
 				= WindowControl	"dtaTrxCodesState"
 				{
-					PositionTop	"601"
+					PositionTop	"544"
 				}
 				= WindowControl	"dtaTrxGroupsState"
 				{
-					PositionTop	"584"
+					PositionTop	"527"
 				}
 			}
-			LastTag	"10014"
-			SizeHeight	"558"
+			LastTag	"10016"
+			SizeHeight	"501"
 		}
 	}
 }
@@ -1131,21 +999,21 @@ Dim JE As String
     
 End Sub
 
-Private Sub Lookup_BeforeUserChanged(KeepFocus As Boolean, CancelLogic As Boolean)
-    'Set the lookup window reference to the field we want to return back to
-    'Notice the keyword \\\"set\\\".  You must use that when you are setting an
-    'instance of an object
-    Set SmartList.Vendors.ReturnField = strVendorID
-    Set SmartList.Vendors.ReturnField2 = strVendorName
-    'Set SmartList.Vendors.returnfield2 = strVendorName
-    'open the lookup and set the hidden sortby field which will fill the window for us
-    SmartList.Vendors.Open
-    SmartList.Vendors.a.Caption = \"Vendor Name\"
-    SmartList.Vendors.a1.Caption = \"Vendor ID\"
-    SmartList.Vendors.a.Value = 1
-    
-
-End Sub
+'Private Sub Lookup_BeforeUserChanged(KeepFocus As Boolean, CancelLogic As Boolean)
+'    'Set the lookup window reference to the field we want to return back to
+'    'Notice the keyword \\\"set\\\".  You must use that when you are setting an
+'    'instance of an object
+'    Set SmartList.Vendors.ReturnField = strVendorID
+'    Set SmartList.Vendors.ReturnField2 = strVendorName
+'    'Set SmartList.Vendors.returnfield2 = strVendorName
+'    'open the lookup and set the hidden sortby field which will fill the window for us
+'    SmartList.Vendors.Open
+'    SmartList.Vendors.a.Caption = \"Vendor Name\"
+'    SmartList.Vendors.a1.Caption = \"Vendor ID\"
+'    SmartList.Vendors.a.Value = 1
+'
+'
+'End Sub
 
 
 Private Sub Post_BeforeUserChanged(KeepFocus As Boolean, CancelLogic As Boolean)
