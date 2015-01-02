@@ -29,16 +29,16 @@ using Microsoft.Dexterity;
 using Microsoft.Dexterity.Bridge;
 using Microsoft.Dexterity.Applications;
 using Microsoft.Dexterity.Applications.DynamicsDictionary;
-using Microsoft.Dexterity.Applications.InventoryUserDefinedDictionary;
+using Microsoft.Dexterity.Applications.VvfIdInHouseCustomizationDictionary;
 
 namespace InventoryUserDefined
 {
 
     static class DataAccessHelper
     {
-        static InventoryUserDefinedTable IVUDefTable = Microsoft.Dexterity.Applications.InventoryUserDefined.Tables.InventoryUserDefined ;
-        static InventoryUserDefinedSetupTable IVUDefSetupTable = Microsoft.Dexterity.Applications.InventoryUserDefined.Tables.InventoryUserDefinedSetup;
-        static InventoryUserDefinedListSetupTable IVUDefListSetupTable = Microsoft.Dexterity.Applications.InventoryUserDefined.Tables.InventoryUserDefinedListSetup ;
+        static InventoryUserDefinedTable IVUDefTable = VvfIdInHouseCustomization.Tables.InventoryUserDefined;
+        static InventoryUserDefinedSetupTable IVUDefSetupTable = VvfIdInHouseCustomization.Tables.InventoryUserDefinedSetup;
+        static InventoryUserDefinedListSetupTable IVUDefListSetupTable = VvfIdInHouseCustomization.Tables.InventoryUserDefinedListSetup;
         const byte ROW_FOUND = 0;
         const byte ROW_NOT_FOUND = 1;
         const byte TABLE_ERROR = 2;

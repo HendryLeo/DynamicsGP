@@ -33,13 +33,13 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Application.InventoryUserDefined, Version=12.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\OneDrive for Business\GP\VSToolsAssembly\Application.InventoryUserDefined.dll</HintPath>
-    </Reference>
     <Reference Include="Application.Vvf, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\OneDrive for Business\GP\VSToolsAssembly\Application.Vvf.dll</HintPath>
+    </Reference>
+    <Reference Include="Application.VvfIdInHouseCustomization, Version=12.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\OneDrive for Business\GP\VSToolsAssembly\Application.VvfIdInHouseCustomization.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dexterity.Shell, Version=12.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
