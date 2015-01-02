@@ -1,3 +1,5 @@
+This project use additional dictionary called VVFHOUSE.DIC that can be found in folder DexterityDictionary
+
 This Project Add User Defined Tables and Window for Inventory Transaction
 The Tables are inspired by POP User Defined Tables that allow 5 List, 10 Text and 20 Dates
 
