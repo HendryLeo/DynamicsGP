@@ -50,7 +50,7 @@ namespace POInquiry
         void OpenPOInquiry(object sender, EventArgs e)
         {
             //sanscript
-            //OpenWindow("PO1400200",2,2) of form POP_Inquiry_PO_Entry;
+            //OpenWindow("PO1400200",2,2) of form POP_Inquiry_PO_Entry;
             //sample continuum from Mariano Gomez http://dynamicsgpblogster.blogspot.com/2013/08/accessing-microsoft-dynamics-gp-default.html
             try
             {
