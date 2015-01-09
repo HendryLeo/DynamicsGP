@@ -30,6 +30,7 @@ namespace InventoryRules
 
         Boolean canEditReceipt(string Receiptnumber)
         {
+            DateTime defaultGPDate = new DateTime(1900,1,1);
             TableError err;
             Boolean canEdit = false;
             string[] text;
@@ -44,15 +45,21 @@ namespace InventoryRules
                         canEdit = true;
                         break;
                     }
-                //case TableError.NoError:
-                //    {
-                //        //row found
-                //        if (String.IsNullOrEmpty(text[1].Trim()))
-                //        {
-                //            MessageBox.Show("Receipt No: " + Receiptnumber + " has already been reportedto Custom with Registration No: " + text[6].Trim());
-                //        }
-                //        break;
-                //    }
+                case TableError.NoError:
+                    {
+                        //row found 
+                        if (text[0].Trim() == String.Empty & text[5].Trim() == String.Empty & date[0] == defaultGPDate)
+                        {
+                            //
+                            //MessageBox.Show("Receipt No: " + Receiptnumber + " has already been reportedto Custom with Registration No: " + text[5].Trim());
+                            canEdit = true;
+                        }
+                        else
+                        {
+                            canEdit = false;
+                        }
+                        break;
+                    }
                 default:
                     {
                         canEdit = false;

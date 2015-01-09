@@ -41,11 +41,14 @@ namespace EditPOPUserDefinedAfterPost
 		// I am using an Alternate Form hereby
 		// If you are using Original GP Form change to
 		// static PopInquiryReceivingsEntryForm POPInquiryReceivingsEntryForm = Dynamics.Forms.PopInquiryReceivingsEntry;
-        static PopInquiryReceivingsEntryForm POPInquiryReceivingsEntryForm = PurchaseRequisition.Forms.PopInquiryReceivingsEntry;
+        //static PopReceivingsEntryForm POPReceivingEntryForm = Dynamics.Forms.PopReceivingsEntry;
 
+        static PopInquiryReceivingsEntryForm POPInquiryReceivingsEntryForm = PurchaseRequisition.Forms.PopInquiryReceivingsEntry;
+        static PopReceivingsEntryForm POPReceivingEntryForm = PurchaseRequisition.Forms.PopReceivingsEntry;
        
         // Create a reference to the Receiving Inquiry Alternate window
         public static PopInquiryReceivingsEntryForm.PopInquiryReceivingsEntryWindow POPInquiryReceivingsEntryWindow = POPInquiryReceivingsEntryForm.PopInquiryReceivingsEntry;
+        public static PopReceivingsEntryForm.PopReceivingsEntryWindow POPReceivingEntryWindow = POPReceivingEntryForm.PopReceivingsEntry;
 
         // Indicate whether the EditPOPUserDefined form should be closed
         public static Boolean CloseEditPOPUserDefinedForm = false;
@@ -56,15 +59,22 @@ namespace EditPOPUserDefinedAfterPost
         public void Initialize()
         {
             // Add the menu item to open the WinForm
-            POPInquiryReceivingsEntryForm.AddMenuHandler(OpenUserDefined, "User Defined", "N");
-            POPInquiryReceivingsEntryForm.CloseAfterOriginal += new EventHandler(POPInquiryReceivingsEntryForm_CloseAfterOriginal);
+            POPInquiryReceivingsEntryForm.AddMenuHandler(OpenUserDefined1, "User Defined", "N");
+            POPInquiryReceivingsEntryForm.CloseAfterOriginal += new EventHandler(CloseWinForm);
+            POPReceivingEntryForm.AddMenuHandler(OpenUserDefined2, "User Defined", "N");
+            POPReceivingEntryForm.CloseAfterOriginal += new EventHandler(CloseWinForm);
 
             // Watch when the POP Number changes
             //POPInquiryReceivingsEntryWindow.PopReceiptNumber.Change += new EventHandler(POPReceipt_Change);
         }
 
+        void POPReceivingEntryForm_CloseAfterOriginal(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
-        void POPInquiryReceivingsEntryForm_CloseAfterOriginal(object sender, EventArgs e)
+
+        void CloseWinForm(object sender, EventArgs e)
         {
             // Close the WinForm
             CloseEditPOPUserDefinedForm = true;
@@ -85,7 +95,7 @@ namespace EditPOPUserDefinedAfterPost
         //}
 
         // Method to open the User Defined WinForm
-        static void OpenUserDefined(object sender, EventArgs e)
+        static void OpenUserDefined1(object sender, EventArgs e)
         {
             if (EditPOPUserDefinedForm == null)
             {
@@ -101,6 +111,33 @@ namespace EditPOPUserDefinedAfterPost
             }
 
             // Always show and activate the WinForm
+            EditPOPUserDefinedForm.Caller = 1;
+            EditPOPUserDefinedForm.Show();
+            EditPOPUserDefinedForm.Activate();
+
+            // Set the flag to indicate that the form shouldn't be closed
+            CloseEditPOPUserDefinedForm = false;
+
+
+
+        }
+        static void OpenUserDefined2(object sender, EventArgs e)
+        {
+            if (EditPOPUserDefinedForm == null)
+            {
+                try
+                {
+                    EditPOPUserDefinedForm = new EditPOPUserDefined();
+
+                }
+                catch (Exception ex)
+                {
+                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                }
+            }
+
+            // Always show and activate the WinForm
+            EditPOPUserDefinedForm.Caller = 2;
             EditPOPUserDefinedForm.Show();
             EditPOPUserDefinedForm.Activate();
 

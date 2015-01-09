@@ -164,7 +164,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" C:\GP2013\AddIns
+    <PostBuildEvent>xcopy /y "$(TargetPath)" C:\GP2013\AddIns
 start C:\GP2013\Dynamics.lnk</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

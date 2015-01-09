@@ -37,6 +37,14 @@ namespace EditPOPUserDefinedAfterPost
 {
     public partial class EditPOPUserDefined : DexUIForm
     {
+        private Int16 _caller;
+
+        public Int16 Caller
+        {
+            get { return _caller; }
+            set { _caller = value; }
+        }
+
         public EditPOPUserDefined()
         {
             InitializeComponent();
@@ -147,13 +155,26 @@ namespace EditPOPUserDefinedAfterPost
 
         }
 
-        private void EditPOPUserDefined_Load(object sender, EventArgs e)
+        void PopulateForm()
         {
             TableError err;
             string[] UserDefinedStrings;
             DateTime[] UserDefinedDates;
 
-            txtPOPNumber.Text = GPAddIn.POPInquiryReceivingsEntryWindow.PopReceiptNumber.Value;
+            switch (_caller)
+            {
+                case 1:
+                    {
+                        txtPOPNumber.Text = GPAddIn.POPInquiryReceivingsEntryWindow.PopReceiptNumber.Value;
+                        break;
+                    }
+                case 2:
+                    {
+                        txtPOPNumber.Text = GPAddIn.POPReceivingEntryWindow.PopReceiptNumber.Value;
+                        break;
+                    }
+            }
+
             err = DataAccessHelper.GetPOPUserDefinedValues(txtPOPNumber.Text, out UserDefinedStrings, out UserDefinedDates);
             if (err == TableError.NoError | err == TableError.NotFound)
             {
@@ -194,59 +215,17 @@ namespace EditPOPUserDefinedAfterPost
                 dtUserDefDate18.Value = UserDefinedDates[17];
                 dtUserDefDate19.Value = UserDefinedDates[18];
                 dtUserDefDate20.Value = UserDefinedDates[19];
-
             }
+        }
+
+        private void EditPOPUserDefined_Load(object sender, EventArgs e)
+        {
+            PopulateForm();
         }
 
         private void EditPOPUserDefined_Activated(object sender, EventArgs e)
         {
-            TableError err;
-            string[] UserDefinedStrings;
-            DateTime[] UserDefinedDates;
-
-            txtPOPNumber.Text = GPAddIn.POPInquiryReceivingsEntryWindow.PopReceiptNumber.Value;
-            err = DataAccessHelper.GetPOPUserDefinedValues(txtPOPNumber.Text, out UserDefinedStrings, out UserDefinedDates);
-            if (err == TableError.NoError | err == TableError.NotFound)
-            {
-                cboUserDefList1.SelectedItem = UserDefinedStrings[0];
-                cboUserDefList2.SelectedItem = UserDefinedStrings[1];
-                cboUserDefList3.SelectedItem = UserDefinedStrings[2];
-                cboUserDefList4.SelectedItem = UserDefinedStrings[3];
-                cboUserDefList5.SelectedItem = UserDefinedStrings[4];
-
-                txtUserDefText1.Text = UserDefinedStrings[5];
-                txtUserDefText2.Text = UserDefinedStrings[6];
-                txtUserDefText3.Text = UserDefinedStrings[7];
-                txtUserDefText4.Text = UserDefinedStrings[8];
-                txtUserDefText5.Text = UserDefinedStrings[9];
-                txtUserDefText6.Text = UserDefinedStrings[10];
-                txtUserDefText7.Text = UserDefinedStrings[11];
-                txtUserDefText8.Text = UserDefinedStrings[12];
-                txtUserDefText9.Text = UserDefinedStrings[13];
-                txtUserDefText10.Text = UserDefinedStrings[14];
-
-                dtUserDefDate1.Value = UserDefinedDates[0];
-                dtUserDefDate2.Value = UserDefinedDates[1];
-                dtUserDefDate3.Value = UserDefinedDates[2];
-                dtUserDefDate4.Value = UserDefinedDates[3];
-                dtUserDefDate5.Value = UserDefinedDates[4];
-                dtUserDefDate6.Value = UserDefinedDates[5];
-                dtUserDefDate7.Value = UserDefinedDates[6];
-                dtUserDefDate8.Value = UserDefinedDates[7];
-                dtUserDefDate9.Value = UserDefinedDates[8];
-                dtUserDefDate10.Value = UserDefinedDates[9];
-                dtUserDefDate11.Value = UserDefinedDates[10];
-                dtUserDefDate12.Value = UserDefinedDates[11];
-                dtUserDefDate13.Value = UserDefinedDates[12];
-                dtUserDefDate14.Value = UserDefinedDates[13];
-                dtUserDefDate15.Value = UserDefinedDates[14];
-                dtUserDefDate16.Value = UserDefinedDates[15];
-                dtUserDefDate17.Value = UserDefinedDates[16];
-                dtUserDefDate18.Value = UserDefinedDates[17];
-                dtUserDefDate19.Value = UserDefinedDates[18];
-                dtUserDefDate20.Value = UserDefinedDates[19];
-
-            }
+            PopulateForm();
         }
 
         private void cmdSave_Click(object sender, EventArgs e)
