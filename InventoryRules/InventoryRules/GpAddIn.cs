@@ -10,6 +10,8 @@ using Microsoft.Dexterity.Applications.PurchaseRequisitionDictionary;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
+using System.Data.SqlClient;
+using System.Data.Odbc;
 
 
 namespace InventoryRules
@@ -28,7 +30,7 @@ namespace InventoryRules
 
         public static Boolean openSaved;
 
-        Boolean canEditReceipt(string Receiptnumber)
+        Boolean safeToEditReceipt(string Receiptnumber)
         {
             DateTime defaultGPDate = new DateTime(1900,1,1);
             TableError err;
@@ -73,29 +75,54 @@ namespace InventoryRules
 
         DateTime GetNetworkTime()
         {
-            const string ntpServer = "vvfi-dc01";
-            var ntpData = new byte[48];
-            ntpData[0] = 0x1B; //LeapIndicator = 0 (no warning), VersionNum = 3 (IPv4 only), Mode = 3 (Client Mode)
+            DateTime sqlDate = new DateTime(1900,1,1);
 
-            var addresses = Dns.GetHostEntry(ntpServer).AddressList;
-            var ipEndPoint = new IPEndPoint(addresses[0], 123);
-            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            //const string ntpServer = "vvfi-dc01";
+            //var ntpData = new byte[48];
+            //ntpData[0] = 0x1B; //LeapIndicator = 0 (no warning), VersionNum = 3 (IPv4 only), Mode = 3 (Client Mode)
+
+            //var addresses = Dns.GetHostEntry(ntpServer).AddressList;
+            //var ipEndPoint = new IPEndPoint(addresses[0], 123);
+            //var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
+            ////Stops code hang if NTP is blocked
+            //socket.ReceiveTimeout = 3000;
+            //socket.Connect(ipEndPoint);
+
+            //socket.Send(ntpData);
+            //socket.Receive(ntpData);
+            //socket.Close();
+
+            //ulong intPart = (ulong)ntpData[40] << 24 | (ulong)ntpData[41] << 16 | (ulong)ntpData[42] << 8 | (ulong)ntpData[43];
+            //ulong fractPart = (ulong)ntpData[44] << 24 | (ulong)ntpData[45] << 16 | (ulong)ntpData[46] << 8 | (ulong)ntpData[47];
+
+            //var milliseconds = (intPart * 1000) + ((fractPart * 1000) / 0x100000000L);
+            //var networkDateTime = (new DateTime(1900, 1, 1)).AddMilliseconds((long)milliseconds);
+
+            //return networkDateTime.ToLocalTime();
             
-            //Stops code hang if NTP is blocked
-            socket.ReceiveTimeout = 3000;   
-            socket.Connect(ipEndPoint);
+            string connectionString = "DSN=" + Microsoft.Dexterity.Applications.Dynamics.Globals.SqlDataSourceName + ";UID=GPDateGetter;PWD=5Rp6p_R4e8b4j^K;";
+            try
+            {
+                using (OdbcConnection ODBC = new OdbcConnection(connectionString))
+                {
+                    ODBC.Open();
+                    using (OdbcCommand com = new OdbcCommand("SELECT GETDATE()", ODBC))
+                    {
+                        using (OdbcDataReader reader = com.ExecuteReader())
+                        {
+                            reader.Read();
+                            sqlDate = reader.GetDateTime(0);
+                        }
+                    }
+                }
+            }
+            catch (System.Data.Odbc.OdbcException e)
+            {
 
-            socket.Send(ntpData);
-            socket.Receive(ntpData);
-            socket.Close();
-
-            ulong intPart = (ulong)ntpData[40] << 24 | (ulong)ntpData[41] << 16 | (ulong)ntpData[42] << 8 | (ulong)ntpData[43];
-            ulong fractPart = (ulong)ntpData[44] << 24 | (ulong)ntpData[45] << 16 | (ulong)ntpData[46] << 8 | (ulong)ntpData[47];
-
-            var milliseconds = (intPart * 1000) + ((fractPart * 1000) / 0x100000000L);
-            var networkDateTime = (new DateTime(1900, 1, 1)).AddMilliseconds((long)milliseconds);
-
-            return networkDateTime.ToLocalTime();
+            }
+            
+            return sqlDate;
         }
 
         public void Initialize()
@@ -228,12 +255,11 @@ namespace InventoryRules
 
         void POPReceivingEntryWindow_PopReceiptNumber_Change(object sender, EventArgs e)
         {
-            DateTime serverDate = GetNetworkTime().Date;//DateTime.Now;
             if (POPReceivingEntryWindow.PopReceiptNumber.Value.Trim() != String.Empty)
             {
                 if (GRNDateRule())
                 {
-                    if (canEditReceipt(POPReceivingEntryWindow.PopReceiptNumber.Value.Trim()))
+                    if (safeToEditReceipt(POPReceivingEntryWindow.PopReceiptNumber.Value.Trim()))
                     {
                         //save to edit
                         openSaved = false;
@@ -349,9 +375,10 @@ namespace InventoryRules
 
         void POPReceivingEntryWindow_ReceiptDate_LeaveBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            DateTime serverDate = GetNetworkTime().Date;//DateTime.Now;
+            DateTime serverDate;
             if (GRNDateRule())
             {
+                serverDate = GetNetworkTime().Date;
                 if (POPReceivingEntryWindow.ReceiptDate.Value.Date != serverDate)
                 {
                     MessageBox.Show("Document Date cannot be in the past, please re-enter.", "enforceServerDate", MessageBoxButtons.OK);
@@ -364,13 +391,14 @@ namespace InventoryRules
 
         void POPReceivingEntryWindow_BeforeModalDialog(object sender, BeforeModalDialogEventArgs e)
         {
-            DateTime serverDate = GetNetworkTime().Date;//DateTime.Now;
+            DateTime serverDate;
             switch (e.Message)
             {
                 case "Do you want to save or delete the document?":
                     {
                         if (GRNDateRule())
                         {
+                            serverDate = GetNetworkTime().Date;
                             if (POPReceivingEntryWindow.ReceiptDate.Value.Date != serverDate)
                             {
                                 MessageBox.Show("Document Date cannot be in the past, please re-enter.", "enforceServerDate", MessageBoxButtons.OK,MessageBoxIcon.Error);
@@ -386,9 +414,10 @@ namespace InventoryRules
 
         void POPReceivingEntryWindow_SaveButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            DateTime serverDate = GetNetworkTime().Date;//DateTime.Now;
+            DateTime serverDate;
             if (GRNDateRule())
             {
+                serverDate = GetNetworkTime().Date;
                 if (POPReceivingEntryWindow.ReceiptDate.Value.Date != serverDate)
                 {
                     MessageBox.Show("Document Date cannot be in the past, please re-enter.", "enforceServerDate", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -401,9 +430,10 @@ namespace InventoryRules
 
         void POPReceivingEntryWindow_OpenAfterOriginal(object sender, EventArgs e)
         {
-            DateTime serverDate = GetNetworkTime().Date;//DateTime.Now;
+            DateTime serverDate;
             if (GRNDateRule())
             {
+                serverDate = GetNetworkTime().Date;
                 POPReceivingEntryWindow.ReceiptDate.Value = serverDate;
                 POPReceivingEntryWindow.ReceiptDate.Lock();
                 POPReceivingEntryWindow.ExpansionButton1.Lock();
