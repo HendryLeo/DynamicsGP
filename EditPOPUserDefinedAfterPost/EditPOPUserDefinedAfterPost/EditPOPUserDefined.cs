@@ -173,6 +173,16 @@ namespace EditPOPUserDefinedAfterPost
                         txtPOPNumber.Text = GPAddIn.POPReceivingEntryWindow.PopReceiptNumber.Value;
                         break;
                     }
+                case 3:
+                    {
+                        txtPOPNumber.Text = GPAddIn.PORReturnsEntryWindow.PopReceiptNumber.Value;
+                        break;
+                    }
+                case 4:
+                    {
+                        txtPOPNumber.Text = GPAddIn.PORInquiryReturnsEntryWindow.PopReceiptNumber.Value;
+                        break;
+                    }
             }
 
             err = DataAccessHelper.GetPOPUserDefinedValues(txtPOPNumber.Text, out UserDefinedStrings, out UserDefinedDates);

@@ -22,13 +22,16 @@ namespace InventoryRules
 
         static IvTransactionEntryForm IVTrxEntryForm = Vvf.Forms.IvTransactionEntry;
         static PopReceivingsEntryForm POPReceivingEntryForm = PurchaseRequisition.Forms.PopReceivingsEntry;
+        static Microsoft.Dexterity.Applications.VvfDictionary.PorReturnsEntryForm PORReturnsEntryForm = Vvf.Forms.PorReturnsEntry;
         //static Microsoft.Dexterity.Applications.DynamicsDictionary.PopReceiptLookupForm POPReceiptLookupForm = Microsoft.Dexterity.Applications.Dynamics.Forms.PopReceiptLookup;
 
         static IvTransactionEntryForm.IvTransactionEntryWindow IVTrxEntryWindow = IVTrxEntryForm.IvTransactionEntry;
         static PopReceivingsEntryForm.PopReceivingsEntryWindow POPReceivingEntryWindow = POPReceivingEntryForm.PopReceivingsEntry;
+        static Microsoft.Dexterity.Applications.VvfDictionary.PorReturnsEntryForm.PorReturnsEntryWindow PORReturnsEntryWindow = PORReturnsEntryForm.PorReturnsEntry;
         //static Microsoft.Dexterity.Applications.DynamicsDictionary.PopReceiptLookupForm.PopReceiptLookupWindow POPReceiptLookupWindow = POPReceiptLookupForm.PopReceiptLookup;
 
-        public static Boolean openSaved;
+        public static Boolean POPReceivingEntryWindow_openSavedReceipt;//Saved and not user defined
+        public static Boolean PORReturnsEntryWindow_openSavedReturn;//Saved and not user defined
 
         Boolean safeToEditReceipt(string Receiptnumber)
         {
@@ -117,9 +120,9 @@ namespace InventoryRules
                     }
                 }
             }
-            catch (System.Data.Odbc.OdbcException e)
+            catch (System.Data.Odbc.OdbcException)
             {
-
+                
             }
             
             return sqlDate;
@@ -137,134 +140,279 @@ namespace InventoryRules
             POPReceivingEntryWindow.BeforeModalDialog += new System.EventHandler<BeforeModalDialogEventArgs>(POPReceivingEntryWindow_BeforeModalDialog);
             POPReceivingEntryWindow.ReceiptDate.LeaveBeforeOriginal += new System.ComponentModel.CancelEventHandler(POPReceivingEntryWindow_ReceiptDate_LeaveBeforeOriginal);
             POPReceivingEntryWindow.PopReceiptNumber.Change += new System.EventHandler(POPReceivingEntryWindow_PopReceiptNumber_Change);
-            //POPReceivingEntryWindow.PopReceiptNumber.LeaveBeforeOriginal += new System.ComponentModel.CancelEventHandler(POPReceivingEntryWindow_PopReceiptNumber_LeaveBeforeOriginal);
             POPReceivingEntryWindow.LocalAutoRcvButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(POPReceivingEntryWindow_LocalAutoRcvButton_ClickBeforeOriginal);
-            POPReceivingEntryWindow.LineScroll.LineChangeBeforeOriginal += POPReceivingEntryWindow_LineScroll_LineChangeBeforeOriginal;
             POPReceivingEntryWindow.LineScroll.LineDeleteBeforeOriginal += POPReceivingEntryWindow_LineScroll_LineDeleteBeforeOriginal;
-            //POPReceivingEntryWindow.LineScroll.LineEnterBeforeOriginal += POPReceivingEntryWindow_LineScroll_LineEnterBeforeOriginal;
             POPReceivingEntryWindow.LineScroll.LineFillBeforeOriginal += POPReceivingEntryWindow_LineScroll_LineFillBeforeOriginal;
             POPReceivingEntryWindow.LineScroll.LineInsertBeforeOriginal += POPReceivingEntryWindow_LineScroll_LineInsertBeforeOriginal;
-            //POPReceivingEntryWindow.LineScroll.LineLeaveBeforeOriginal += POPReceivingEntryWindow_LineScroll_LineLeaveBeforeOriginal;
 
-            //POPReceivingEntryWindow.LocalTempControlNumber.Change += new System.EventHandler(POPReceivingEntryWindow_LocalTempControlNumber_Change);
+
+            PORReturnsEntryWindow.OpenAfterOriginal += new System.EventHandler(PORReturnsEntryWindow_OpenAfterOriginal);
+            PORReturnsEntryWindow.SaveButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(PORReturnsEntryWindow_SaveButton_ClickBeforeOriginal);
+            PORReturnsEntryWindow.BeforeModalDialog += new System.EventHandler<BeforeModalDialogEventArgs>(PORReturnsEntryWindow_BeforeModalDialog);
+            PORReturnsEntryWindow.ReceiptDate.LeaveBeforeOriginal += new System.ComponentModel.CancelEventHandler(PORReturnsEntryWindow_ReceiptDate_LeaveBeforeOriginal);
+            PORReturnsEntryWindow.PopReceiptNumber.Change += new System.EventHandler(PORReturnsEntryWindow_PopReceiptNumber_Change);
+            PORReturnsEntryWindow.ReturnsScroll.LineFillBeforeOriginal += new System.ComponentModel.CancelEventHandler(PORReturnsEntryWindow_ReturnsScroll_LineFillBeforeOriginal);
+            PORReturnsEntryWindow.ReturnsScroll.LineInsertBeforeOriginal += new System.ComponentModel.CancelEventHandler(PORReturnsEntryWindow_ReturnsScroll_LineInsertBeforeOriginal);
+            PORReturnsEntryWindow.ReturnsScroll.LineDeleteBeforeOriginal += new System.ComponentModel.CancelEventHandler(PORReturnsEntryWindow_ReturnsScroll_LineDeleteBeforeOriginal);
+            PORReturnsEntryWindow.LookupButton4.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(LookupButton4_ClickBeforeOriginal);
+            PORReturnsEntryWindow.ReplaceReturnedGoods.ValidateBeforeOriginal += new System.ComponentModel.CancelEventHandler(ReplaceReturnedGoods_ValidateBeforeOriginal);
+            PORReturnsEntryWindow.InvoiceExpectedReturns.ValidateBeforeOriginal += new System.ComponentModel.CancelEventHandler(InvoiceExpectedReturns_ValidateBeforeOriginal);
+        }
+
+        void PORReturnsEntryWindow_ReceiptDate_LeaveBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            DateTime serverDate;
+            if (IVDateRule())
+            {
+                serverDate = GetNetworkTime().Date;
+                if (PORReturnsEntryWindow.ReceiptDate.Value.Date != serverDate)
+                {
+                    MessageBox.Show("Document Date cannot be in the past, please re-enter.", "enforceServerDate", MessageBoxButtons.OK);
+                    PORReturnsEntryWindow.ReceiptDate.Value = serverDate;
+                    PORReturnsEntryWindow.ReceiptDate.Focus();
+                    e.Cancel = true;
+                }
+            }
+
+        }
+
+        void PORReturnsEntryWindow_BeforeModalDialog(object sender, BeforeModalDialogEventArgs e)
+        {
+            DateTime serverDate;
+            switch (e.Message)
+            {
+                case "Do you want to save or delete the document?":
+                    {
+                        if (IVDateRule())
+                        {
+                            serverDate = GetNetworkTime().Date;
+                            if (PORReturnsEntryWindow.ReceiptDate.Value.Date != serverDate)
+                            {
+                                MessageBox.Show("Document Date cannot be in the past, please re-enter.", "enforceServerDate", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                //PORReturnsEntryWindow.ReceiptDate.Value = serverDate;
+                                PORReturnsEntryWindow.ReceiptDate.Focus();
+                                e.Response = DialogResponse.Button3;
+                            }
+                        }
+                        break;
+                    }
+            }
+
+        }
+
+        void PORReturnsEntryWindow_SaveButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            DateTime serverDate;
+            if (IVDateRule())
+            {
+                serverDate = GetNetworkTime().Date;
+                if (PORReturnsEntryWindow.ReceiptDate.Value.Date != serverDate)
+                {
+                    MessageBox.Show("Document Date cannot be in the past, please re-enter.", "enforceServerDate", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    //PORReturnsEntryWindow.ReceiptDate.Value = serverDate;
+                    PORReturnsEntryWindow.ReceiptDate.Focus();
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        void PORReturnsEntryWindow_OpenAfterOriginal(object sender, EventArgs e)
+        {
+            DateTime serverDate;
+            if (IVDateRule())
+            {
+                serverDate = GetNetworkTime().Date;
+                PORReturnsEntryWindow.ReceiptDate.Value = serverDate;
+                PORReturnsEntryWindow.ReceiptDate.Lock();
+                PORReturnsEntryWindow.ExpansionButton1.Lock();
+            }
+
+        }
+
+        void InvoiceExpectedReturns_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (PORReturnsEntryWindow_openSavedReturn)
+            {
+                e.Cancel = true;
+                PORReturnsEntryWindow.IsChanged = false;
+            }
+        }
+
+        void ReplaceReturnedGoods_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (PORReturnsEntryWindow_openSavedReturn)
+            {
+                e.Cancel = true;
+                PORReturnsEntryWindow.IsChanged = false;
+            }
+        }
+
+        void LookupButton4_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (PORReturnsEntryWindow_openSavedReturn) e.Cancel = true;
+        }
+
+        void PORReturnsEntryWindow_ReturnsScroll_LineDeleteBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (PORReturnsEntryWindow_openSavedReturn) e.Cancel = true;
+        }
+
+        void PORReturnsEntryWindow_ReturnsScroll_LineInsertBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (PORReturnsEntryWindow_openSavedReturn) e.Cancel = true;
+        }
+
+        void PORReturnsEntryWindow_ReturnsScroll_LineFillBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (PORReturnsEntryWindow_openSavedReturn) e.Cancel = true;
+        }
+
+        void PORReturnsEntryWindow_PopReceiptNumber_Change(object sender, EventArgs e)
+        {
+            if (PORReturnsEntryWindow.PopReceiptNumber.Value.Trim() != String.Empty)
+            {
+                if (IVDateRule())
+                {
+                    if (safeToEditReceipt(PORReturnsEntryWindow.PopReceiptNumber.Value.Trim()))
+                    {
+                        //save to edit
+                        PORReturnsEntryWindow_openSavedReturn = false;
+                        //enable receiptdate
+                        //PORReturnsEntryWindow.ReceiptDate.Enable();
+                        //PORReturnsEntryWindow.ExpansionButton1.Enable();
+                        PORReturnsEntryWindow.VendorDocumentNumber.Enable();
+                        //enable record manipulation fields
+                        PORReturnsEntryWindow.SaveButton.Enable();
+                        PORReturnsEntryWindow.DeleteButton.Enable();
+                        PORReturnsEntryWindow.PostButton.Enable();
+                        PORReturnsEntryWindow.LocalReturnType.Enable();
+                        PORReturnsEntryWindow.VendorName.Enable();
+                        PORReturnsEntryWindow.CurrencyId.Enable();
+                        PORReturnsEntryWindow.ExpansionButton3.Enable();
+                        PORReturnsEntryWindow.ReplaceReturnedGoods.Enable();
+                        PORReturnsEntryWindow.InvoiceExpectedReturns.Enable();
+                        PORReturnsEntryWindow.LookupButton5.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.PoNumber.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.VendorItemNumber.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.ItemNumber.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.ReceiptReturnNumber.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.UOfM.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.QtyReserved.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.UnitCost.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.VendorItemDescription.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.ItemDescription.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.InventoryAccount.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.UnrealizedPurchasePriceVarianceAccount.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.CommentId.Enable();
+                        PORReturnsEntryWindow.ReturnsScroll.LookupButton3.Enable();
+                        PORReturnsEntryWindow.DistributionsButton.Enable();
+                        PORReturnsEntryWindow.LookupButton4.Enable();
+                        PORReturnsEntryWindow.LookupButton6.Enable();
+                        PORReturnsEntryWindow.LookupButton7.Enable();
+                        PORReturnsEntryWindow.LookupButton8.Enable();
+                    }
+                    else
+                    {
+                        //calling saved Receipt that has been reported
+                        MessageBox.Show("You are opening a saved Document that is not allowed to be changed" + System.Environment.NewLine + "Opening Inquiry Instead", "enforceServerDate", MessageBoxButtons.OK);
+                        PORReturnsEntryWindow_openSavedReturn = true;
+                        //PORReturnsEntryWindow.ReceiptDate.Disable();
+                        //PORReturnsEntryWindow.ExpansionButton1.Disable();
+                        PORReturnsEntryWindow.VendorDocumentNumber.Disable();
+                        //disable record manipulation fields
+                        PORReturnsEntryWindow.SaveButton.Disable();
+                        PORReturnsEntryWindow.DeleteButton.Disable();
+                        PORReturnsEntryWindow.PostButton.Disable();
+                        PORReturnsEntryWindow.LocalReturnType.Disable();
+                        PORReturnsEntryWindow.VendorName.Disable();
+                        PORReturnsEntryWindow.CurrencyId.Disable();
+                        PORReturnsEntryWindow.ExpansionButton3.Disable();
+                        PORReturnsEntryWindow.ReplaceReturnedGoods.Disable();
+                        PORReturnsEntryWindow.InvoiceExpectedReturns.Disable();
+                        PORReturnsEntryWindow.LookupButton5.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.PoNumber.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.VendorItemNumber.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.ItemNumber.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.ReceiptReturnNumber.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.UOfM.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.QtyReserved.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.UnitCost.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.VendorItemDescription.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.ItemDescription.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.InventoryAccount.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.UnrealizedPurchasePriceVarianceAccount.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.CommentId.Disable();
+                        PORReturnsEntryWindow.ReturnsScroll.LookupButton3.Disable();
+                        PORReturnsEntryWindow.DistributionsButton.Disable();
+                        PORReturnsEntryWindow.LookupButton4.Disable();
+                        PORReturnsEntryWindow.LookupButton6.Disable();
+                        PORReturnsEntryWindow.LookupButton7.Disable();
+                        PORReturnsEntryWindow.LookupButton8.Disable();
+
+                        //call inquiry window
+                        //sanscript
+                        //'OpenWindow() of form POR_Inquiry_Returns_Entry', 0, "RTS1400011", 4, 2, 2
+                        try
+                        {
+                            Dynamics.Application gpApp = (Dynamics.Application)Activator.CreateInstance(Type.GetTypeFromProgID("Dynamics.Application"));
+                            if (gpApp == null)
+                                return;
+                            else
+                            {
+                                string passthrough_code = "";
+                                string compile_err;
+                                int error_code;
+
+                                passthrough_code += @"OpenWindow(""" + PORReturnsEntryWindow.PopReceiptNumber.Value + @""",4,2,2) of form POR_Inquiry_Returns_Entry;";
+
+                                //not needed in my case, and it will auto adapt to the alternate/modified setup
+                                //gpApp.CurrentProductID = 0;
+
+                                error_code = gpApp.ExecuteSanscript(passthrough_code, out compile_err);
+                            }
+                        }
+                        catch
+                        {
+                            //MessageBox.Show("Failed to initialize gpApp");
+                            //return;
+                        }
+                    }
+                }
+            }
         }
 
         void POPReceivingEntryWindow_LocalAutoRcvButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (openSaved) e.Cancel = true;
+            if (POPReceivingEntryWindow_openSavedReceipt) e.Cancel = true;
         }
-
-        //void POPReceivingEntryWindow_LineScroll_LineLeaveBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    //throw new NotImplementedException();
-        //}
 
         void POPReceivingEntryWindow_LineScroll_LineInsertBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if(openSaved) e.Cancel = true;
+            if(POPReceivingEntryWindow_openSavedReceipt) e.Cancel = true;
         }
 
         void POPReceivingEntryWindow_LineScroll_LineFillBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (openSaved) e.Cancel = true;
+            if (POPReceivingEntryWindow_openSavedReceipt) e.Cancel = true;
         }
-
-        //void POPReceivingEntryWindow_LineScroll_LineEnterBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    //throw new NotImplementedException();
-        //    if (openSaved) e.Cancel = true;
-        //}
 
         void POPReceivingEntryWindow_LineScroll_LineDeleteBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //throw new NotImplementedException();
-            if (openSaved) e.Cancel = true;
+            if (POPReceivingEntryWindow_openSavedReceipt) e.Cancel = true;
         }
-
-        void POPReceivingEntryWindow_LineScroll_LineChangeBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            //throw new NotImplementedException();
-            if (openSaved) e.Cancel = true;
-        }
-
-        //void POPReceivingEntryWindow_LocalTempControlNumber_Change(object sender, EventArgs e)
-        //{
-        //    DateTime serverDate = GetNetworkTime().Date;//DateTime.Now;
-        //    if (POPReceivingEntryWindow.PopReceiptNumber.Value == POPReceivingEntryWindow.LocalTempControlNumber.Value)
-        //    {
-        //        if (GRNDateRule())
-        //        {
-        //            if (String.IsNullOrEmpty(POPReceivingEntryWindow.LocalTempControlNumber.Value.Trim()))
-        //            {
-        //                //empty number
-        //                openSaved = false;
-        //                //disable record manipulation fields
-        //                POPReceivingEntryWindow.SaveButton.Enable();
-        //                POPReceivingEntryWindow.DeleteButton.Enable();
-        //                POPReceivingEntryWindow.VoidButtonI.Enable();
-        //                POPReceivingEntryWindow.PostButton.Enable();
-        //            }
-        //            else
-        //            {
-        //                //calling saved Receipt
-        //                MessageBox.Show("You are opening a saved Document that is not allowed to be changed" + System.Environment.NewLine + "Opening Inquiry Instead", "enforceServerDate", MessageBoxButtons.OK);
-        //                openSaved = true;
-        //                //disable record manipulation fields
-        //                POPReceivingEntryWindow.SaveButton.Disable();
-        //                POPReceivingEntryWindow.DeleteButton.Disable();
-        //                POPReceivingEntryWindow.VoidButtonI.Disable();
-        //                POPReceivingEntryWindow.PostButton.Disable();
-
-        //                //call inquiry window
-        //                //sanscript
-        //                //'OpenWindow() of form POP_Inquiry_Receivings_Entry', 0, "GRN1400953", 2, 3, 2
-        //                try
-        //                {
-        //                    Dynamics.Application gpApp = (Dynamics.Application)Activator.CreateInstance(Type.GetTypeFromProgID("Dynamics.Application"));
-        //                    if (gpApp == null)
-        //                        return;
-        //                    else
-        //                    {
-        //                        string passthrough_code = "";
-        //                        string compile_err;
-        //                        int error_code;
-
-        //                        passthrough_code += @"OpenWindow(""" + POPReceivingEntryWindow.LocalTempControlNumber.Value + @""",2,4,2) of form POP_Inquiry_Receivings_Entry;";
-
-        //                        //not needed in my case, and it will auto adapt to the alternate/modified setup
-        //                        //gpApp.CurrentProductID = 0;
-
-        //                        error_code = gpApp.ExecuteSanscript(passthrough_code, out compile_err);
-        //                    }
-        //                }
-        //                catch
-        //                {
-        //                    //MessageBox.Show("Failed to initialize gpApp");
-        //                    //return;
-        //                }
-        //            }
-        //        }
-        //    }
-            
-        //}
-
-        //void POPReceivingEntryWindow_PopReceiptNumber_LeaveBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    //throw new NotImplementedException();
-        //}
 
         void POPReceivingEntryWindow_PopReceiptNumber_Change(object sender, EventArgs e)
         {
             if (POPReceivingEntryWindow.PopReceiptNumber.Value.Trim() != String.Empty)
             {
-                if (GRNDateRule())
+                if (IVDateRule())
                 {
                     if (safeToEditReceipt(POPReceivingEntryWindow.PopReceiptNumber.Value.Trim()))
                     {
                         //save to edit
-                        openSaved = false;
+                        POPReceivingEntryWindow_openSavedReceipt = false;
                         //enable receiptdate
-                        POPReceivingEntryWindow.ReceiptDate.Enable();
+                        //POPReceivingEntryWindow.ReceiptDate.Enable();
                         //enable record manipulation fields
                         POPReceivingEntryWindow.SaveButton.Enable();
                         POPReceivingEntryWindow.DeleteButton.Enable();
@@ -304,7 +452,7 @@ namespace InventoryRules
                     {
                         //calling saved Receipt that has been reported
                         MessageBox.Show("You are opening a saved Document that is not allowed to be changed" + System.Environment.NewLine + "Opening Inquiry Instead", "enforceServerDate", MessageBoxButtons.OK);
-                        openSaved = true;
+                        POPReceivingEntryWindow_openSavedReceipt = true;
                         //disable record manipulation fields
                         POPReceivingEntryWindow.SaveButton.Disable();
                         POPReceivingEntryWindow.DeleteButton.Disable();
@@ -370,13 +518,12 @@ namespace InventoryRules
                     }
                 }
             }
-            
         }
 
         void POPReceivingEntryWindow_ReceiptDate_LeaveBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             DateTime serverDate;
-            if (GRNDateRule())
+            if (IVDateRule())
             {
                 serverDate = GetNetworkTime().Date;
                 if (POPReceivingEntryWindow.ReceiptDate.Value.Date != serverDate)
@@ -396,7 +543,7 @@ namespace InventoryRules
             {
                 case "Do you want to save or delete the document?":
                     {
-                        if (GRNDateRule())
+                        if (IVDateRule())
                         {
                             serverDate = GetNetworkTime().Date;
                             if (POPReceivingEntryWindow.ReceiptDate.Value.Date != serverDate)
@@ -415,7 +562,7 @@ namespace InventoryRules
         void POPReceivingEntryWindow_SaveButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             DateTime serverDate;
-            if (GRNDateRule())
+            if (IVDateRule())
             {
                 serverDate = GetNetworkTime().Date;
                 if (POPReceivingEntryWindow.ReceiptDate.Value.Date != serverDate)
@@ -431,7 +578,7 @@ namespace InventoryRules
         void POPReceivingEntryWindow_OpenAfterOriginal(object sender, EventArgs e)
         {
             DateTime serverDate;
-            if (GRNDateRule())
+            if (IVDateRule())
             {
                 serverDate = GetNetworkTime().Date;
                 POPReceivingEntryWindow.ReceiptDate.Value = serverDate;
@@ -484,7 +631,7 @@ namespace InventoryRules
             }
         }
 
-        Boolean GRNDateRule()
+        Boolean IVDateRule()
         {
             Boolean enforceServerDate = true;
             string[] targets;

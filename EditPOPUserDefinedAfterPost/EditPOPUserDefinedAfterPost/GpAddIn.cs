@@ -45,10 +45,14 @@ namespace EditPOPUserDefinedAfterPost
 
         static PopInquiryReceivingsEntryForm POPInquiryReceivingsEntryForm = PurchaseRequisition.Forms.PopInquiryReceivingsEntry;
         static PopReceivingsEntryForm POPReceivingEntryForm = PurchaseRequisition.Forms.PopReceivingsEntry;
-       
+        static PorReturnsEntryForm PORReturnsEntryForm = Vvf.Forms.PorReturnsEntry;
+        static PorInquiryReturnsEntryForm PORInquiryReturnsEntryForm = Vvf.Forms.PorInquiryReturnsEntry;
+
         // Create a reference to the Receiving Inquiry Alternate window
         public static PopInquiryReceivingsEntryForm.PopInquiryReceivingsEntryWindow POPInquiryReceivingsEntryWindow = POPInquiryReceivingsEntryForm.PopInquiryReceivingsEntry;
         public static PopReceivingsEntryForm.PopReceivingsEntryWindow POPReceivingEntryWindow = POPReceivingEntryForm.PopReceivingsEntry;
+        public static PorReturnsEntryForm.PorReturnsEntryWindow PORReturnsEntryWindow = PORReturnsEntryForm.PorReturnsEntry;
+        public static PorInquiryReturnsEntryForm.PorInquiryReturnsEntryWindow PORInquiryReturnsEntryWindow = PORInquiryReturnsEntryForm.PorInquiryReturnsEntry;
 
         // Indicate whether the EditPOPUserDefined form should be closed
         public static Boolean CloseEditPOPUserDefinedForm = false;
@@ -63,6 +67,10 @@ namespace EditPOPUserDefinedAfterPost
             POPInquiryReceivingsEntryForm.CloseAfterOriginal += new EventHandler(CloseWinForm);
             POPReceivingEntryForm.AddMenuHandler(OpenUserDefined2, "User Defined", "N");
             POPReceivingEntryForm.CloseAfterOriginal += new EventHandler(CloseWinForm);
+            PORReturnsEntryForm.AddMenuHandler(OpenUserDefined3, "User Defined", "N");
+            PORReturnsEntryForm.CloseAfterOriginal += new EventHandler(CloseWinForm);
+            PORInquiryReturnsEntryForm.AddMenuHandler(OpenUserDefined4, "User Defined", "N");
+            PORInquiryReturnsEntryForm.CloseAfterOriginal += new EventHandler(CloseWinForm);
 
             // Watch when the POP Number changes
             //POPInquiryReceivingsEntryWindow.PopReceiptNumber.Change += new EventHandler(POPReceipt_Change);
@@ -147,5 +155,60 @@ namespace EditPOPUserDefinedAfterPost
 
 
         }
+
+        static void OpenUserDefined3(object sender, EventArgs e)
+        {
+            if (EditPOPUserDefinedForm == null)
+            {
+                try
+                {
+                    EditPOPUserDefinedForm = new EditPOPUserDefined();
+
+                }
+                catch (Exception ex)
+                {
+                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                }
+            }
+
+            // Always show and activate the WinForm
+            EditPOPUserDefinedForm.Caller = 3;
+            EditPOPUserDefinedForm.Show();
+            EditPOPUserDefinedForm.Activate();
+
+            // Set the flag to indicate that the form shouldn't be closed
+            CloseEditPOPUserDefinedForm = false;
+
+
+
+        }
+
+        static void OpenUserDefined4(object sender, EventArgs e)
+        {
+            if (EditPOPUserDefinedForm == null)
+            {
+                try
+                {
+                    EditPOPUserDefinedForm = new EditPOPUserDefined();
+
+                }
+                catch (Exception ex)
+                {
+                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                }
+            }
+
+            // Always show and activate the WinForm
+            EditPOPUserDefinedForm.Caller = 4;
+            EditPOPUserDefinedForm.Show();
+            EditPOPUserDefinedForm.Activate();
+
+            // Set the flag to indicate that the form shouldn't be closed
+            CloseEditPOPUserDefinedForm = false;
+
+
+
+        }
+
     }
 }
