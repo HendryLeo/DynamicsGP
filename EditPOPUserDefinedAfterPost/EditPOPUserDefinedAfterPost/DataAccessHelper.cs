@@ -29,18 +29,55 @@ using Microsoft.Dexterity;
 using Microsoft.Dexterity.Bridge;
 using Microsoft.Dexterity.Applications;
 using Microsoft.Dexterity.Applications.DynamicsDictionary;
+using Microsoft.Dexterity.Applications.VvfIdInHouseCustomizationDictionary;
 
 namespace EditPOPUserDefinedAfterPost
 {
 
     class DataAccessHelper
     {
+        static IvRulesTable IVRulesTable = VvfIdInHouseCustomization.Tables.IvRules;
+        static IvRuleTargetsTable IVRuleTargetsTable = VvfIdInHouseCustomization.Tables.IvRuleTargets;
         static PopReceiptUserDefinedTable POPUserDefinedTable = Microsoft.Dexterity.Applications.Dynamics.Tables.PopReceiptUserDefined;
         static PopSetupTable POPSetupTable = Microsoft.Dexterity.Applications.Dynamics.Tables.PopSetup;
         static PopUserDefinedSetupTable POPUserDefinedSetupTable = Microsoft.Dexterity.Applications.Dynamics.Tables.PopUserDefinedSetup;
         const byte ROW_FOUND = 0;
         const byte ROW_NOT_FOUND = 1;
         const byte TABLE_ERROR = 2;
+
+
+        //this code is copy paste from Inventory Rules Project
+        static public TableError GetIVRuleTargetsByID(short idx, out string[] users)
+        {
+            TableError lastError, err;
+            List<string> list;
+
+            list = new List<string>();
+
+            IVRuleTargetsTable.Key = 1;
+            IVRuleTargetsTable.RangeClear();
+            IVRuleTargetsTable.Clear();
+            IVRuleTargetsTable.Index.Value = idx;
+            IVRuleTargetsTable.RangeStart();
+            IVRuleTargetsTable.UserId.Fill();
+            IVRuleTargetsTable.RangeEnd();
+
+            lastError = IVRuleTargetsTable.GetFirst();
+            if (lastError == TableError.NoError)
+            {
+                err = lastError;
+                while (err == TableError.NoError)
+                {
+                    list.Add(IVRuleTargetsTable.UserId);
+                    err = IVRuleTargetsTable.GetNext();
+                }
+            }
+
+            users = list.ToArray();
+
+            IVRuleTargetsTable.Close();
+            return lastError;
+        }// end this code is copy paste from Inventory Rules Project
 
         static public TableError GetPOPUserDefinedSetup(byte idx, out string[] strs)
         {

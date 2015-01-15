@@ -72,143 +72,144 @@ namespace EditPOPUserDefinedAfterPost
             PORInquiryReturnsEntryForm.AddMenuHandler(OpenUserDefined4, "User Defined", "N");
             PORInquiryReturnsEntryForm.CloseAfterOriginal += new EventHandler(CloseWinForm);
 
-            // Watch when the POP Number changes
-            //POPInquiryReceivingsEntryWindow.PopReceiptNumber.Change += new EventHandler(POPReceipt_Change);
         }
-
-        void POPReceivingEntryForm_CloseAfterOriginal(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
 
         void CloseWinForm(object sender, EventArgs e)
         {
             // Close the WinForm
             CloseEditPOPUserDefinedForm = true;
-            EditPOPUserDefinedForm.Close();
-            EditPOPUserDefinedForm = null;
+            if (EditPOPUserDefinedForm != null)
+            {
+                EditPOPUserDefinedForm.Close();
+                EditPOPUserDefinedForm = null;
+            }
         }
 
-        //void POPReceipt_Change(object sender, EventArgs e)
-        //{
-        //    // If the Winform is open, update the document number
-        //    // and clear the other controls
-        //    if (EditPOPUserDefinedForm.Created == true)
-        //    {
-        //        EditPOPUserDefinedForm. .Text = SOPEntryWindow.SopNumber.Value;
-        //        EditPOPUserDefinedForm.textBoxEstimatedFreight.Clear();
-        //        EditPOPUserDefinedForm.textBoxTotalWeight.Clear();
-        //    }
-        //}
+        Boolean userCanEditUDef()
+        {
+            Boolean canEdit = false;
+
+            string[] targets;
+            TableError err;
+
+            err = DataAccessHelper.GetIVRuleTargetsByID(6, out targets);
+            if (err == TableError.NoError)
+            {
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId) == -1)
+                {
+                    canEdit = true;
+                }
+            }
+            return canEdit;
+        }
 
         // Method to open the User Defined WinForm
-        static void OpenUserDefined1(object sender, EventArgs e)
+        void OpenUserDefined1(object sender, EventArgs e)
         {
-            if (EditPOPUserDefinedForm == null)
+            if (userCanEditUDef())
             {
-                try
+                if (EditPOPUserDefinedForm == null)
                 {
-                    EditPOPUserDefinedForm = new EditPOPUserDefined();
-                    
+                    try
+                    {
+                        EditPOPUserDefinedForm = new EditPOPUserDefined();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
-                }
+
+                // Always show and activate the WinForm
+                EditPOPUserDefinedForm.Caller = 1;
+                EditPOPUserDefinedForm.Show();
+                EditPOPUserDefinedForm.Activate();
+
+                // Set the flag to indicate that the form shouldn't be closed
+                CloseEditPOPUserDefinedForm = false;
             }
-
-            // Always show and activate the WinForm
-            EditPOPUserDefinedForm.Caller = 1;
-            EditPOPUserDefinedForm.Show();
-            EditPOPUserDefinedForm.Activate();
-
-            // Set the flag to indicate that the form shouldn't be closed
-            CloseEditPOPUserDefinedForm = false;
-
-
-
-        }
-        static void OpenUserDefined2(object sender, EventArgs e)
-        {
-            if (EditPOPUserDefinedForm == null)
-            {
-                try
-                {
-                    EditPOPUserDefinedForm = new EditPOPUserDefined();
-
-                }
-                catch (Exception ex)
-                {
-                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
-                }
-            }
-
-            // Always show and activate the WinForm
-            EditPOPUserDefinedForm.Caller = 2;
-            EditPOPUserDefinedForm.Show();
-            EditPOPUserDefinedForm.Activate();
-
-            // Set the flag to indicate that the form shouldn't be closed
-            CloseEditPOPUserDefinedForm = false;
-
-
-
         }
 
-        static void OpenUserDefined3(object sender, EventArgs e)
+        void OpenUserDefined2(object sender, EventArgs e)
         {
-            if (EditPOPUserDefinedForm == null)
+            if (userCanEditUDef())
             {
-                try
+                if (EditPOPUserDefinedForm == null)
                 {
-                    EditPOPUserDefinedForm = new EditPOPUserDefined();
+                    try
+                    {
+                        EditPOPUserDefinedForm = new EditPOPUserDefined();
 
+                    }
+                    catch (Exception ex)
+                    {
+                        Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
-                }
+
+                // Always show and activate the WinForm
+                EditPOPUserDefinedForm.Caller = 2;
+                EditPOPUserDefinedForm.Show();
+                EditPOPUserDefinedForm.Activate();
+
+                // Set the flag to indicate that the form shouldn't be closed
+                CloseEditPOPUserDefinedForm = false;
             }
-
-            // Always show and activate the WinForm
-            EditPOPUserDefinedForm.Caller = 3;
-            EditPOPUserDefinedForm.Show();
-            EditPOPUserDefinedForm.Activate();
-
-            // Set the flag to indicate that the form shouldn't be closed
-            CloseEditPOPUserDefinedForm = false;
-
-
-
         }
 
-        static void OpenUserDefined4(object sender, EventArgs e)
+        void OpenUserDefined3(object sender, EventArgs e)
         {
-            if (EditPOPUserDefinedForm == null)
+            if (userCanEditUDef())
             {
-                try
+                if (EditPOPUserDefinedForm == null)
                 {
-                    EditPOPUserDefinedForm = new EditPOPUserDefined();
+                    try
+                    {
+                        EditPOPUserDefinedForm = new EditPOPUserDefined();
 
+                    }
+                    catch (Exception ex)
+                    {
+                        Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
-                }
+
+                // Always show and activate the WinForm
+                EditPOPUserDefinedForm.Caller = 3;
+                EditPOPUserDefinedForm.Show();
+                EditPOPUserDefinedForm.Activate();
+
+                // Set the flag to indicate that the form shouldn't be closed
+                CloseEditPOPUserDefinedForm = false;
             }
-
-            // Always show and activate the WinForm
-            EditPOPUserDefinedForm.Caller = 4;
-            EditPOPUserDefinedForm.Show();
-            EditPOPUserDefinedForm.Activate();
-
-            // Set the flag to indicate that the form shouldn't be closed
-            CloseEditPOPUserDefinedForm = false;
-
-
-
         }
 
+        void OpenUserDefined4(object sender, EventArgs e)
+        {
+            if (userCanEditUDef())
+            {
+                if (EditPOPUserDefinedForm == null)
+                {
+                    try
+                    {
+                        EditPOPUserDefinedForm = new EditPOPUserDefined();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                    }
+                }
+
+                // Always show and activate the WinForm
+                EditPOPUserDefinedForm.Caller = 4;
+                EditPOPUserDefinedForm.Show();
+                EditPOPUserDefinedForm.Activate();
+
+                // Set the flag to indicate that the form shouldn't be closed
+                CloseEditPOPUserDefinedForm = false;
+            }
+        }
     }
 }
