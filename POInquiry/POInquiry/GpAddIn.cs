@@ -49,6 +49,7 @@ namespace POInquiry
 
         void OpenPOInquiry(object sender, EventArgs e)
         {
+            
             //sanscript
             //OpenWindow("PO1400200",2,2) of form POP_Inquiry_PO_Entry;
             //sample continuum from Mariano Gomez http://dynamicsgpblogster.blogspot.com/2013/08/accessing-microsoft-dynamics-gp-default.html
@@ -62,7 +63,9 @@ namespace POInquiry
                     string passthrough_code = "";
                     string compile_err;
                     int error_code;
-
+                    //this sanscript will save the Open PO
+                    passthrough_code += @"run script 'Save Button' of window POP_PO_Entry of form POP_PO_Entry;";
+                    //this will open Inquiry
                     passthrough_code += @"OpenWindow(""" + POPPOEntryWindow.PoNumber.Value + @""",2,2) of form POP_Inquiry_PO_Entry;";
                     
                     //not needed in my case, and it will auto adapt to the alternate/modified setup
