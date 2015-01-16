@@ -6,7 +6,7 @@ using Microsoft.Dexterity.Applications;
 //using Microsoft.Dexterity.Applications.DynamicsDictionary;
 using Microsoft.Dexterity.Applications.VvfDictionary;
 using Microsoft.Dexterity.Applications.SmartListDictionary;
-
+using System.Windows.Forms;
 
 namespace JournalEntryWithVendorInfo
 {
@@ -24,6 +24,8 @@ namespace JournalEntryWithVendorInfo
 
         // Flag to track that a lookup was opened
         public static Boolean ReturnToLookup = false;
+        string orIDToSave = "", orNameToSave = "";
+        int jrnEntryToUpdate = 0;
 
         public void Initialize()
         {
@@ -36,6 +38,142 @@ namespace JournalEntryWithVendorInfo
             VendorLookupForm vendorLookupForm = SmartList.Forms.VendorLookup;
             vendorLookupForm.VendorLookup.SelectButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(VendorSelectButton_ClickBeforeOriginal);
 
+            GLTrxEntryWindow.SaveButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(SaveButton_ClickBeforeOriginal);
+            GLTrxEntryWindow.SaveButton.ClickAfterOriginal += SaveButton_ClickAfterOriginal;
+            GLTrxEntryWindow.DeleteButton.ClickBeforeOriginal += DeleteButton_ClickBeforeOriginal;
+            GLTrxEntryWindow.DeleteButton.ClickAfterOriginal += DeleteButton_ClickAfterOriginal;
+            GLTrxEntryWindow.BeforeModalDialog += GLTrxEntryWindow_BeforeModalDialog;
+            GLTrxEntryWindow.AfterModalDialog += GLTrxEntryWindow_AfterModalDialog;
+            GLTrxEntryWindow.PostButton.ClickBeforeOriginal += PostButton_ClickBeforeOriginal;
+            GLTrxEntryWindow.JournalEntry.Change += JournalEntry_Change;
+        }
+
+        void JournalEntry_Change(object sender, EventArgs e)
+        {
+            TableError err;
+            string orID = "", orName = "";
+
+            //if (GLTrxEntryWindow.JournalEntry.Value == jrnEntryToUpdate)
+            //{
+            //    VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value = orIDToSave;
+            //    VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value = orNameToSave;
+            //}
+            //else
+            if (GLTrxEntryWindow.JournalEntry.Value != jrnEntryToUpdate)
+            {
+                err = DataAccessHelper.GetGLTrxLineByJournalEntry(GLTrxEntryWindow.JournalEntry.Value, out orID, out orName);
+                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value = orID;
+                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value = orName;
+            }
+       }
+
+        void DeleteButton_ClickAfterOriginal(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        void PostButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            DialogResult answer;
+            TableError err;
+
+            if (VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value.Trim() == String.Empty)
+            {
+                answer = MessageBox.Show("VendorID/CustomerID tidak diisi, Mau dilanjutkan?", "Vendor/Customer tidak diisi", MessageBoxButtons.YesNo);
+                if (answer == DialogResult.No)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+            else
+            {
+                err = DataAccessHelper.UpdateGLTrxLineByJournalEntry(GLTrxEntryWindow.JournalEntry.Value, VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value.Trim(), VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value.Trim());
+                if (err != TableError.NoError)
+                {
+                    MessageBox.Show(err.ToString());
+                    e.Cancel = true;
+                }
+            }
+        }
+
+        void GLTrxEntryWindow_BeforeModalDialog(object sender, BeforeModalDialogEventArgs e)
+        {
+            switch (e.Message)
+            {
+                case "Do you want to save changes or delete this transaction?":
+                    GLTrxEntryWindow.BatchNumber.Value = Dynamics.Globals.UserId;
+                    jrnEntryToUpdate = GLTrxEntryWindow.JournalEntry.Value;
+                    orIDToSave = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value.Trim();
+                    orNameToSave = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value.Trim();
+                    break;
+
+            }
+        }
+
+        void GLTrxEntryWindow_AfterModalDialog(object sender, AfterModalDialogEventArgs e)
+        {
+            switch (e.Message)
+            {
+                case "Do you want to save changes or delete this transaction?":
+                    switch (e.Response)
+                    {
+                        case DialogResponse.Button1://save
+                            DataAccessHelper.UpdateGLTrxLineByJournalEntry(jrnEntryToUpdate, orIDToSave, orNameToSave);
+                            jrnEntryToUpdate = 0;
+                            orIDToSave = "";
+                            orNameToSave = "";
+                            break;
+                        case DialogResponse.Button2://delete
+                            jrnEntryToUpdate = 0;
+                            orIDToSave = "";
+                            orNameToSave = "";                        
+                            break;
+                        case DialogResponse.Button3://cancel
+                            break;
+                    }
+                    break;
+            }
+        }
+
+        void DeleteButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        void SaveButton_ClickAfterOriginal(object sender, EventArgs e)
+        {
+            TableError err;
+            if (jrnEntryToUpdate > 0)
+            {
+                err = DataAccessHelper.UpdateGLTrxLineByJournalEntry(jrnEntryToUpdate, orIDToSave, orNameToSave);
+                if (err != TableError.NoError)
+                {
+                    MessageBox.Show("Vendor/Customer Info not saved");
+                }
+            }
+            jrnEntryToUpdate = 0;
+            orIDToSave = "";
+            orNameToSave = "";
+        }
+        void SaveButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            DialogResult answer;
+
+            if (VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value.Trim() == String.Empty)
+            {
+                answer = MessageBox.Show("VendorID/CustomerID tidak diisi, Mau dilanjutkan?", "Vendor/Customer tidak diisi", MessageBoxButtons.YesNo);
+                if (answer == DialogResult.No)
+                {
+                    e.Cancel = true;
+                }
+            }
+            else
+            {
+                jrnEntryToUpdate = GLTrxEntryWindow.JournalEntry.Value;
+                orIDToSave = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value.Trim();
+                orNameToSave = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value.Trim();
+            }
         }
 
         void CustomerID_Lookup_BeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
@@ -50,7 +188,7 @@ namespace JournalEntryWithVendorInfo
             customerLookup.Open();
 
             //set the field
-            customerLookup.CustomerLookup.CustomerNumber.Value = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrCustomerId.Value;
+            customerLookup.CustomerLookup.CustomerNumber.Value = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value;
             customerLookup.CustomerLookup.CustomerName.Value = "";
             customerLookup.CustomerLookup.CustomerSortBy.Value = 2; //sort by 1 = customer id, 2 = customer name
 
@@ -92,12 +230,13 @@ namespace JournalEntryWithVendorInfo
                 string customerName = customerLookupForm.CustomerLookup.CustomerLookupScroll.CustomerName.Value;
 
                 // Display the value retrieved
-                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrCustomerId.Value = customerNumber;
-                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrCustomerName.Value = customerName;
+                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value = customerNumber;
+                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value = customerName;
 
 
                 // Clear the flag that indicates a value is to be retrieved from the lookup.
                 GPAddIn.ReturnToLookup = false;
+                GLTrxEntryWindow.IsChanged = true;
             }
         }
 
@@ -118,6 +257,7 @@ namespace JournalEntryWithVendorInfo
 
                 // Clear the flag that indicates a value is to be retrieved from the lookup.
                 GPAddIn.ReturnToLookup = false;
+                GLTrxEntryWindow.IsChanged = true;
             }
         }
     }
