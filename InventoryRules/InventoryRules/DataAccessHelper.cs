@@ -105,6 +105,7 @@ namespace InventoryRules
             IVRuleTargetsTable.Clear();
             IVRuleTargetsTable.Index.Value = idx;
             IVRuleTargetsTable.RangeStart();
+			IVRuleTargetsTable.UserId.Fill();
             IVRuleTargetsTable.RangeEnd();
 
             lastError = IVRuleTargetsTable.GetFirst();

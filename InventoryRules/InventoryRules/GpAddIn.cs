@@ -23,12 +23,18 @@ namespace InventoryRules
         static IvTransactionEntryForm IVTrxEntryForm = Vvf.Forms.IvTransactionEntry;
         static PopReceivingsEntryForm POPReceivingEntryForm = PurchaseRequisition.Forms.PopReceivingsEntry;
         static Microsoft.Dexterity.Applications.VvfDictionary.PorReturnsEntryForm PORReturnsEntryForm = Vvf.Forms.PorReturnsEntry;
-        //static Microsoft.Dexterity.Applications.DynamicsDictionary.PopReceiptLookupForm POPReceiptLookupForm = Microsoft.Dexterity.Applications.Dynamics.Forms.PopReceiptLookup;
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.IvTransferEntryForm IVTransferEntryForm = Microsoft.Dexterity.Applications.Dynamics.Forms.IvTransferEntry;
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.IvBinQuantityTransferEntryForm IVBinQtyTrfEntryForm = Microsoft.Dexterity.Applications.Dynamics.Forms.IvBinQuantityTransferEntry;
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.PmVoidVouchersForm PMVoidVouchersForm = Microsoft.Dexterity.Applications.Dynamics.Forms.PmVoidVouchers;
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.IvItemMaintenanceForm IVItemMaintenanceForm = Microsoft.Dexterity.Applications.Dynamics.Forms.IvItemMaintenance;
 
         static IvTransactionEntryForm.IvTransactionEntryWindow IVTrxEntryWindow = IVTrxEntryForm.IvTransactionEntry;
         static PopReceivingsEntryForm.PopReceivingsEntryWindow POPReceivingEntryWindow = POPReceivingEntryForm.PopReceivingsEntry;
         static Microsoft.Dexterity.Applications.VvfDictionary.PorReturnsEntryForm.PorReturnsEntryWindow PORReturnsEntryWindow = PORReturnsEntryForm.PorReturnsEntry;
-        //static Microsoft.Dexterity.Applications.DynamicsDictionary.PopReceiptLookupForm.PopReceiptLookupWindow POPReceiptLookupWindow = POPReceiptLookupForm.PopReceiptLookup;
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.IvTransferEntryForm.IvTransferEntryWindow IVTransferEntryWindow = IVTransferEntryForm.IvTransferEntry;
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.IvBinQuantityTransferEntryForm.IvBinQuantityTransferEntryWindow IVBinQtyTrfEntryWindow = IVBinQtyTrfEntryForm.IvBinQuantityTransferEntry;
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.PmVoidVouchersForm.PmVoidVouchersWindow PMVoidVouchersWindow = PMVoidVouchersForm.PmVoidVouchers;
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.IvItemMaintenanceForm.IvItemMaintenanceWindow IVItemMaintenanceWindow = IVItemMaintenanceForm.IvItemMaintenance;
 
         public static Boolean POPReceivingEntryWindow_openSavedReceipt;//Saved and not user defined
         public static Boolean PORReturnsEntryWindow_openSavedReturn;//Saved and not user defined
@@ -130,11 +136,13 @@ namespace InventoryRules
 
         public void Initialize()
         {
+            //rule 1 & 2
             IVTrxEntryWindow.PostButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(IVTrxEntryWindow_PostButton_ClickBeforeOriginal);
             IVTrxEntryWindow.SaveButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(IVTrxEntryWindow_SaveButton_ClickBeforeOriginal);
             IVTrxEntryWindow.SaveButton.ClickAfterOriginal += new System.EventHandler(IVTrxEntryWindow_SaveButton_ClickAfterOriginal);
             IVTrxEntryWindow.OpenAfterOriginal += new System.EventHandler(IVTrxEntryWindow_OpenAfterOriginal);
 
+            //rule 3
             POPReceivingEntryWindow.OpenAfterOriginal += new System.EventHandler(POPReceivingEntryWindow_OpenAfterOriginal);
             POPReceivingEntryWindow.SaveButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(POPReceivingEntryWindow_SaveButton_ClickBeforeOriginal);
             POPReceivingEntryWindow.BeforeModalDialog += new System.EventHandler<BeforeModalDialogEventArgs>(POPReceivingEntryWindow_BeforeModalDialog);
@@ -145,7 +153,7 @@ namespace InventoryRules
             POPReceivingEntryWindow.LineScroll.LineFillBeforeOriginal += POPReceivingEntryWindow_LineScroll_LineFillBeforeOriginal;
             POPReceivingEntryWindow.LineScroll.LineInsertBeforeOriginal += POPReceivingEntryWindow_LineScroll_LineInsertBeforeOriginal;
 
-
+            //rule 3
             PORReturnsEntryWindow.OpenAfterOriginal += new System.EventHandler(PORReturnsEntryWindow_OpenAfterOriginal);
             PORReturnsEntryWindow.SaveButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(PORReturnsEntryWindow_SaveButton_ClickBeforeOriginal);
             PORReturnsEntryWindow.BeforeModalDialog += new System.EventHandler<BeforeModalDialogEventArgs>(PORReturnsEntryWindow_BeforeModalDialog);
@@ -157,6 +165,204 @@ namespace InventoryRules
             PORReturnsEntryWindow.LookupButton4.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(LookupButton4_ClickBeforeOriginal);
             PORReturnsEntryWindow.ReplaceReturnedGoods.ValidateBeforeOriginal += new System.ComponentModel.CancelEventHandler(ReplaceReturnedGoods_ValidateBeforeOriginal);
             PORReturnsEntryWindow.InvoiceExpectedReturns.ValidateBeforeOriginal += new System.ComponentModel.CancelEventHandler(InvoiceExpectedReturns_ValidateBeforeOriginal);
+
+            //rule 4
+            IVTransferEntryWindow.OpenAfterOriginal += IVTransferEntryWindow_IVTransferEntryWindow_OpenAfterOriginal;
+            IVTransferEntryWindow.LocalFromDefaultSite.ValidateBeforeOriginal += IVTransferEntryWindow_LocalFromDefaultSite_ValidateBeforeOriginal;
+            IVTransferEntryWindow.LocalToDefaultSite.ValidateBeforeOriginal += IVTransferEntryWindow_LocalToDefaultSite_ValidateBeforeOriginal;
+            IVTransferEntryWindow.IvTransferScroll.TrxLocation.ValidateBeforeOriginal += IVTransferEntryWindow_TrxLocation_ValidateBeforeOriginal;
+            IVTransferEntryWindow.IvTransferScroll.TransferToLocation.ValidateBeforeOriginal += IVTransferEntryWindow_TransferToLocation_ValidateBeforeOriginal;
+            IVBinQtyTrfEntryWindow.LocalToBin.ValidateBeforeOriginal += IVBinQtyTrfEntryWindow_LocalToBin_ValidateBeforeOriginal;
+            IVBinQtyTrfEntryWindow.ActivateAfterOriginal += IVBinQtyTrfEntryWindow_ActivateAfterOriginal;
+
+            //rule 5
+            PMVoidVouchersWindow.TransactionsScroll.LineFillBeforeOriginal += PMVoidVouchersWindow_TransactionsScroll_LineFillBeforeOriginal;
+
+            //rule 6 is implemented in EditPOPUserDefinedAfterPost
+
+            //rule 7
+            IVItemMaintenanceWindow.OpenAfterOriginal += IVItemMaintenanceWindow_OpenAfterOriginal;
+            IVItemMaintenanceWindow.DecimalPlacesQtys.ValidateBeforeOriginal += DecimalPlacesQtys_ValidateBeforeOriginal;
+            IVItemMaintenanceWindow.ValuationMethod.ValidateBeforeOriginal += ValuationMethod_ValidateBeforeOriginal;
+            IVItemMaintenanceWindow.SaveButton.ClickBeforeOriginal += SaveButton_ClickBeforeOriginal;
+            IVItemMaintenanceWindow.SaveButton.ClickAfterOriginal += SaveButton_ClickAfterOriginal;
+            IVItemMaintenanceWindow.ClearButton.ClickAfterOriginal += ClearButton_ClickAfterOriginal;
+        }
+
+        void SaveButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (ItemCreationRule())
+            {
+                if(IVItemMaintenanceWindow.ItemType.Value < 3)//sales inventory and discontinued item
+                {
+                    if (IVItemMaintenanceWindow.ValuationMethod.Value != 3)
+                    {
+                        MessageBox.Show("Valuation Method must be Average Perpetual", "ItemCreationRule", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        IVItemMaintenanceWindow.ValuationMethod.Value = 3;
+                        e.Cancel = true;
+                    }
+                }
+                if (IVItemMaintenanceWindow.ItemType.Value != 3)
+                {
+                    if (IVItemMaintenanceWindow.DecimalPlacesQtys < 3)
+                    {
+                        MessageBox.Show("Decimal Places must not be less than 2", "ItemCreationRule", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        IVItemMaintenanceWindow.DecimalPlacesQtys.Value = 3;
+                        e.Cancel = true;
+                    }
+                }
+            }
+        }
+
+        void ClearButton_ClickAfterOriginal(object sender, EventArgs e)
+        {
+            if (ItemCreationRule())
+            {
+                IVItemMaintenanceWindow.ValuationMethod.Value = 3;
+                IVItemMaintenanceWindow.DecimalPlacesQtys.Value = 3;
+                IVItemMaintenanceWindow.IsChanged = false;
+            }
+        }
+
+        void SaveButton_ClickAfterOriginal(object sender, EventArgs e)
+        {
+            if (ItemCreationRule())
+            {
+                IVItemMaintenanceWindow.ValuationMethod.Value = 3;
+                IVItemMaintenanceWindow.DecimalPlacesQtys.Value = 3;
+                IVItemMaintenanceWindow.IsChanged = false;
+            }
+        }
+
+        void IVItemMaintenanceWindow_OpenAfterOriginal(object sender, EventArgs e)
+        {
+            if(ItemCreationRule())
+            {
+                IVItemMaintenanceWindow.ValuationMethod.Value = 3;
+                IVItemMaintenanceWindow.DecimalPlacesQtys.Value = 3;
+                IVItemMaintenanceWindow.IsChanged = false;
+            }
+        }
+
+        void ValuationMethod_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (ItemCreationRule())
+            {
+                if (IVItemMaintenanceWindow.ValuationMethod.Value != 3)
+                {
+                    MessageBox.Show("Item Valuation Method must be Average Perpetual", "ItemCreationRule", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    IVItemMaintenanceWindow.ValuationMethod.Value = 3;
+                }
+            }
+        }
+
+        void DecimalPlacesQtys_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (ItemCreationRule())
+            {
+                if (IVItemMaintenanceWindow.DecimalPlacesQtys.Value < 3)
+                {
+                    MessageBox.Show("Item Decimal Places must not be less than 2", "ItemCreationRule", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    IVItemMaintenanceWindow.DecimalPlacesQtys.Value = 3;
+                }
+            }
+        }
+
+        void PMVoidVouchersWindow_TransactionsScroll_LineFillBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //throw new NotImplementedException();
+            if(canNotVoidPMVouchersRule())
+            {
+                if (PMVoidVouchersForm.Tables.PmTransactionOpen.DocumentType.Value == 1)
+                {
+                    if (PMVoidVouchersForm.Tables.PmTransactionOpen.BatchSource.Value.Trim() == "Rcvg Trx Ivc")
+                    {
+                        e.Cancel = true;
+                    }
+                }
+            }
+        }
+
+        void IVTransferEntryWindow_TransferToLocation_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (UserDefaults2())
+            {
+                if (IVTransferEntryWindow.IvTransferScroll.TransferToLocation.Value != "LOGISTICS")
+                {
+                    MessageBox.Show("User ppic only can use LOGISTICS Site");
+                    IVTransferEntryWindow.IvTransferScroll.TransferToLocation.Value = "LOGISTICS";
+                    //e.Cancel = true;
+                }
+            }
+        }
+
+        void IVTransferEntryWindow_TrxLocation_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (UserDefaults2())
+            {
+                if (IVTransferEntryWindow.IvTransferScroll.TrxLocation.Value != "PROD")
+                {
+                    MessageBox.Show("User ppic only can use PROD Site");
+                    IVTransferEntryWindow.IvTransferScroll.TrxLocation.Value = "PROD";
+                    //e.Cancel = true;
+                }
+            }
+        }
+
+        void IVBinQtyTrfEntryWindow_ActivateAfterOriginal(object sender, EventArgs e)
+        {
+            if (UserDefaults2())
+            {
+                IVBinQtyTrfEntryWindow.LocalToBin.Value = "WB STORE";
+            }
+        }
+
+        void IVTransferEntryWindow_IVTransferEntryWindow_OpenAfterOriginal(object sender, EventArgs e)
+        {
+            if (UserDefaults2())
+            {
+                IVTransferEntryWindow.LocalFromDefaultSite.Value = "PROD";
+                IVTransferEntryWindow.LocalToDefaultSite.Value = "LOGISTICS";
+            }
+        }
+
+        void IVTransferEntryWindow_LocalFromDefaultSite_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (UserDefaults2())
+            {
+                if (IVTransferEntryWindow.LocalFromDefaultSite.Value != "PROD")
+                {
+                    MessageBox.Show("User ppic only can use PROD Site");
+                    IVTransferEntryWindow.LocalFromDefaultSite.Value = "PROD";
+                    //e.Cancel = true;
+                }
+            }
+        }
+
+        void IVTransferEntryWindow_LocalToDefaultSite_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (UserDefaults2())
+            {
+                if (IVTransferEntryWindow.LocalToDefaultSite.Value != "LOGISTICS")
+                {
+                    MessageBox.Show("User ppic only can use LOGISTICS Site");
+                    IVTransferEntryWindow.LocalToDefaultSite.Value = "LOGISTICS";
+                    //e.Cancel = true;
+                }
+            }
+        }
+
+        void IVBinQtyTrfEntryWindow_LocalToBin_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (UserDefaults2())
+            {
+                if (IVBinQtyTrfEntryWindow.LocalToBin.Value != "WB STORE")
+                {
+                    MessageBox.Show("User ppic only can use WB STORE Bin");
+                    IVBinQtyTrfEntryWindow.LocalToBin.Value = "WB STORE";
+                    //e.Cancel = true;
+                }
+            }
         }
 
         void PORReturnsEntryWindow_ReceiptDate_LeaveBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
@@ -624,14 +830,67 @@ namespace InventoryRules
 
         void IVTrxEntryWindow_PostButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (!(UserCanPost()))
+            if (UserCanNotPost())
             {
                 MessageBox.Show("Jangan Post dari sini, Silahkan Post dari Series Post", "Rule 1", MessageBoxButtons.OK);
                 e.Cancel = true;
             }
         }
 
-        Boolean IVDateRule()
+        Boolean ItemCreationRule()//rule 7
+        {
+            Boolean canNotLessThan2 = true;
+
+            string[] targets;
+            TableError err;
+
+            err = DataAccessHelper.GetIVRuleTargetsByID(7, out targets);
+            if (err == TableError.NoError)
+            {
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId.Value) > -1)
+                {
+                    canNotLessThan2 = false;
+                }
+            }
+            return canNotLessThan2;
+        }
+
+        Boolean canNotVoidPMVouchersRule()//rule 5
+        {
+            Boolean canNotVoid = true;
+            string[] targets;
+            TableError err;
+
+            err = DataAccessHelper.GetIVRuleTargetsByID(5, out targets);
+            if (err == TableError.NoError)
+            {
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId.Value) > -1)
+                {
+                    canNotVoid = false;
+                }
+            }
+            return canNotVoid;
+
+        }
+
+        Boolean UserDefaults2() //rule 4
+        {
+            Boolean useDefault = false;
+            string[] targets;
+            TableError err;
+
+            err = DataAccessHelper.GetIVRuleTargetsByID(4, out targets);
+            if (err == TableError.NoError)
+            {
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId.Value) > -1)
+                {
+                    useDefault = true;
+                }
+            }
+            return useDefault;
+        }
+
+        Boolean IVDateRule() //rule 3
         {
             Boolean enforceServerDate = true;
             string[] targets;
@@ -640,16 +899,16 @@ namespace InventoryRules
             err = DataAccessHelper.GetIVRuleTargetsByID(3, out targets);
             if (err == TableError.NoError)
             {
-                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId) == -1)
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId.Value) > -1)
                 {
-                    enforceServerDate = true;
+                    enforceServerDate = false;
                 }
             }
 
             return enforceServerDate;
         }
 
-        Boolean UserDefaults1()
+        Boolean UserDefaults1() //rule 2
         {
             Boolean useDefault = false;
             string[] targets;
@@ -658,7 +917,7 @@ namespace InventoryRules
             err = DataAccessHelper.GetIVRuleTargetsByID(2, out targets);
             if (err == TableError.NoError)
             {
-                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId) == -1) 
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId.Value) > -1) 
                 {
                     useDefault = true;
                 }
@@ -666,18 +925,18 @@ namespace InventoryRules
             return useDefault;
         }
 
-        Boolean UserCanPost()
+        Boolean UserCanNotPost() //rule 1
         {
-            Boolean userCanPost = false;
+            Boolean userCanPost = true;
             string[] targets;
             TableError err;
 
             err = DataAccessHelper.GetIVRuleTargetsByID(1, out targets);
             if (err == TableError.NoError)
             {
-                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId) == -1) 
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId.Value) > -1) 
                 {
-                    userCanPost = true;
+                    userCanPost = false;
                 }
             }
             return userCanPost;
