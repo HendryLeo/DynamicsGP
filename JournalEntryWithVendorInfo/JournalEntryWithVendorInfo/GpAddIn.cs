@@ -38,17 +38,36 @@ namespace JournalEntryWithVendorInfo
             VendorLookupForm vendorLookupForm = SmartList.Forms.VendorLookup;
             vendorLookupForm.VendorLookup.SelectButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(VendorSelectButton_ClickBeforeOriginal);
 
-            GLTrxEntryWindow.SaveButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(SaveButton_ClickBeforeOriginal);
-            GLTrxEntryWindow.SaveButton.ClickAfterOriginal += SaveButton_ClickAfterOriginal;
-            GLTrxEntryWindow.DeleteButton.ClickBeforeOriginal += DeleteButton_ClickBeforeOriginal;
-            GLTrxEntryWindow.DeleteButton.ClickAfterOriginal += DeleteButton_ClickAfterOriginal;
-            GLTrxEntryWindow.BeforeModalDialog += GLTrxEntryWindow_BeforeModalDialog;
-            GLTrxEntryWindow.AfterModalDialog += GLTrxEntryWindow_AfterModalDialog;
-            GLTrxEntryWindow.PostButton.ClickBeforeOriginal += PostButton_ClickBeforeOriginal;
-            GLTrxEntryWindow.JournalEntry.Change += JournalEntry_Change;
+            GLTrxEntryWindow.SaveButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(GLTrxEntryWindow_SaveButton_ClickBeforeOriginal);
+            GLTrxEntryWindow.SaveButton.ClickAfterOriginal += new System.EventHandler(GLTrxEntryWindow_SaveButton_ClickAfterOriginal);
+            GLTrxEntryWindow.BeforeModalDialog +=  new System.EventHandler<BeforeModalDialogEventArgs> (GLTrxEntryWindow_BeforeModalDialog);
+            GLTrxEntryWindow.AfterModalDialog +=  new System.EventHandler<AfterModalDialogEventArgs>(GLTrxEntryWindow_AfterModalDialog);
+            GLTrxEntryWindow.PostButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(GLTrxEntryWindow_PostButton_ClickBeforeOriginal);
+            GLTrxEntryWindow.JournalEntry.Change +=  new System.EventHandler(GLTrxEntryWindow_JournalEntry_Change);
+
+            GLJEInquiryWindow.JournalEntry.Change += new System.EventHandler(GLJEInquiryWindow_JournalEntry_Change);
         }
 
-        void JournalEntry_Change(object sender, EventArgs e)
+        void GLJEInquiryWindow_JournalEntry_Change(object sender, EventArgs e)
+        {
+            VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorId.Value = "";
+            VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorName.Value = "";
+            if (GLJEInquiryWindow.JournalEntry.Value > 0)
+            {
+                if(GLJEInquiryWindow.LocalFiscalYear.Value == GLJEInquiryForm.Tables.GlAccountTrxHist.HistoryYear.Value.ToString())//history year trx
+                {
+                    VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorId.Value = GLJEInquiryForm.Tables.GlAccountTrxHist.OriginatingMasterId.Value;
+                    VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorName.Value = GLJEInquiryForm.Tables.GlAccountTrxHist.OriginatingMasterName.Value;
+                }
+                else if(GLJEInquiryWindow.LocalFiscalYear.Value == GLJEInquiryForm.Tables.GlYtdTrxOpen.OpenYear.Value.ToString())//current ytd trx
+                {
+                    VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorId.Value = GLJEInquiryForm.Tables.GlYtdTrxOpen.OriginatingMasterId.Value;
+                    VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorName.Value = GLJEInquiryForm.Tables.GlYtdTrxOpen.OriginatingMasterName.Value;
+                }
+            }
+        }
+
+        void GLTrxEntryWindow_JournalEntry_Change(object sender, EventArgs e)
         {
             TableError err;
             string orID = "", orName = "";
@@ -67,12 +86,7 @@ namespace JournalEntryWithVendorInfo
             }
        }
 
-        void DeleteButton_ClickAfterOriginal(object sender, EventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        void PostButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        void GLTrxEntryWindow_PostButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             DialogResult answer;
             TableError err;
@@ -136,12 +150,7 @@ namespace JournalEntryWithVendorInfo
             }
         }
 
-        void DeleteButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        void SaveButton_ClickAfterOriginal(object sender, EventArgs e)
+        void GLTrxEntryWindow_SaveButton_ClickAfterOriginal(object sender, EventArgs e)
         {
             TableError err;
             if (jrnEntryToUpdate > 0)
@@ -156,7 +165,8 @@ namespace JournalEntryWithVendorInfo
             orIDToSave = "";
             orNameToSave = "";
         }
-        void SaveButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+
+        void GLTrxEntryWindow_SaveButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             DialogResult answer;
 
