@@ -64,75 +64,102 @@ namespace InventoryUserDefined
             IVSetupForm.CloseAfterOriginal += new EventHandler(IVUDefSetupForm_CloseAfterOriginal);
         }
 
-        void OpenIVUDefSetup(object sender,EventArgs e)
+        Boolean userCanEditUDef()
         {
-            if (IVUDefSetupForm == null)
-            {
-                try
-                {
-                    IVUDefSetupForm = new IVUDefSetup();
+            Boolean canEdit = false;
 
-                }
-                catch (Exception ex)
+            string[] targets;
+            TableError err;
+
+            err = DataAccessHelper.GetIVRuleTargetsByID(6, out targets);
+            if (err == TableError.NoError)
+            {
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId) > -1)
                 {
-                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                    canEdit = true;
                 }
             }
+            return canEdit;
+        }
 
-            // Always show and activate the WinForm
-            IVUDefSetupForm.Show();
-            IVUDefSetupForm.Activate();
+        void OpenIVUDefSetup(object sender,EventArgs e)
+        {
+            if (userCanEditUDef())
+            {
+                if (IVUDefSetupForm == null)
+                {
+                    try
+                    {
+                        IVUDefSetupForm = new IVUDefSetup();
 
-            // Set the flag to indicate that the form shouldn't be closed
-            CloseIVUDefSetupForm = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                    }
+                }
+
+                // Always show and activate the WinForm
+                IVUDefSetupForm.Show();
+                IVUDefSetupForm.Activate();
+
+                // Set the flag to indicate that the form shouldn't be closed
+                CloseIVUDefSetupForm = false;
+            }
         }
 
         void OpenIVUDef1(object sender,EventArgs e)
         {
-            if (EditIVUDefForm == null)
+            if (userCanEditUDef())
             {
-                try
+                if (EditIVUDefForm == null)
                 {
-                    EditIVUDefForm = new EditIVUDef();
+                    try
+                    {
+                        EditIVUDefForm = new EditIVUDef();
 
+                    }
+                    catch (Exception ex)
+                    {
+                        Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
-                }
+
+                // Always show and activate the WinForm
+                EditIVUDefForm.Caller = 1;
+                EditIVUDefForm.Show();
+                EditIVUDefForm.Activate();
+
+                // Set the flag to indicate that the form shouldn't be closed
+                CloseEditIVUDefForm = false;
             }
-
-            // Always show and activate the WinForm
-            EditIVUDefForm.Caller = 1;
-            EditIVUDefForm.Show();
-            EditIVUDefForm.Activate();
-
-            // Set the flag to indicate that the form shouldn't be closed
-            CloseEditIVUDefForm = false;
         }
 
         void OpenIVUDef2(object sender, EventArgs e)
         {
-            if (EditIVUDefForm == null)
+            if (userCanEditUDef())
             {
-                try
+                if (EditIVUDefForm == null)
                 {
-                    EditIVUDefForm = new EditIVUDef();
+                    try
+                    {
+                        EditIVUDefForm = new EditIVUDef();
 
+                    }
+                    catch (Exception ex)
+                    {
+                        Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
-                }
+
+                // Always show and activate the WinForm
+                EditIVUDefForm.Caller = 2;
+                EditIVUDefForm.Show();
+                EditIVUDefForm.Activate();
+
+                // Set the flag to indicate that the form shouldn't be closed
+                CloseEditIVUDefForm = false;
             }
-
-            // Always show and activate the WinForm
-            EditIVUDefForm.Caller = 2;
-            EditIVUDefForm.Show();
-            EditIVUDefForm.Activate();
-
-            // Set the flag to indicate that the form shouldn't be closed
-            CloseEditIVUDefForm = false;
         }
 
         void EditIVUDefForm_CloseAfterOriginal(object sender, EventArgs e)
