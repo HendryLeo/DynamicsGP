@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("EditPOPUserDefinedAfterPost")]
-[assembly: AssemblyCopyright("Copyright ©  2014 Hendry Leo")]
+[assembly: AssemblyCopyright("Copyright © Hendry Leo 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
