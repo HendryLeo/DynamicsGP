@@ -800,7 +800,7 @@ namespace InventoryRules
             {
                 if (IVTrxEntryWindow.VvfAdjtype == 1)
                 {
-                    answer = MessageBox.Show("Anda yakin akan menyimpan Adjustment Type = IN", "Adjustment IN", MessageBoxButtons.YesNo);
+                    answer = MessageBox.Show("Are you sure want to save Adjustment Type = IN", "Adjustment IN", MessageBoxButtons.YesNo);
                     if (answer == DialogResult.No) e.Cancel = true;
                 }
             }
@@ -832,7 +832,7 @@ namespace InventoryRules
         {
             if (UserCanNotPost())
             {
-                MessageBox.Show("Jangan Post dari sini, Silahkan Post dari Series Post", "Rule 1", MessageBoxButtons.OK);
+                MessageBox.Show("Do Not Post from here, Please Post from Series Post", "Rule 1", MessageBoxButtons.OK);
                 e.Cancel = true;
             }
         }
