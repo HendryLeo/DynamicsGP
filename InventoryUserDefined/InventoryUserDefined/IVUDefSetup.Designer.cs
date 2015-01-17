@@ -775,7 +775,7 @@
             this.cmdList1.Image = global::InventoryUserDefined.Properties.Resources.Field_Expansion;
             this.cmdList1.Location = new System.Drawing.Point(276, 34);
             this.cmdList1.Name = "cmdList1";
-            this.cmdList1.Size = new System.Drawing.Size(24, 22);
+            this.cmdList1.Size = new System.Drawing.Size(20, 22);
             this.cmdList1.TabIndex = 165;
             this.cmdList1.UseVisualStyleBackColor = false;
             this.cmdList1.Click += new System.EventHandler(this.cmdList1_Click);
@@ -786,7 +786,7 @@
             this.cmdList2.Image = global::InventoryUserDefined.Properties.Resources.Field_Expansion;
             this.cmdList2.Location = new System.Drawing.Point(276, 55);
             this.cmdList2.Name = "cmdList2";
-            this.cmdList2.Size = new System.Drawing.Size(24, 22);
+            this.cmdList2.Size = new System.Drawing.Size(20, 22);
             this.cmdList2.TabIndex = 166;
             this.cmdList2.UseVisualStyleBackColor = false;
             this.cmdList2.Click += new System.EventHandler(this.cmdList2_Click);
@@ -797,7 +797,7 @@
             this.cmdList3.Image = global::InventoryUserDefined.Properties.Resources.Field_Expansion;
             this.cmdList3.Location = new System.Drawing.Point(276, 76);
             this.cmdList3.Name = "cmdList3";
-            this.cmdList3.Size = new System.Drawing.Size(24, 22);
+            this.cmdList3.Size = new System.Drawing.Size(20, 22);
             this.cmdList3.TabIndex = 167;
             this.cmdList3.UseVisualStyleBackColor = false;
             this.cmdList3.Click += new System.EventHandler(this.cmdList3_Click);
@@ -808,7 +808,7 @@
             this.cmdList4.Image = global::InventoryUserDefined.Properties.Resources.Field_Expansion;
             this.cmdList4.Location = new System.Drawing.Point(276, 97);
             this.cmdList4.Name = "cmdList4";
-            this.cmdList4.Size = new System.Drawing.Size(24, 22);
+            this.cmdList4.Size = new System.Drawing.Size(20, 22);
             this.cmdList4.TabIndex = 168;
             this.cmdList4.UseVisualStyleBackColor = false;
             this.cmdList4.Click += new System.EventHandler(this.cmdList4_Click);
@@ -819,7 +819,7 @@
             this.cmdList5.Image = global::InventoryUserDefined.Properties.Resources.Field_Expansion;
             this.cmdList5.Location = new System.Drawing.Point(276, 118);
             this.cmdList5.Name = "cmdList5";
-            this.cmdList5.Size = new System.Drawing.Size(24, 22);
+            this.cmdList5.Size = new System.Drawing.Size(20, 22);
             this.cmdList5.TabIndex = 169;
             this.cmdList5.UseVisualStyleBackColor = false;
             this.cmdList5.Click += new System.EventHandler(this.cmdList5_Click);
