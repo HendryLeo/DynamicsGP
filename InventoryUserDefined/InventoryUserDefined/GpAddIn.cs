@@ -74,7 +74,7 @@ namespace InventoryUserDefined
             err = DataAccessHelper.GetIVRuleTargetsByID(6, out targets);
             if (err == TableError.NoError)
             {
-                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId) > -1)
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId.Value.Trim()) > -1)
                 {
                     canEdit = true;
                 }
@@ -166,16 +166,22 @@ namespace InventoryUserDefined
         {
             // Close the WinForm
             CloseEditIVUDefForm = true;
-            EditIVUDefForm.Close();
-            EditIVUDefForm = null;
+            if (EditIVUDefForm != null)
+            {
+                EditIVUDefForm.Close();
+                EditIVUDefForm = null;
+            }
         }
 
         void IVUDefSetupForm_CloseAfterOriginal(object sender, EventArgs e)
         {
             // Close the WinForm
             CloseIVUDefSetupForm = true;
-            IVUDefSetupForm.Close();
-            IVUDefSetupForm = null;
+            if (EditIVUDefForm != null)
+            {
+                EditIVUDefForm.Close();
+                EditIVUDefForm = null;
+            }
         }
 
     }
