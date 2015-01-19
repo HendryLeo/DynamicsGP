@@ -95,7 +95,7 @@ namespace EditPOPUserDefinedAfterPost
             err = DataAccessHelper.GetIVRuleTargetsByID(6, out targets);
             if (err == TableError.NoError)
             {
-                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId) > -1)
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId.Value) > -1)
                 {
                     canEdit = true;
                 }
