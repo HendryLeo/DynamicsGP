@@ -1,4 +1,5 @@
 using System;
+using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Dexterity.Bridge;
@@ -57,19 +58,26 @@ namespace RevaluationInfo
                 }
                 backDate++;
             }
-            if (XchRatefound)
+            try
             {
-                Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglMulai.Value = MCExchangeRateMstrTable.ExchangeDate.Value;
-                Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglExpire.Value = MCExchangeRateMstrTable.ExpirationDate.Value;
-                Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalKursPajak.Value = MCExchangeRateMstrTable.ExchangeRate.Value;
-                Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalBalanceKurs.Value = MCExchangeRateMstrTable.ExchangeRate.Value * currBalance;
+                if (XchRatefound)
+                {
+                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglMulai.Value = MCExchangeRateMstrTable.ExchangeDate.Value;
+                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglExpire.Value = MCExchangeRateMstrTable.ExpirationDate.Value;
+                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalKursPajak.Value = MCExchangeRateMstrTable.ExchangeRate.Value;
+                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalBalanceKurs.Value = MCExchangeRateMstrTable.ExchangeRate.Value * currBalance;
+                }
+                else
+                {
+                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglMulai.Value = DateTime.Now.Date;
+                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglExpire.Value = DateTime.Now.Date;
+                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalKursPajak.Value = 1;
+                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalBalanceKurs.Value = 1 * currBalance;
+                }
             }
-            else
+            catch (Microsoft.Dexterity.Bridge.DexterityException ex)
             {
-                Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglMulai.Value = DateTime.Now.Date;
-                Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglExpire.Value = DateTime.Now.Date;
-                Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalKursPajak.Value = 1;
-                Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalBalanceKurs.Value = 1 * currBalance;
+                MessageBox.Show(ex.Message + System.Environment.NewLine + "Are you using the Modified Window?");
             }
             //CMCheckbookMstrTable.Close();
             MCExchangeRateMstrTable.Close();
