@@ -17,23 +17,13 @@ namespace CompanyOptions
 
         static SyCurrentActivityTable ActivityTable = Microsoft.Dexterity.Applications.Dynamics.Tables.SyCurrentActivity;
         
-        //System.Timers.Timer aTimer = new System.Timers.Timer();//using timer cause memory corruption, can not figure out how
-        //string userActivity = "";
-
         public void Initialize()
         {
             // Register Event to trigger when Switch Company form opens
-            SwitchCompanyWindow.OpenAfterOriginal += new System.EventHandler(SwitchCompanyWindow_OpenAfterOriginal);
-            //SwitchCompanyWindow.CloseBeforeOriginal += new System.ComponentModel.CancelEventHandler(SwitchCompanyWindow_CloseBeforeOriginal);
+            SwitchCompanyWindow.OpenBeforeOriginal += new System.ComponentModel.CancelEventHandler(SwitchCompanyWindow_OpenBeforeOriginal);
         }
 
-        //void SwitchCompanyWindow_CloseBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
-        //{
-        //    aTimer.Stop();
-        //    //aTimer = null;
-        //}
-
-        void SwitchCompanyWindow_OpenAfterOriginal(object sender, EventArgs e)
+        void SwitchCompanyWindow_OpenBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             List<string> users;
             TableError err;
@@ -65,32 +55,6 @@ namespace CompanyOptions
                 //userActivity += str + ",";
                 SwitchCompanyWindow.LocalStatus.Value += str + ",";
             }
-            //remove trailing comma
-            //userActivity = userActivity.Substring(0, userActivity.Length - 1);
-            //if (userActivity.Length > 1)
-            //{
-            //    aTimer.Elapsed += aTimer_Elapsed;
-            //    aTimer.Interval = 1000;
-            //    aTimer.Start();
-            //}
         }
-
-        //void aTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        //{
-        //    //Application.DoEvents();
-        //    try
-        //    {
-        //        if (SwitchCompanyWindow != null)
-        //        {
-        //            SwitchCompanyWindow.LocalStatus.Value = userActivity;
-        //            userActivity = userActivity.Substring(1) + userActivity.Substring(0, 1);
-        //        }
-        //    }
-        //    catch(Exception ex)
-        //    {
-        //        aTimer.Stop();
-                
-        //    }
-        //}
     }
 }

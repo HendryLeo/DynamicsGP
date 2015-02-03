@@ -41,10 +41,11 @@
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.Dexterity.Bridge, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Application.Dynamics">
       <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
