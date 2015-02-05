@@ -25,7 +25,7 @@ namespace RevaluationInfo
 
         void CheckbookId_Change(object sender, EventArgs e)
         {
-            DateTime defaultGPDate = new DateTime(1900, 1, 1);
+            DateTime defaultGPDate = new DateTime(1900, 1, 1), userDate;
             TableError err;
             decimal currBalance;
             byte backDate = 1;
@@ -35,14 +35,15 @@ namespace RevaluationInfo
 
             //this is hardcoded value that may not be portable to other GP Setup
             //currencyid suffix is -TAX
-            
+            userDate = DateTime.Now.Date;
             MCExchangeRateMstrTable.Clear();
             MCExchangeRateMstrTable.Key = 1;
             MCExchangeRateMstrTable.ExchangeTableId.Value = CMCheckbookBalanceForm.Tables.CmCheckbookMstr.CurrencyId.Value + "-TAX";
-            MCExchangeRateMstrTable.ExchangeDate.Value = DateTime.Now.Date;
+            MCExchangeRateMstrTable.ExchangeDate.Value = userDate.Date;
             MCExchangeRateMstrTable.Time.Value = defaultGPDate;
 
             err = MCExchangeRateMstrTable.Get();
+            if (err == TableError.NoError) XchRatefound = true;//found
             while (backDate < 7 & err == TableError.NotFound)//loop 7 times while notfound
             {
                 MCExchangeRateMstrTable.Clear();
@@ -58,6 +59,7 @@ namespace RevaluationInfo
                 }
                 backDate++;
             }
+            
             try
             {
                 if (XchRatefound)
@@ -69,10 +71,10 @@ namespace RevaluationInfo
                 }
                 else
                 {
-                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglMulai.Value = DateTime.Now.Date;
-                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglExpire.Value = DateTime.Now.Date;
+                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglMulai.Value = userDate.Date;
+                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalTglExpire.Value = userDate.Date;
                     Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalKursPajak.Value = 1;
-                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalBalanceKurs.Value = 1 * currBalance;
+                    Microsoft.Dexterity.Applications.DynamicsModified.Forms.CmCheckbookBalance.CmCheckbookBalance.LocalBalanceKurs.Value = currBalance;
                 }
             }
             catch (Microsoft.Dexterity.Bridge.DexterityException ex)
