@@ -11,6 +11,8 @@ opt-out rule, is enforced by default, user can request to be exempted
 5 (opt-out). Void Open Payable Transaction, can not void invoices that originated from POP
 6 (opt-in). user can edit User Defined after post
 7 (opt-out). Item Maintenance - item quantity decimal must not be less than 2, Item valuation method is average perpetual
+8 (opt-out). Matching Invoice date can not be less than Receipt Date
+9 (opt-in). user can only edit Receipt Date and save to batch
 
 As usual, I have several alternate form
 rule no 2, 4 is tightly coupled with my GP setup

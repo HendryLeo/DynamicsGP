@@ -20,6 +20,9 @@ namespace InventoryRules
     {
         // IDexterityAddIn interface
 
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.IvBatchEntryForm IVBatchEntryForm = Microsoft.Dexterity.Applications.Dynamics.Forms.IvBatchEntry;
+
+
         static IvTransactionEntryForm IVTrxEntryForm = Vvf.Forms.IvTransactionEntry;
         static PopReceivingsEntryForm POPReceivingEntryForm = PurchaseRequisition.Forms.PopReceivingsEntry;
         static Microsoft.Dexterity.Applications.VvfDictionary.PorReturnsEntryForm PORReturnsEntryForm = Vvf.Forms.PorReturnsEntry;
@@ -27,6 +30,10 @@ namespace InventoryRules
         static Microsoft.Dexterity.Applications.DynamicsDictionary.IvBinQuantityTransferEntryForm IVBinQtyTrfEntryForm = Microsoft.Dexterity.Applications.Dynamics.Forms.IvBinQuantityTransferEntry;
         static Microsoft.Dexterity.Applications.DynamicsDictionary.PmVoidVouchersForm PMVoidVouchersForm = Microsoft.Dexterity.Applications.Dynamics.Forms.PmVoidVouchers;
         static Microsoft.Dexterity.Applications.DynamicsDictionary.IvItemMaintenanceForm IVItemMaintenanceForm = Microsoft.Dexterity.Applications.Dynamics.Forms.IvItemMaintenance;
+        static Microsoft.Dexterity.Applications.VvfDictionary.PopInvoiceEntryForm POPInvoiceEntryForm = Microsoft.Dexterity.Applications.Vvf.Forms.PopInvoiceEntry;
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.PopInvoiceMatchingForm POPInvoiceMatchingForm = Microsoft.Dexterity.Applications.Dynamics.Forms.PopInvoiceMatching;
+
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.IvBatchEntryForm.IvBatchEntryWindow IVBatchEntryWindow = IVBatchEntryForm.IvBatchEntry;
 
         static IvTransactionEntryForm.IvTransactionEntryWindow IVTrxEntryWindow = IVTrxEntryForm.IvTransactionEntry;
         static PopReceivingsEntryForm.PopReceivingsEntryWindow POPReceivingEntryWindow = POPReceivingEntryForm.PopReceivingsEntry;
@@ -35,9 +42,42 @@ namespace InventoryRules
         static Microsoft.Dexterity.Applications.DynamicsDictionary.IvBinQuantityTransferEntryForm.IvBinQuantityTransferEntryWindow IVBinQtyTrfEntryWindow = IVBinQtyTrfEntryForm.IvBinQuantityTransferEntry;
         static Microsoft.Dexterity.Applications.DynamicsDictionary.PmVoidVouchersForm.PmVoidVouchersWindow PMVoidVouchersWindow = PMVoidVouchersForm.PmVoidVouchers;
         static Microsoft.Dexterity.Applications.DynamicsDictionary.IvItemMaintenanceForm.IvItemMaintenanceWindow IVItemMaintenanceWindow = IVItemMaintenanceForm.IvItemMaintenance;
+        static Microsoft.Dexterity.Applications.VvfDictionary.PopInvoiceEntryForm.PopInvoiceEntryWindow POPInvoiceEntryWindow = POPInvoiceEntryForm.PopInvoiceEntry;
+        static Microsoft.Dexterity.Applications.DynamicsDictionary.PopInvoiceMatchingForm.PopInvoiceMatchingWindow POPInvoiceMatchingWindow = POPInvoiceMatchingForm.PopInvoiceMatching;
 
         public static Boolean POPReceivingEntryWindow_openSavedReceipt;//Saved and not user defined
         public static Boolean PORReturnsEntryWindow_openSavedReturn;//Saved and not user defined
+
+        Boolean invoiceDateLessThanReceiptDate(string InvoiceNumber, DateTime invoiceDate)
+        {
+            DateTime receiptDate;
+            TableError err;
+            string[] POPReceiptMatched;
+            Boolean cancel = false; //cancel as soon as invoiceDate is less than a receipt date
+
+            err = DataAccessHelper.GetPOPReceiptMatchedbyPOPInvoice(InvoiceNumber, out POPReceiptMatched);
+            switch (err)
+            {
+                case TableError.NoError: //receipt matched
+                    {
+                        foreach (string POPReceipt in POPReceiptMatched)
+                        {
+                            err = DataAccessHelper.GetPOPReceiptDate(POPReceipt, out receiptDate);
+                            switch (err)
+                            {
+                                case TableError.NoError:
+                                    {
+                                        if (invoiceDate < receiptDate) cancel = true;
+                                        break;
+                                    }
+                            }
+                            if (cancel) break;
+                        }
+                        break;
+                    }
+            }
+            return cancel;
+        }
 
         Boolean safeToEditReceipt(string Receiptnumber)
         {
@@ -142,7 +182,7 @@ namespace InventoryRules
             IVTrxEntryWindow.SaveButton.ClickAfterOriginal += new System.EventHandler(IVTrxEntryWindow_SaveButton_ClickAfterOriginal);
             IVTrxEntryWindow.OpenAfterOriginal += new System.EventHandler(IVTrxEntryWindow_OpenAfterOriginal);
 
-            //rule 3
+            //rule 3 and 9 for POP Receipt Entry
             POPReceivingEntryWindow.OpenAfterOriginal += new System.EventHandler(POPReceivingEntryWindow_OpenAfterOriginal);
             POPReceivingEntryWindow.SaveButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(POPReceivingEntryWindow_SaveButton_ClickBeforeOriginal);
             POPReceivingEntryWindow.BeforeModalDialog += new System.EventHandler<BeforeModalDialogEventArgs>(POPReceivingEntryWindow_BeforeModalDialog);
@@ -153,7 +193,7 @@ namespace InventoryRules
             POPReceivingEntryWindow.LineScroll.LineFillBeforeOriginal += POPReceivingEntryWindow_LineScroll_LineFillBeforeOriginal;
             POPReceivingEntryWindow.LineScroll.LineInsertBeforeOriginal += POPReceivingEntryWindow_LineScroll_LineInsertBeforeOriginal;
 
-            //rule 3
+            //rule 3 and 9 for POP Return Entry
             PORReturnsEntryWindow.OpenAfterOriginal += new System.EventHandler(PORReturnsEntryWindow_OpenAfterOriginal);
             PORReturnsEntryWindow.SaveButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(PORReturnsEntryWindow_SaveButton_ClickBeforeOriginal);
             PORReturnsEntryWindow.BeforeModalDialog += new System.EventHandler<BeforeModalDialogEventArgs>(PORReturnsEntryWindow_BeforeModalDialog);
@@ -182,14 +222,99 @@ namespace InventoryRules
 
             //rule 7
             IVItemMaintenanceWindow.OpenAfterOriginal += IVItemMaintenanceWindow_OpenAfterOriginal;
-            IVItemMaintenanceWindow.DecimalPlacesQtys.ValidateBeforeOriginal += DecimalPlacesQtys_ValidateBeforeOriginal;
-            IVItemMaintenanceWindow.ValuationMethod.ValidateBeforeOriginal += ValuationMethod_ValidateBeforeOriginal;
-            IVItemMaintenanceWindow.SaveButton.ClickBeforeOriginal += SaveButton_ClickBeforeOriginal;
-            IVItemMaintenanceWindow.SaveButton.ClickAfterOriginal += SaveButton_ClickAfterOriginal;
-            IVItemMaintenanceWindow.ClearButton.ClickAfterOriginal += ClearButton_ClickAfterOriginal;
+            IVItemMaintenanceWindow.DecimalPlacesQtys.ValidateBeforeOriginal += IVItemMaintenanceWindow_DecimalPlacesQtys_ValidateBeforeOriginal;
+            IVItemMaintenanceWindow.ValuationMethod.ValidateBeforeOriginal += IVItemMaintenanceWindow_ValuationMethod_ValidateBeforeOriginal;
+            IVItemMaintenanceWindow.SaveButton.ClickBeforeOriginal += IVItemMaintenanceWindow_SaveButton_ClickBeforeOriginal;
+            IVItemMaintenanceWindow.SaveButton.ClickAfterOriginal += IVItemMaintenanceWindow_SaveButton_ClickAfterOriginal;
+            IVItemMaintenanceWindow.ClearButton.ClickAfterOriginal += IVItemMaintenanceWindow_ClearButton_ClickAfterOriginal;
+
+            //rule 8
+            //POPInvoiceMatchingWindow.LineScroll.LineFillBeforeOriginal += POPInvoiceMatchingWindow_LineScroll_LineFillBeforeOriginal; // if manual matching to receipt
+            POPInvoiceEntryWindow.SaveButton.ClickBeforeOriginal += POPInvoiceEntryWindow_SaveButton_ClickBeforeOriginal; //before save, check all matched receipt date
+            POPInvoiceEntryWindow.PostButton.ClickBeforeOriginal += POPInvoiceEntryWindow_PostButton_ClickBeforeOriginal; //before post, check all matched receipt date
+            POPInvoiceEntryWindow.BeforeModalDialog += POPInvoiceEntryWindow_POPInvoiceEntryWindow_BeforeModalDialog; // if close window and prompted to save
+
+            //rule 9
+            //is the same object with rule 3
         }
 
-        void SaveButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        void POPInvoiceEntryWindow_POPInvoiceEntryWindow_BeforeModalDialog(object sender, BeforeModalDialogEventArgs e)
+        {
+            switch (e.Message.Trim().ToUpper())
+            {
+                case "DO YOU WANT TO SAVE OR DELETE THE DOCUMENT?":
+                    {
+                        if (InvoiceMatchingRule())
+                        {
+                            DateTime invoiceDate;
+                            string InvoiceNumber;
+
+                            invoiceDate = POPInvoiceEntryWindow.ReceiptDate.Value;
+                            InvoiceNumber = POPInvoiceEntryWindow.PopReceiptNumber.Value;
+
+                            if (invoiceDateLessThanReceiptDate(InvoiceNumber, invoiceDate))
+                            {
+                                MessageBox.Show("Invoice date is less than one of the receipt", "Rule 8", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                e.Response = DialogResponse.Button3;
+                            }
+                        }
+                        break;
+                    }
+            }
+        }
+
+        void POPInvoiceEntryWindow_PostButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            DateTime invoiceDate;
+            string InvoiceNumber;
+
+            invoiceDate = POPInvoiceEntryWindow.ReceiptDate.Value;
+            InvoiceNumber = POPInvoiceEntryWindow.PopReceiptNumber.Value;
+
+            if (invoiceDateLessThanReceiptDate(InvoiceNumber, invoiceDate))
+            {
+                MessageBox.Show("Invoice date is less than one of the receipt", "Rule 8", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Cancel = true;
+            }
+        }
+
+        void POPInvoiceEntryWindow_SaveButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            DateTime invoiceDate;
+            string InvoiceNumber;
+
+            invoiceDate = POPInvoiceEntryWindow.ReceiptDate.Value;
+            InvoiceNumber = POPInvoiceEntryWindow.PopReceiptNumber.Value;
+
+            if (invoiceDateLessThanReceiptDate(InvoiceNumber,invoiceDate))
+            {
+                MessageBox.Show("Invoice date is less than one of the receipt", "Rule 8", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                e.Cancel = true;
+            }
+        }
+
+        //void POPInvoiceMatchingWindow_LineScroll_LineFillBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    DateTime invoiceDate, receiptDate;
+        //    TableError err;
+
+        //    if (InvoiceMatchingRule())
+        //    {
+        //        invoiceDate = POPInvoiceEntryWindow.ReceiptDate.Value;
+        //        err =DataAccessHelper.GetPOPReceiptDate(POPInvoiceMatchingForm.Tables.PopPoRcptApply.PopReceiptNumber.Value, out receiptDate);
+        //        switch (err)
+        //        {
+        //            case TableError.NoError:
+        //                {
+        //                    if (invoiceDate < receiptDate) e.Cancel = true;
+        //                    break;
+        //                }
+        //        }
+                
+        //    }
+        //}
+
+        void IVItemMaintenanceWindow_SaveButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (ItemCreationRule())
             {
@@ -214,7 +339,7 @@ namespace InventoryRules
             }
         }
 
-        void ClearButton_ClickAfterOriginal(object sender, EventArgs e)
+        void IVItemMaintenanceWindow_ClearButton_ClickAfterOriginal(object sender, EventArgs e)
         {
             if (ItemCreationRule())
             {
@@ -224,7 +349,7 @@ namespace InventoryRules
             }
         }
 
-        void SaveButton_ClickAfterOriginal(object sender, EventArgs e)
+        void IVItemMaintenanceWindow_SaveButton_ClickAfterOriginal(object sender, EventArgs e)
         {
             if (ItemCreationRule())
             {
@@ -244,7 +369,7 @@ namespace InventoryRules
             }
         }
 
-        void ValuationMethod_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        void IVItemMaintenanceWindow_ValuationMethod_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (ItemCreationRule())
             {
@@ -256,7 +381,7 @@ namespace InventoryRules
             }
         }
 
-        void DecimalPlacesQtys_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        void IVItemMaintenanceWindow_DecimalPlacesQtys_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (ItemCreationRule())
             {
@@ -400,6 +525,12 @@ namespace InventoryRules
                                 e.Response = DialogResponse.Button3;
                             }
                         }
+
+                        if (limitedReceiptUser())
+                        {
+                            MessageBox.Show("Automatically save changes", "Rule 9", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            e.Response = DialogResponse.Button1;
+                        }
                         break;
                     }
             }
@@ -433,6 +564,44 @@ namespace InventoryRules
                 PORReturnsEntryWindow.ExpansionButton1.Lock();
             }
 
+            if (limitedReceiptUser())
+            {
+                //PORReturnsEntryWindow.ReceiptDate.Disable();
+                //PORReturnsEntryWindow.ExpansionButton1.Disable();
+                PORReturnsEntryWindow.VendorDocumentNumber.Disable();
+                //disable record manipulation fields
+                PORReturnsEntryWindow.DeleteButton.Disable();
+                PORReturnsEntryWindow.PostButton.Disable();
+                PORReturnsEntryWindow.LocalReturnType.Disable();
+                PORReturnsEntryWindow.VendorName.Disable();
+                PORReturnsEntryWindow.CurrencyId.Disable();
+                PORReturnsEntryWindow.ExpansionButton3.Disable();
+                PORReturnsEntryWindow.ReplaceReturnedGoods.Disable();
+                PORReturnsEntryWindow.InvoiceExpectedReturns.Disable();
+                PORReturnsEntryWindow.LookupButton5.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.PoNumber.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.VendorItemNumber.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.ItemNumber.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.ReceiptReturnNumber.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.UOfM.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.QtyReserved.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.UnitCost.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.VendorItemDescription.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.ItemDescription.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.InventoryAccount.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.UnrealizedPurchasePriceVarianceAccount.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.CommentId.Disable();
+                PORReturnsEntryWindow.ReturnsScroll.LookupButton3.Disable();
+                PORReturnsEntryWindow.DistributionsButton.Disable();
+                PORReturnsEntryWindow.LookupButton4.Disable();
+                PORReturnsEntryWindow.LookupButton6.Disable();
+                PORReturnsEntryWindow.LookupButton7.Disable();
+                PORReturnsEntryWindow.LookupButton8.Disable();
+                //enable save and return date only
+                PORReturnsEntryWindow.SaveButton.Enable();
+                PORReturnsEntryWindow.ReceiptDate.Enable();
+                PORReturnsEntryWindow.ReceiptDate.Focus();
+            }
         }
 
         void InvoiceExpectedReturns_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
@@ -456,21 +625,25 @@ namespace InventoryRules
         void LookupButton4_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (PORReturnsEntryWindow_openSavedReturn) e.Cancel = true;
+            if (limitedReceiptUser()) e.Cancel = true;
         }
 
         void PORReturnsEntryWindow_ReturnsScroll_LineDeleteBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (PORReturnsEntryWindow_openSavedReturn) e.Cancel = true;
+            if (limitedReceiptUser()) e.Cancel = true;
         }
 
         void PORReturnsEntryWindow_ReturnsScroll_LineInsertBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (PORReturnsEntryWindow_openSavedReturn) e.Cancel = true;
+            if (limitedReceiptUser()) e.Cancel = true;
         }
 
         void PORReturnsEntryWindow_ReturnsScroll_LineFillBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (PORReturnsEntryWindow_openSavedReturn) e.Cancel = true;
+            if (limitedReceiptUser()) e.Cancel = true;
         }
 
         void PORReturnsEntryWindow_PopReceiptNumber_Change(object sender, EventArgs e)
@@ -584,27 +757,71 @@ namespace InventoryRules
                         }
                     }
                 }
+
+                if (limitedReceiptUser())
+                {
+                    //PORReturnsEntryWindow.ReceiptDate.Disable();
+                    //PORReturnsEntryWindow.ExpansionButton1.Disable();
+                    PORReturnsEntryWindow.VendorDocumentNumber.Disable();
+                    //disable record manipulation fields
+                    PORReturnsEntryWindow.DeleteButton.Disable();
+                    PORReturnsEntryWindow.PostButton.Disable();
+                    PORReturnsEntryWindow.LocalReturnType.Disable();
+                    PORReturnsEntryWindow.VendorName.Disable();
+                    PORReturnsEntryWindow.CurrencyId.Disable();
+                    PORReturnsEntryWindow.ExpansionButton3.Disable();
+                    PORReturnsEntryWindow.ReplaceReturnedGoods.Disable();
+                    PORReturnsEntryWindow.InvoiceExpectedReturns.Disable();
+                    PORReturnsEntryWindow.LookupButton5.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.PoNumber.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.VendorItemNumber.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.ItemNumber.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.ReceiptReturnNumber.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.UOfM.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.QtyReserved.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.UnitCost.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.VendorItemDescription.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.ItemDescription.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.InventoryAccount.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.UnrealizedPurchasePriceVarianceAccount.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.CommentId.Disable();
+                    PORReturnsEntryWindow.ReturnsScroll.LookupButton3.Disable();
+                    PORReturnsEntryWindow.DistributionsButton.Disable();
+                    PORReturnsEntryWindow.LookupButton4.Disable();
+                    PORReturnsEntryWindow.LookupButton6.Disable();
+                    PORReturnsEntryWindow.LookupButton7.Disable();
+                    PORReturnsEntryWindow.LookupButton8.Disable();
+                    //enable save and return date only
+                    PORReturnsEntryWindow.SaveButton.Enable();
+                    PORReturnsEntryWindow.ReceiptDate.Enable();
+                    PORReturnsEntryWindow.ReceiptDate.Focus();
+                }
+
             }
         }
 
         void POPReceivingEntryWindow_LocalAutoRcvButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (POPReceivingEntryWindow_openSavedReceipt) e.Cancel = true;
+            if (limitedReceiptUser()) e.Cancel = true;
         }
 
         void POPReceivingEntryWindow_LineScroll_LineInsertBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if(POPReceivingEntryWindow_openSavedReceipt) e.Cancel = true;
+            if (limitedReceiptUser()) e.Cancel = true;
         }
 
         void POPReceivingEntryWindow_LineScroll_LineFillBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (POPReceivingEntryWindow_openSavedReceipt) e.Cancel = true;
+            if (limitedReceiptUser()) e.Cancel = true;
         }
 
         void POPReceivingEntryWindow_LineScroll_LineDeleteBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (POPReceivingEntryWindow_openSavedReceipt) e.Cancel = true;
+            if (limitedReceiptUser()) e.Cancel = true;
         }
 
         void POPReceivingEntryWindow_PopReceiptNumber_Change(object sender, EventArgs e)
@@ -723,6 +940,45 @@ namespace InventoryRules
                         }
                     }
                 }
+
+                if (limitedReceiptUser())
+                {
+                    POPReceivingEntryWindow.DeleteButton.Disable();
+                    POPReceivingEntryWindow.VoidButtonI.Disable();
+                    POPReceivingEntryWindow.PostButton.Disable();
+                    POPReceivingEntryWindow.LocalAutoRcvButton.Disable();
+                    POPReceivingEntryWindow.PopType.Disable();
+                    POPReceivingEntryWindow.VendorName.Disable();
+                    POPReceivingEntryWindow.CurrencyId.Disable();
+                    POPReceivingEntryWindow.LookupButton5.Disable();
+                    POPReceivingEntryWindow.LineScroll.PoNumber.Disable();
+                    POPReceivingEntryWindow.LineScroll.VendorItemNumber.Disable();
+                    POPReceivingEntryWindow.LineScroll.ItemNumber.Disable();
+                    POPReceivingEntryWindow.LineScroll.QtyShipped.Disable();
+                    POPReceivingEntryWindow.LineScroll.UnitCost.Disable();
+                    POPReceivingEntryWindow.LineScroll.UOfM.Disable();
+                    POPReceivingEntryWindow.LineScroll.LocationCode.Disable();
+                    POPReceivingEntryWindow.LineScroll.QtyOrdered.Disable();
+                    POPReceivingEntryWindow.LineScroll.QtyInvoiced.Disable();
+                    POPReceivingEntryWindow.LineScroll.ExtendedCost.Disable();
+                    POPReceivingEntryWindow.LineScroll.ExtendedCost.Lock();
+                    POPReceivingEntryWindow.LineScroll.VendorItemDescription.Disable();
+                    POPReceivingEntryWindow.LineScroll.ItemDescription.Disable();
+                    POPReceivingEntryWindow.LineScroll.Remarks.Disable();
+                    POPReceivingEntryWindow.LineScroll.QtyPrevShipped.Disable();
+                    POPReceivingEntryWindow.LineScroll.QtyPrevInvoiced.Disable();
+                    POPReceivingEntryWindow.LocalLandedCostButton.Disable();
+                    POPReceivingEntryWindow.DistributionsButton.Disable();
+                    POPReceivingEntryWindow.UserDefinedButton.Disable();
+                    POPReceivingEntryWindow.LookupButton4.Disable();
+                    POPReceivingEntryWindow.LookupButton6.Disable();
+                    POPReceivingEntryWindow.LookupButton8.Disable();
+                    POPReceivingEntryWindow.LookupButton9.Disable();
+                    POPReceivingEntryWindow.VendorDocumentNumber.Disable();
+                    POPReceivingEntryWindow.SaveButton.Enable();
+                    POPReceivingEntryWindow.ReceiptDate.Enable();
+                    POPReceivingEntryWindow.ReceiptDate.Focus();
+                }
             }
         }
 
@@ -760,6 +1016,11 @@ namespace InventoryRules
                                 e.Response = DialogResponse.Button3;
                             }
                         }
+                        if (limitedReceiptUser())
+                        {
+                            MessageBox.Show("Automatically save changes", "Rule 9", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            e.Response = DialogResponse.Button1;
+                        }
                         break;
                     }
             }
@@ -791,6 +1052,44 @@ namespace InventoryRules
                 POPReceivingEntryWindow.ReceiptDate.Lock();
                 POPReceivingEntryWindow.ExpansionButton1.Lock();
             }
+            if(limitedReceiptUser())
+            {
+                POPReceivingEntryWindow.DeleteButton.Disable();
+                POPReceivingEntryWindow.VoidButtonI.Disable();
+                POPReceivingEntryWindow.PostButton.Disable();
+                POPReceivingEntryWindow.LocalAutoRcvButton.Disable();
+                POPReceivingEntryWindow.PopType.Disable();
+                POPReceivingEntryWindow.VendorName.Disable();
+                POPReceivingEntryWindow.CurrencyId.Disable();
+                POPReceivingEntryWindow.LookupButton5.Disable();
+                POPReceivingEntryWindow.LineScroll.PoNumber.Disable();
+                POPReceivingEntryWindow.LineScroll.VendorItemNumber.Disable();
+                POPReceivingEntryWindow.LineScroll.ItemNumber.Disable();
+                POPReceivingEntryWindow.LineScroll.QtyShipped.Disable();
+                POPReceivingEntryWindow.LineScroll.UnitCost.Disable();
+                POPReceivingEntryWindow.LineScroll.UOfM.Disable();
+                POPReceivingEntryWindow.LineScroll.LocationCode.Disable();
+                POPReceivingEntryWindow.LineScroll.QtyOrdered.Disable();
+                POPReceivingEntryWindow.LineScroll.QtyInvoiced.Disable();
+                POPReceivingEntryWindow.LineScroll.ExtendedCost.Disable();
+                POPReceivingEntryWindow.LineScroll.ExtendedCost.Lock();
+                POPReceivingEntryWindow.LineScroll.VendorItemDescription.Disable();
+                POPReceivingEntryWindow.LineScroll.ItemDescription.Disable();
+                POPReceivingEntryWindow.LineScroll.Remarks.Disable();
+                POPReceivingEntryWindow.LineScroll.QtyPrevShipped.Disable();
+                POPReceivingEntryWindow.LineScroll.QtyPrevInvoiced.Disable();
+                POPReceivingEntryWindow.LocalLandedCostButton.Disable();
+                POPReceivingEntryWindow.DistributionsButton.Disable();
+                POPReceivingEntryWindow.UserDefinedButton.Disable();
+                POPReceivingEntryWindow.LookupButton4.Disable();
+                POPReceivingEntryWindow.LookupButton6.Disable();
+                POPReceivingEntryWindow.LookupButton8.Disable();
+                POPReceivingEntryWindow.LookupButton9.Disable();
+                POPReceivingEntryWindow.VendorDocumentNumber.Disable();
+                POPReceivingEntryWindow.SaveButton.Enable();
+                POPReceivingEntryWindow.ReceiptDate.Enable(); 
+                POPReceivingEntryWindow.ReceiptDate.Focus();
+            }
         }
 
         void IVTrxEntryWindow_SaveButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
@@ -808,8 +1107,11 @@ namespace InventoryRules
 
         void IVTrxEntryWindow_OpenAfterOriginal(object sender, EventArgs e)
         {
+            TableError err;
+
             if (UserDefaults1())
             {
+                err = DataAccessHelper.CreateIVBatch("ISSUE SEMENTARA");
                 IVTrxEntryWindow.LocalDefaultSite.Value = "STORE";
                 IVTrxEntryWindow.VvfAdjtype.Value = 2;
                 IVTrxEntryWindow.BatchNumber.Value = "ISSUE SEMENTARA";
@@ -835,6 +1137,43 @@ namespace InventoryRules
                 MessageBox.Show("Do Not Post from here, Please Post from Series Post", "Rule 1", MessageBoxButtons.OK);
                 e.Cancel = true;
             }
+        }
+
+        Boolean limitedReceiptUser()
+        {
+            Boolean limitedUser = false;
+
+            string[] targets;
+            TableError err;
+
+            err = DataAccessHelper.GetIVRuleTargetsByID(9, out targets);
+            if (err == TableError.NoError)
+            {
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId.Value) > -1)
+                {
+                    limitedUser = true;
+                }
+            }
+            return limitedUser;
+
+        }
+
+        Boolean InvoiceMatchingRule()//rule 8
+        {
+            Boolean canNotLessThanReceipt = true;
+
+            string[] targets;
+            TableError err;
+
+            err = DataAccessHelper.GetIVRuleTargetsByID(8, out targets);
+            if (err == TableError.NoError)
+            {
+                if (Array.IndexOf(targets, Microsoft.Dexterity.Applications.Dynamics.Globals.UserId.Value) > -1)
+                {
+                    canNotLessThanReceipt = false;
+                }
+            }
+            return canNotLessThanReceipt;
         }
 
         Boolean ItemCreationRule()//rule 7

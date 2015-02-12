@@ -1,4 +1,27 @@
-﻿using System;
+﻿/* The MIT License (MIT)
+ * 
+ * Copyright (c) 2014 HendryLeo
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,11 +38,99 @@ namespace InventoryRules
         static IvRuleTargetsTable IVRuleTargetsTable = VvfIdInHouseCustomization.Tables.IvRuleTargets;
         //static PopReceiptTable POPReceiptTable = Microsoft.Dexterity.Applications.Dynamics.Tables.PopReceipt;
         static PopReceiptUserDefinedTable POPUserDefinedTable = Microsoft.Dexterity.Applications.Dynamics.Tables.PopReceiptUserDefined;
-
+        static PopReceiptHistTable POPReceiptHistTable = Microsoft.Dexterity.Applications.Dynamics.Tables.PopReceiptHist;
+        static PopShipIvcApplyTable POPShipIvcApplyTable = Microsoft.Dexterity.Applications.Dynamics.Tables.PopShipIvcApply;
 
         const byte ROW_FOUND = 0;
         const byte ROW_NOT_FOUND = 1;
         const byte TABLE_ERROR = 2;
+
+        static public TableError CreateIVBatch(string batch)//create or update batch
+        {
+            //byte exist = ROW_NOT_FOUND;
+            TableError lastError;
+
+            BatchHeadersTable BatchHeadersTable = Microsoft.Dexterity.Applications.Dynamics.Tables.BatchHeaders;
+            BatchHeadersTable.Key = 1;
+            //BatchHeadersTable.Clear();
+            BatchHeadersTable.BatchSource.Value = "IV_Trxent";
+            BatchHeadersTable.BatchNumber.Value = "ISSUE SEMENTARA";
+            lastError = BatchHeadersTable.Change();
+            if (lastError == TableError.NoError)//found
+            {
+                //unconditional update to correct value
+                BatchHeadersTable.Series.Value = 5;
+                BatchHeadersTable.BatchFrequency.Value = 1;
+                BatchHeadersTable.PostToGl.Value = true;
+                BatchHeadersTable.Origin.Value = 1;
+
+            }
+            else //notfound
+            {
+                BatchHeadersTable.Clear();
+                BatchHeadersTable.BatchSource.Value = "IV_Trxent";
+                BatchHeadersTable.BatchNumber.Value = "ISSUE SEMENTARA";
+                BatchHeadersTable.Series.Value = 5;
+                BatchHeadersTable.BatchFrequency.Value = 1;
+                BatchHeadersTable.PostToGl.Value = true;
+                BatchHeadersTable.Origin.Value = 1;
+            }
+
+            lastError = BatchHeadersTable.Save();
+            BatchHeadersTable.Close();
+
+            return lastError;
+        }
+
+        static public TableError GetPOPReceiptDate(string POPReceipt, out DateTime receiptDate)
+        {
+            receiptDate = new DateTime(1900, 1, 1);
+            TableError lastError;
+
+            POPReceiptHistTable.Key = 1;
+            POPReceiptHistTable.PopReceiptNumber.Value = POPReceipt;
+            lastError = POPReceiptHistTable.Get();
+
+            if (lastError == TableError.NoError) //row found
+            {
+                receiptDate = POPReceiptHistTable.ReceiptDate.Value;
+            }
+            POPReceiptHistTable.Close();
+            return lastError;
+        }
+
+        static public TableError GetPOPReceiptMatchedbyPOPInvoice(string POPInvoice, out string[] POPReceiptNumber)
+        {
+            List<string> list = new List<string>();
+            TableError lastError, err;
+
+            POPShipIvcApplyTable.Key = 1;
+            POPShipIvcApplyTable.Clear();
+            POPShipIvcApplyTable.PopInvoiceNumber.Value = POPInvoice;
+            POPShipIvcApplyTable.RangeStart();
+            POPShipIvcApplyTable.Fill();
+            POPShipIvcApplyTable.PopInvoiceNumber.Value = POPInvoice;
+            POPShipIvcApplyTable.RangeEnd();
+
+
+            lastError = POPShipIvcApplyTable.GetFirst();
+            if (lastError == TableError.NoError)
+            {
+                err = lastError;
+                list.Clear();
+                while (err == TableError.NoError)
+                {
+                    list.Add(POPShipIvcApplyTable.PopReceiptNumber.Value);
+                    err = POPShipIvcApplyTable.GetNext();
+                }
+            }
+
+
+            POPShipIvcApplyTable.Close();
+
+            POPReceiptNumber = list.ToArray();
+            return lastError;
+        }
 
         static public TableError GetPOPUserDefinedValues(string POPReceipt, out string[] strs, out DateTime[] date)
         {
