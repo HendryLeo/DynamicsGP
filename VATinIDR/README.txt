@@ -12,12 +12,4 @@ the idea is
 4. normal operation will be interrupted while posting Payable Invoice because Voucher Number already taken in step 3.
 5. normal operation created Payable Invoice, need to delete that trx. careful that GL distribution is the same with bullet 3 and can be deleted if using normal delete
 
-create invoice and save to batch 
-- sendkeys = done
-- table filling
-	batch creation
-		check noteindex from VAT module
-	invoice creation
-		check form procedure
-
-posting from batch routine = done 
+posting from batch routine = done

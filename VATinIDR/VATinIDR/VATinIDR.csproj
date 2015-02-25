@@ -39,11 +39,6 @@
       <HintPath>..\..\..\..\..\..\OneDrive for Business\GP\VSToolsAssembly\Application.Vat.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Application.Vat.ModifiedForms, Version=12.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\OneDrive for Business\GP\VSToolsAssembly\Application.Vat.ModifiedForms.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
