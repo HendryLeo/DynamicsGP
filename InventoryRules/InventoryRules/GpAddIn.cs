@@ -47,6 +47,7 @@ namespace InventoryRules
 
         public static Boolean POPReceivingEntryWindow_openSavedReceipt;//Saved and not user defined
         public static Boolean PORReturnsEntryWindow_openSavedReturn;//Saved and not user defined
+        Boolean IVTrxEntryWindow_FirstOpen = true;
 
         Boolean invoiceDateLessThanReceiptDate(string InvoiceNumber, DateTime invoiceDate)
         {
@@ -181,6 +182,7 @@ namespace InventoryRules
             IVTrxEntryWindow.SaveButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(IVTrxEntryWindow_SaveButton_ClickBeforeOriginal);
             IVTrxEntryWindow.SaveButton.ClickAfterOriginal += new System.EventHandler(IVTrxEntryWindow_SaveButton_ClickAfterOriginal);
             IVTrxEntryWindow.OpenAfterOriginal += new System.EventHandler(IVTrxEntryWindow_OpenAfterOriginal);
+            IVTrxEntryWindow.CloseAfterOriginal += IVTrxEntryWindow_CloseAfterOriginal;
 
             //rule 3 and 9 for POP Receipt Entry
             POPReceivingEntryWindow.OpenAfterOriginal += new System.EventHandler(POPReceivingEntryWindow_OpenAfterOriginal);
@@ -1108,26 +1110,43 @@ namespace InventoryRules
         void IVTrxEntryWindow_OpenAfterOriginal(object sender, EventArgs e)
         {
             TableError err;
-
-            if (UserDefaults1())
+            if (IVTrxEntryWindow_FirstOpen)
             {
-                err = DataAccessHelper.CreateIVBatch("ISSUE SEMENTARA");
-                IVTrxEntryWindow.LocalDefaultSite.Value = "STORE";
-                IVTrxEntryWindow.VvfAdjtype.Value = 2;
-                IVTrxEntryWindow.BatchNumber.Value = "ISSUE SEMENTARA";
-                IVTrxEntryWindow.Changed.Value = false;
+                if (UserDefaults1())
+                {
+                    err = DataAccessHelper.CreateIVBatch("ISSUE SEMENTARA");
+                    IVTrxEntryWindow.LocalDefaultSite.Value = "STORE";
+                    IVTrxEntryWindow.LocalDefaultSite.RunValidate();
+                    IVTrxEntryWindow.VvfAdjtype.Value = 2;
+                    IVTrxEntryWindow.VvfAdjtype.RunValidate();
+                    IVTrxEntryWindow.BatchNumber.Value = "";
+                    IVTrxEntryWindow.BatchNumber.RunValidate();
+                    IVTrxEntryWindow.BatchNumber.Value = "ISSUE SEMENTARA";
+                    IVTrxEntryWindow.BatchNumber.RunValidate();
+                    IVTrxEntryWindow.Changed.Value = false;
+                }
+                IVTrxEntryWindow_FirstOpen = false;
             }
         }
 
+        void IVTrxEntryWindow_CloseAfterOriginal(object sender, EventArgs e)
+        {
+            IVTrxEntryWindow_FirstOpen = true;
+        }
         void IVTrxEntryWindow_SaveButton_ClickAfterOriginal(object sender, EventArgs e)
         {
-            if(UserDefaults1())
-            {
-                IVTrxEntryWindow.LocalDefaultSite.Value = "STORE";
-                IVTrxEntryWindow.VvfAdjtype.Value = 2;
-                IVTrxEntryWindow.BatchNumber.Value = "ISSUE SEMENTARA";
-                IVTrxEntryWindow.Changed.Value = false;
-            }
+            //if(UserDefaults1())
+            //{
+            //    IVTrxEntryWindow.LocalDefaultSite.Value = "STORE";
+            //    IVTrxEntryWindow.LocalDefaultSite.RunValidate();
+            //    IVTrxEntryWindow.VvfAdjtype.Value = 2;
+            //    IVTrxEntryWindow.VvfAdjtype.RunValidate();
+            //    IVTrxEntryWindow.BatchNumber.Value = "";
+            //    IVTrxEntryWindow.BatchNumber.RunValidate();
+            //    IVTrxEntryWindow.BatchNumber.Value = "ISSUE SEMENTARA";
+            //    IVTrxEntryWindow.BatchNumber.RunValidate();
+            //    IVTrxEntryWindow.Changed.Value = false;
+            //}
         }
 
         void IVTrxEntryWindow_PostButton_ClickBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
