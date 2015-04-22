@@ -48,7 +48,20 @@ namespace VATinIDR
 
             VATInWindow.PostButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(PostButton_ClickBeforeOriginal);
             VATInWindow.PostButton.ClickAfterOriginal += new EventHandler(PostButton_ClickAfterOriginal);
+            //VATInWindow.VatTotalPpn.Change += VatTotalPpn_Change;
+            //VATInWindow.TotalTax.Change += TotalTax_Change;
         }
+
+        /* void TotalTax_Change(object sender, EventArgs e)
+        {
+            MessageBox.Show(VATInWindow.DocumentAmount.Value.ToString());
+            MessageBox.Show(VATInWindow.TotalTax.Value.ToString());
+        }
+
+        void VatTotalPpn_Change(object sender, EventArgs e)
+        {
+            MessageBox.Show("TotalPpn" + VATInWindow.VatTotalPpn.Value.ToString());
+        } */
 
         void PostButton_ClickAfterOriginal(object sender, EventArgs e)
         {
