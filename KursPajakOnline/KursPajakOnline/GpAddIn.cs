@@ -49,6 +49,11 @@ namespace KursPajakOnline
 
             HtmlAgilityPack.HtmlWeb web = new HtmlWeb();
             HtmlAgilityPack.HtmlDocument doc = web.Load("http://www.fiskal.depkeu.go.id/dw-kurs-db.asp");
+            if (doc.DocumentNode.InnerHtml.IndexOf("<title>The page cannot be found</title>") > 0) //website 404
+            {
+                doc = null;
+                doc = web.Load("http://www.fiskal.kemenkeu.go.id/dw-kurs-db.asp"); //try the other link
+            }
             HtmlAgilityPack.HtmlNodeCollection nodes1 = doc.DocumentNode.SelectNodes("//*[@id='default-divone']");
             HtmlAgilityPack.HtmlNodeCollection nodes2 = doc.DocumentNode.SelectNodes("//*[@id='default-divone']/div[2]");
             
@@ -187,6 +192,20 @@ namespace KursPajakOnline
                     MCExchangeRateMstrTable.ExchangeRate.Value = decimal.Parse(kur.Nilai, new CultureInfo("en-us"));
                     MCExchangeRateMstrTable.ExpirationDate.Value = tglExpire;
                     MCExchangeRateMstrTable.Save();
+                    //if (kur.NegaraISO == "USD") //jika USD, update juga IDR-TAX
+                    //{
+                    //    kur.NegaraISO = "IDR";
+                    //    MCExchangeRateMstrTable.Clear();
+                    //    MCExchangeRateMstrTable.Key = 1;
+                    //    MCExchangeRateMstrTable.CurrencyId.Value = kur.NegaraISO;
+                    //    MCExchangeRateMstrTable.ExchangeTableId.Value = kur.NegaraISO + "-TAX";
+                    //    MCExchangeRateMstrTable.ExchangeDate.Value = tglBerlaku;
+                    //    MCExchangeRateMstrTable.Time.Value = defaultGPDate;
+                    //    MCExchangeRateMstrTable.ExchangeRate.Value = decimal.Parse(kur.Nilai, new CultureInfo("en-us"));
+                    //    MCExchangeRateMstrTable.ExpirationDate.Value = tglExpire;
+                    //    MCExchangeRateMstrTable.Save();
+
+                    //}
                 }
 
                 MCExchangeRateMstrTable.Close();
