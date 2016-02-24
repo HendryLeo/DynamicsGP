@@ -192,20 +192,20 @@ namespace KursPajakOnline
                     MCExchangeRateMstrTable.ExchangeRate.Value = decimal.Parse(kur.Nilai, new CultureInfo("en-us"));
                     MCExchangeRateMstrTable.ExpirationDate.Value = tglExpire;
                     MCExchangeRateMstrTable.Save();
-                    //if (kur.NegaraISO == "USD") //jika USD, update juga IDR-TAX
-                    //{
-                    //    kur.NegaraISO = "IDR";
-                    //    MCExchangeRateMstrTable.Clear();
-                    //    MCExchangeRateMstrTable.Key = 1;
-                    //    MCExchangeRateMstrTable.CurrencyId.Value = kur.NegaraISO;
-                    //    MCExchangeRateMstrTable.ExchangeTableId.Value = kur.NegaraISO + "-TAX";
-                    //    MCExchangeRateMstrTable.ExchangeDate.Value = tglBerlaku;
-                    //    MCExchangeRateMstrTable.Time.Value = defaultGPDate;
-                    //    MCExchangeRateMstrTable.ExchangeRate.Value = decimal.Parse(kur.Nilai, new CultureInfo("en-us"));
-                    //    MCExchangeRateMstrTable.ExpirationDate.Value = tglExpire;
-                    //    MCExchangeRateMstrTable.Save();
+                    if (kur.NegaraISO == "USD") //if USD, also update IDR-TAX
+                    {
+                        kur.NegaraISO = "IDR";
+                        MCExchangeRateMstrTable.Clear();
+                        MCExchangeRateMstrTable.Key = 1;
+                        MCExchangeRateMstrTable.CurrencyId.Value = kur.NegaraISO;
+                        MCExchangeRateMstrTable.ExchangeTableId.Value = kur.NegaraISO + "-TAX";
+                        MCExchangeRateMstrTable.ExchangeDate.Value = tglBerlaku;
+                        MCExchangeRateMstrTable.Time.Value = defaultGPDate;
+                        MCExchangeRateMstrTable.ExchangeRate.Value = decimal.Parse(kur.Nilai, new CultureInfo("en-us"));
+                        MCExchangeRateMstrTable.ExpirationDate.Value = tglExpire;
+                        MCExchangeRateMstrTable.Save();
 
-                    //}
+                    }
                 }
 
                 MCExchangeRateMstrTable.Close();
