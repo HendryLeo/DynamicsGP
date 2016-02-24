@@ -33,25 +33,25 @@ namespace KursPajakOnline
 
         static McExchangeRateMaintenanceForm.McExchangeRateMaintenanceWindow MCExchRateMaintWindow = MCExchRateMaintForm.McExchangeRateMaintenance;
 
-        static McExchangeRateMstrTable MCExchRateMstrTable = Dynamics.Tables.McExchangeRateMstr;
+        static McExchangeRateMstrTable MCExchangeRateMstrTable = Dynamics.Tables.McExchangeRateMstr;
 
         public void Initialize()
         {
-            MCExchRateMaintForm.AddMenuHandler(getRateOnline, "Kurs Pajak Ortax");
+            MCExchRateMaintForm.AddMenuHandler(getRateOnline, "Kurs KMK");
         }
 
         void getRateOnline(object sender, EventArgs e)
         {
             string html = "", htmlTable = "", message = "", tglKurs = "";
             int dataPosition = 0, dataPosition2 = 0, dataPosition3 = 0;
-            DateTime tglBerlaku, tglExpire;
+            DateTime tglBerlaku, tglExpire, defaultGPDate = new DateTime(1900, 1, 1);
+            TableError err;
 
             HtmlAgilityPack.HtmlWeb web = new HtmlWeb();
-            //var doc = web.Load("http://www.ortax.org/ortax/?mod=kurs");
-            HtmlAgilityPack.HtmlDocument doc = web.Load("http://www.fiskal.kemenkeu.go.id/2010/edef-kurs-pajak-db.asp?strDate=" + DateTime.Now.ToString("yyyyMMdd"));
-            HtmlAgilityPack.HtmlNodeCollection nodes1 = doc.DocumentNode.SelectNodes("//div[contains(concat(' ', normalize-space(@class), ' '), ' konteks02 ')]");
-            HtmlAgilityPack.HtmlNodeCollection nodes2 = doc.DocumentNode.SelectNodes("//div[contains(concat(' ', normalize-space(@class), ' '), ' KursTable ')]");
-
+            HtmlAgilityPack.HtmlDocument doc = web.Load("http://www.fiskal.depkeu.go.id/dw-kurs-db.asp");
+            HtmlAgilityPack.HtmlNodeCollection nodes1 = doc.DocumentNode.SelectNodes("//*[@id='default-divone']");
+            HtmlAgilityPack.HtmlNodeCollection nodes2 = doc.DocumentNode.SelectNodes("//*[@id='default-divone']/div[2]");
+            
             message = "";
             foreach (HtmlAgilityPack.HtmlNode node in nodes1)
             {
@@ -65,14 +65,12 @@ namespace KursPajakOnline
 
             Image image = TheArtOfDev.HtmlRenderer.WinForms.HtmlRender.RenderToImage(html.Substring(dataPosition));
 
-            //bool exists = System.IO.Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\KursPajak");
-            //if (!exists) 
             System.IO.Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\KursPajak");
 
             image.Save(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\KursPajak\\akses-" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".png", ImageFormat.Png);
 
             dataPosition = html.IndexOf("<p>Tanggal Berlaku");
-            dataPosition2 = html.IndexOf("<div class=\"KursTable\"");
+            dataPosition2 = html.IndexOf("</p> </div> <div class=\"col-xs-4\"> <a");
             tglKurs = html.Substring(dataPosition, dataPosition2-dataPosition);
             dataPosition3 = tglKurs.IndexOf("-");
 
@@ -80,8 +78,8 @@ namespace KursPajakOnline
             tglBerlaku = DateTime.Parse(tglKurs.Substring(21, dataPosition3 - 22), idCulture);
             tglExpire = DateTime.Parse(tglKurs.Substring(dataPosition3 + 2, tglKurs.Length - dataPosition3 - 7), idCulture);
 
-            MessageBox.Show("Tgl Berlaku = " + tglBerlaku.ToString("dd MMMM yyyy"));
-            MessageBox.Show("Tgl Expire = " + tglExpire.ToString("dd MMMM yyyy"));
+            //MessageBox.Show("Tgl Berlaku = " + tglBerlaku.ToString("dd MMMM yyyy"));
+            //MessageBox.Show("Tgl Expire = " + tglExpire.ToString("dd MMMM yyyy"));
 
             //html.IndexOf()
             //tglBerlaku = DateTime.Par
@@ -91,7 +89,7 @@ namespace KursPajakOnline
                 message = node.InnerHtml;
                 
             }
-            htmlTable = Regex.Replace(message, @"\s+", " ").Replace("<img src='aimages/down.gif'>", "").Replace("<img src='aimages/up.gif'>", ""); //clean up whitespace and img tag
+            htmlTable = Regex.Replace(message, @"\s+", " ").Replace("<img src='data/aimages/down.gif'>", "").Replace("<img src='data/aimages/up.gif'>", ""); //clean up whitespace and img tag
             //MessageBox.Show(htmlTable);
             
             
@@ -101,12 +99,14 @@ namespace KursPajakOnline
             XmlNodeList trLines = xmlTable.DocumentElement.SelectNodes("/table/tr");
 
             //List<KursLine> kurs = new List<KursLine>();
-
+            message = "";
+            message += "Tanggal Berlaku = " + tglBerlaku.ToString("dd MMMM yyyy") + Environment.NewLine;
+            message += "Tanggal Expire = " + tglExpire.ToString("dd MMMM yyyy") + Environment.NewLine;
             foreach (XmlNode trLine in trLines)
             {
                 Boolean notUsed = false;
-                //<tr><td class='ctr'>1</td><td class='ctr'>Dolar</td><td>Amerika Serikat (USD)</td><td class='right'>13,122.00 </td><td class='right'>-0.46%</td></tr>
-                
+                //<tr><td class='text-left'>1</td><td class='text-left'>Dolar</td><td>Amerika Serikat (USD)</td><td class='text-right'>13,816.00 </td><td class='text-right'>0.43 %</td></tr>
+
                 XmlNodeList tdLines = trLine.SelectNodes("td");
                 int i = 1;
                 KursLine kur = new KursLine();
@@ -135,6 +135,9 @@ namespace KursPajakOnline
                                 case "Singapura (SGD)":
                                     kur.NegaraISO = "SGD";
                                     break;
+                                case "Euro (EUR)":
+                                    kur.NegaraISO = "EUR";
+                                    break;
                                 default:
                                     notUsed = true;
                                     break;
@@ -153,19 +156,41 @@ namespace KursPajakOnline
                     i++;
                 }
                 if (notUsed) continue;
-                //at this point we should have the interested xchange rate
-                MessageBox.Show(kur.Negara + " " + double.Parse(kur.Nilai, new CultureInfo("en-us")));
+                //at this point we should have an interested xchange rate
+                //MessageBox.Show(kur.Negara + " " + double.Parse(kur.Nilai, new CultureInfo("en-us")));
+
                 //add table insert logic here
                 //first check if this week xchange rate is already input by user, we should not override user value
 
 
-                MCExchRateMstrTable.Key = 1;
-                MCExchRateMstrTable.ExchangeTableId.Value = kur.NegaraISO + "-TAX";
-                MCExchRateMstrTable.ExchangeDate.Value = tglBerlaku;
-                MCExchRateMstrTable.Time.Value = defaultGPDate;
-                //if not inputted, then we insert the values
+                MCExchangeRateMstrTable.Key = 1;
+                MCExchangeRateMstrTable.ExchangeTableId.Value = kur.NegaraISO + "-TAX";
+                MCExchangeRateMstrTable.ExchangeDate.Value = tglBerlaku;
+                MCExchangeRateMstrTable.Time.Value = defaultGPDate;
+                
+                err = MCExchangeRateMstrTable.Get();
+                if (err == TableError.NoError)
+                {
+                    //found
+                    MessageBox.Show("Previously inputted exchange rate found for " + kur.Negara + Environment.NewLine + "Please confirm manually");
+                    
+                }
+                else
+                {
+                    //if not inputted, then we insert the values
+                    MCExchangeRateMstrTable.Clear();
+                    MCExchangeRateMstrTable.Key = 1;
+                    MCExchangeRateMstrTable.CurrencyId.Value = kur.NegaraISO;
+                    MCExchangeRateMstrTable.ExchangeTableId.Value = kur.NegaraISO + "-TAX";
+                    MCExchangeRateMstrTable.ExchangeDate.Value = tglBerlaku;
+                    MCExchangeRateMstrTable.Time.Value = defaultGPDate;
+                    MCExchangeRateMstrTable.ExchangeRate.Value = decimal.Parse(kur.Nilai, new CultureInfo("en-us"));
+                    MCExchangeRateMstrTable.ExpirationDate.Value = tglExpire;
+                    MCExchangeRateMstrTable.Save();
+                }
 
-
+                MCExchangeRateMstrTable.Close();
+                message += kur.NegaraISO + "-TAX = " + decimal.Parse(kur.Nilai, new CultureInfo("en-us")) + Environment.NewLine;
             }//each trLines
 
             Form form = new Form();
@@ -181,7 +206,12 @@ namespace KursPajakOnline
 
             form.Controls.Add(pb);
             form.Show();
-            form.Left += 500;
+            form.Left += 450;
+
+            message += "Please compare the values here with the image and then confirm in GP";
+            MessageBox.Show(message);
+
+            MCExchRateMaintWindow.TopOfFileButtonToolbar.RunValidate();
         }
     }
 }
