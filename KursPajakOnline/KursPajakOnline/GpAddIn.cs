@@ -48,12 +48,21 @@ namespace KursPajakOnline
             TableError err;
 
             HtmlAgilityPack.HtmlWeb web = new HtmlWeb();
-            HtmlAgilityPack.HtmlDocument doc = web.Load("http://www.fiskal.depkeu.go.id/dw-kurs-db.asp");
-            if (doc.DocumentNode.InnerHtml.IndexOf("<title>The page cannot be found</title>") > 0) //website 404
+            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+            try
             {
-                doc = null;
-                doc = web.Load("http://www.fiskal.kemenkeu.go.id/dw-kurs-db.asp"); //try the other link
+                doc = web.Load("http://www.fiskal.kemenkeu.go.id/dw-kurs-db.asp");
             }
+            catch (HtmlWebException webException)
+            { 
+                doc = web.Load("http://www.fiskal.depkeu.go.id/dw-kurs-db.asp"); //try the other link
+            }
+
+            //if (doc.DocumentNode.InnerHtml.IndexOf("<title>The page cannot be found</title>") > 0) //website 404
+            //{
+            //    doc = null;
+            //    doc = web.Load("http://www.fiskal.kemenkeu.go.id/dw-kurs-db.asp"); //try the other link
+            //}
             HtmlAgilityPack.HtmlNodeCollection nodes1 = doc.DocumentNode.SelectNodes("//*[@id='default-divone']");
             HtmlAgilityPack.HtmlNodeCollection nodes2 = doc.DocumentNode.SelectNodes("//*[@id='default-divone']/div[2]");
             
