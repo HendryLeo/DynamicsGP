@@ -40,6 +40,7 @@ namespace InventoryRules
         static PopReceiptUserDefinedTable POPUserDefinedTable = Microsoft.Dexterity.Applications.Dynamics.Tables.PopReceiptUserDefined;
         static PopReceiptHistTable POPReceiptHistTable = Microsoft.Dexterity.Applications.Dynamics.Tables.PopReceiptHist;
         static PopShipIvcApplyTable POPShipIvcApplyTable = Microsoft.Dexterity.Applications.Dynamics.Tables.PopShipIvcApply;
+        static IvItemMstrTable IVItemMstrTable = Microsoft.Dexterity.Applications.Dynamics.Tables.IvItemMstr;
 
         const byte ROW_FOUND = 0;
         const byte ROW_NOT_FOUND = 1;
@@ -78,6 +79,27 @@ namespace InventoryRules
 
             lastError = BatchHeadersTable.Save();
             BatchHeadersTable.Close();
+
+            return lastError;
+        }
+
+        static public TableError GetItemTypebyItemCode(string ItemCode, out short ItemType)
+        {
+
+            TableError lastError;
+            ItemType = 0;
+
+            IVItemMstrTable.Key = 1;
+            IVItemMstrTable.ItemNumber.Value = ItemCode;
+            lastError = IVItemMstrTable.Get();
+
+            if (lastError == TableError.NoError) //row found
+            {
+                ItemType = IVItemMstrTable.ItemType.Value;
+
+            }
+
+            IVItemMstrTable.Close();
 
             return lastError;
         }

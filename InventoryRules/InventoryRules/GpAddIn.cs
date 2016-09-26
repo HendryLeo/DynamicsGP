@@ -238,7 +238,71 @@ namespace InventoryRules
 
             //rule 9
             //is the same object with rule 3
+
+            //rule osep
+            //IVTrxEntryWindow.IvTransactionScroll.ItemNumber.ValidateBeforeOriginal += IVTrxEntryWindow_ItemNumber_ValidateBeforeOriginal;
+            //IVTrxEntryWindow.IvTransactionScroll.ItemNumber.LeaveBeforeOriginal += IVTrxEntryWindow_ItemNumber_LeaveBeforeOriginal;
         }
+
+        // void IVTrxEntryWindow_ItemNumber_LeaveBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        // {
+            // short ItemType;
+            // TableError err;
+
+            // ItemType = 0;
+            // if (IVTrxEntryWindow.IvTransactionScroll.ItemNumber.Value.ToString().Trim() != "")
+            // {
+                // if (IVDateRule())
+                // {
+                    // err = DataAccessHelper.GetItemTypebyItemCode(IVTrxEntryWindow.IvTransactionScroll.ItemNumber.Value.ToString(), out ItemType);
+                    // if (err == TableError.NoError)
+                    // {
+                        // if (!(ItemType == 1 | ItemType == 5))
+                        // {
+                            not allowed to transact
+                            // MessageBox.Show("Not Allowed to make transaction for this item", "Inventory Rules", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            // e.Cancel = true;
+                            // IVTrxEntryWindow.IvTransactionScroll.ItemNumber.Focus();
+                        // }
+                    // }
+                    // else
+                    // {
+                        // MessageBox.Show("Can not validate Item Type. Please try again or restart GP", "Inventory Rules", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        // e.Cancel = true;
+                        // IVTrxEntryWindow.IvTransactionScroll.ItemNumber.Focus();
+                    // }
+                // }
+            // }
+        // }
+
+        //void IVTrxEntryWindow_ItemNumber_ValidateBeforeOriginal(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+        //    short ItemType;
+        //    TableError err;
+
+        //    ItemType = 0;
+
+        //    if (IVDateRule())
+        //    {
+        //        err = DataAccessHelper.GetItemTypebyItemCode(IVTrxEntryWindow.IvTransactionScroll.ItemNumber.Value.ToString(), out ItemType);
+        //        if (err == TableError.NoError)
+        //        {
+        //            if (!(ItemType == 1 | ItemType == 5))
+        //            {
+        //                // not allowed to transact
+        //                MessageBox.Show("Not Allowed to make transaction for this item", "Inventory Rules", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //                e.Cancel = true;
+        //                IVTrxEntryWindow.IvTransactionScroll.ItemNumber.Focus();
+        //            }
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("Can not validate Item Type. Please try again or restart GP", "Inventory Rules", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //            e.Cancel = true;
+        //            IVTrxEntryWindow.IvTransactionScroll.ItemNumber.Focus();
+        //        }
+        //    }
+        //}
 
         void POPInvoiceEntryWindow_POPInvoiceEntryWindow_BeforeModalDialog(object sender, BeforeModalDialogEventArgs e)
         {
