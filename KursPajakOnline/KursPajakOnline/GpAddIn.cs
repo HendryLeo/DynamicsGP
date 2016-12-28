@@ -90,8 +90,14 @@ namespace KursPajakOnline
 
             CultureInfo idCulture = new CultureInfo("id-id", false);
             tglBerlaku = DateTime.Parse(tglKurs.Substring(21, dataPosition3 - 22), idCulture);
+            //there is a bug here
             tglExpire = DateTime.Parse(tglKurs.Substring(dataPosition3 + 2, tglKurs.Length - dataPosition3 - 7), idCulture);
-
+            //end bug
+            //possible correction
+            //tglExpire = DateTime.Parse(tglKurs.Substring(dataPosition3 + 2), idCulture);
+            //untested
+            
+            
             //MessageBox.Show("Tgl Berlaku = " + tglBerlaku.ToString("dd MMMM yyyy"));
             //MessageBox.Show("Tgl Expire = " + tglExpire.ToString("dd MMMM yyyy"));
 
