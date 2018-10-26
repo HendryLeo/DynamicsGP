@@ -1,6 +1,6 @@
 /* The MIT License (MIT)
  * 
- * Copyright (c) 2014 HendryLeo
+ * Copyright (c) 2018 HendryLeo
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,17 +26,18 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Dexterity.Bridge;
 using Microsoft.Dexterity.Applications;
-//using Microsoft.Dexterity.Applications.DynamicsDictionary;
-using Microsoft.Dexterity.Applications.VvfDictionary;
+using Microsoft.Dexterity.Applications.DynamicsDictionary;
 
 namespace POInquiry
 {
+    //reference to Dynamics Continuum Integration Library breaks VS Tools Application.Dynamics namespace
+    //so we use alias for Application.Dynamics
+    using GPForms = Microsoft.Dexterity.Applications;
+
     public class GPAddIn : IDexterityAddIn
     {
         // IDexterityAddIn interface
-        //for original Dynamics Form use
-        //static PopPoEntryForm POPPOEntryForm = Dynamics.Forms.PopPoEntry;
-        static PopPoEntryForm POPPOEntryForm = Vvf.Forms.PopPoEntry;
+        static PopPoEntryForm POPPOEntryForm = GPForms.Dynamics.Forms.PopPoEntry;
 
         static PopPoEntryForm.PopPoEntryWindow POPPOEntryWindow = POPPOEntryForm.PopPoEntry;
 
