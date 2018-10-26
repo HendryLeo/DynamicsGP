@@ -1,3 +1,6 @@
+//credit to
+//https://winthropdc.wordpress.com/2014/12/15/customising-the-company-login-window-series-visual-studio-tools-revisited-visual-c/
+
 using System;
 using System.Collections.Generic;
 using System.Text;
