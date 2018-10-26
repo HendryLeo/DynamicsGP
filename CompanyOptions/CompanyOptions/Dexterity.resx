@@ -123,7 +123,7 @@
 default form to 'Switch Company';
 default window to 'Switch Company';
 
-l_adjust = 230;
+l_adjust = 180;
 
 Field_GetPosition('(L) Company Names', h_pos, v_pos);
 Field_GetSize('(L) Company Names', h_size, v_size);

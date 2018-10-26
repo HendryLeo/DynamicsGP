@@ -49,11 +49,20 @@ namespace CompanyOptions
             }
             ActivityTable.Close();
 
+            Boolean firstOne = true;
             //create string scrolling procedure here to display all user activity, otherwise Status is limited to 62 char
             foreach (string str in users.ToArray())
             {
-                //userActivity += str + ",";
-                SwitchCompanyWindow.LocalStatus.Value += str + ",";
+                if (firstOne)
+                {
+                    SwitchCompanyWindow.LocalStatus.Value += str;
+                }
+                else
+                {
+                    SwitchCompanyWindow.LocalStatus.Value += "," +  str;
+                }
+                
+                firstOne = false;
             }
         }
     }
