@@ -26,15 +26,43 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Dexterity.Bridge;
 using Microsoft.Dexterity.Applications;
+using Microsoft.Dexterity.Applications.DynamicsDictionary;
+using Microsoft.Dexterity.Applications.DynamicsModifiedDictionary;
 
 namespace DJBCReports
 {
     public class GPAddIn : IDexterityAddIn
     {
         // IDexterityAddIn interface
+        static Microsoft.Dexterity.Applications.DynamicsModifiedDictionary.IvItemStockInquiryForm ItemStockInquiryForm = DynamicsModified.Forms.IvItemStockInquiry;
+
+        static Microsoft.Dexterity.Applications.DynamicsModifiedDictionary.IvItemStockInquiryForm.IvItemStockInquiryWindow ItemStockInquiryWindow = ItemStockInquiryForm.IvItemStockInquiry;
+
+        static DJBCForm DJBCForm;
 
         public void Initialize()
         {
+            ItemStockInquiryWindow.LocalLaporanBeaCukai.ClickAfterOriginal += OpenDJBCForm; 
+        }
+
+        private void OpenDJBCForm(object sender, EventArgs e)
+        {
+            if (DJBCForm == null || DJBCForm.IsDisposed)
+            {
+                try
+                {
+                    DJBCForm = new DJBCForm();
+
+                }
+                catch (Exception ex)
+                {
+                    Dynamics.Forms.SyVisualStudioHelper.Functions.DexError.Invoke(ex.Message);
+                }
+            }
+
+            // Always show and activate the WinForm
+            DJBCForm.Show();
+            DJBCForm.Activate();
         }
     }
 }
