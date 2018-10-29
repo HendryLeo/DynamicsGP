@@ -31,12 +31,14 @@ using Microsoft.Dexterity.Applications.DynamicsModifiedDictionary;
 
 namespace DJBCReports
 {
+    using GPModifiedForms = Microsoft.Dexterity.Applications.DynamicsModifiedDictionary;
+
     public class GPAddIn : IDexterityAddIn
     {
         // IDexterityAddIn interface
-        static Microsoft.Dexterity.Applications.DynamicsModifiedDictionary.IvItemStockInquiryForm ItemStockInquiryForm = DynamicsModified.Forms.IvItemStockInquiry;
+        static GPModifiedForms.IvItemStockInquiryForm ItemStockInquiryForm = DynamicsModified.Forms.IvItemStockInquiry;
 
-        static Microsoft.Dexterity.Applications.DynamicsModifiedDictionary.IvItemStockInquiryForm.IvItemStockInquiryWindow ItemStockInquiryWindow = ItemStockInquiryForm.IvItemStockInquiry;
+        static GPModifiedForms.IvItemStockInquiryForm.IvItemStockInquiryWindow ItemStockInquiryWindow = ItemStockInquiryForm.IvItemStockInquiry;
 
         static DJBCForm DJBCForm;
 
