@@ -36,16 +36,11 @@ namespace DJBCReports
             ServerReport serverReport = rptViewer.ServerReport;
 
             // Get a reference to the default credentials  
-            //System.Net.ICredentials credentials =
-            //    System.Net.CredentialCache.DefaultCredentials;
-
-            // Get a reference to the report server credentials  
-            NetworkCredential rsCredentials = new
-                NetworkCredential("hendry.leo", "Wingardium1", "VVFINDONESIA");
+            System.Net.ICredentials credentials = System.Net.CredentialCache.DefaultCredentials;
 
             // Set the credentials for the server report  
             //rsCredentials.NetworkCredentials = credentials;
-            rptViewer.ServerReport.ReportServerCredentials.NetworkCredentials = rsCredentials;
+            rptViewer.ServerReport.ReportServerCredentials.NetworkCredentials = credentials;
 
             //// Set the report server URL and report path  
             //serverReport.ReportServerUrl =
