@@ -1,0 +1,525 @@
+<Component Name="GL_Journal_Entry_Inquiry" ProductId="0" Object="Form" >
+= Form	"GL_Journal_Entry_Inquiry"
+{
+	Datatypes
+	{
+		Datatype	"strVendorID"		
+		{
+			AllowOddLength	"false"
+			Control	"String"
+			Format	""
+			KeyableLength	"31"
+			StorageLength	"32"
+		}
+		Datatype	"strVendorName"		
+		{
+			AllowOddLength	"false"
+			Control	"String"
+			Format	""
+			KeyableLength	"65"
+			StorageLength	"66"
+		}
+	}
+	Fields
+	{
+		Field	"strVendorID"		
+		{
+			ArraySize	"0"
+			Datatype	"(L) strVendorID"
+			LookupForm	""
+			PhysicalName	""
+		}
+		Field	"strVendorName"		
+		{
+			ArraySize	"0"
+			Datatype	"(L) strVendorName"
+			LookupForm	""
+			PhysicalName	""
+		}
+	}
+	Windows
+	{
+		= Window	"GL_Journal_Entry_Inquiry"
+		{
+			Fields
+			{
+				= WindowControl	"(L) BkOutOrigJENote"
+				{
+					PositionTop	"540"
+				}
+				= WindowControl	"(L) CorrectedByJENote"
+				{
+					PositionTop	"559"
+				}
+				= WindowControl	"(L) Difference"
+				{
+					PositionTop	"422"
+				}
+				= WindowControl	"(L) Dummy Record Note Show Hide2"
+				{
+					PositionTop	"561"
+				}
+				= WindowControl	"(L) Dummy TRX Date"
+				{
+					PositionTop	"646"
+				}
+				= WindowControl	"(L) Dummy TRX Sequence"
+				{
+					PositionTop	"663"
+				}
+				= WindowControl	"(L) Dummy WIN FILL"
+				{
+					PositionTop	"544"
+				}
+				= WindowControl	"(L) Dummy WINHist FILL"
+				{
+					PositionTop	"768"
+				}
+				= WindowControl	"(L) First Day Of History"
+				{
+					PositionTop	"544"
+				}
+				= WindowControl	"(L) HistoryTrx"
+				{
+					PositionTop	"787"
+				}
+				= WindowControl	"(L) Intercompany"
+				{
+					PositionTop	"428"
+				}
+				= WindowControl	"(L) Journal Entry Count"
+				{
+					PositionTop	"595"
+				}
+				= WindowControl	"(L) Journal Number"
+				{
+					PositionTop	"815"
+				}
+				= WindowControl	"(L) LedgerName"
+				{
+					PositionTop	"129"
+				}
+				= WindowControl	"(L) ListFlag"
+				{
+					PositionTop	"616"
+				}
+				= WindowControl	"(L) Next Sequence DLR"
+				{
+					PositionTop	"578"
+				}
+				= WindowControl	"(L) Note Index 2"
+				{
+					PositionTop	"612"
+				}
+				= WindowControl	"(L) Old Journal"
+				{
+					PositionTop	"561"
+				}
+				= WindowControl	"(L) Posting Number"
+				{
+					PositionTop	"129"
+				}
+				= WindowControl	"(L) RecTrxSeq"
+				{
+					PositionTop	"834"
+				}
+				= WindowControl	"(L) Return To Modify Rate"
+				{
+					PositionTop	"680"
+				}
+				= WindowControl	"(L) TRXDate"
+				{
+					PositionTop	"853"
+				}
+				= WindowControl	"(L) Total Credits"
+				{
+					PositionTop	"403"
+				}
+				= WindowControl	"(L) Total Debits"
+				{
+					PositionTop	"403"
+				}
+				= WindowControl	"(L) Year"
+				{
+					PositionTop	"872"
+				}
+				= WindowControl	"(L) getprev"
+				{
+					PositionTop	"629"
+				}
+				WindowControl	"(L) strVendorID"				
+				{
+					Alignment	"left"
+					Appearance	"2D Border"
+					AutoComplete	"false"
+					AutoCopy	"false"
+					BackColor	"System - Window Background"
+					Border	"true"
+					ControlType	"String"
+					DisableLookup	"false"
+					Editable	"false"
+					Field	"(L) strVendorID"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Window Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					LinkedFormat	"0"
+					LinkedLookup	"0"
+					LinkedPrompt	"0"
+					Password	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"127"
+					PositionTop	"110"
+					ReadingOrder	"LeftToRight"
+					Required	"false"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SavedOnRestart	"false"
+					SetChangeFlag	"true"
+					SizeHeight	"20"
+					SizeWidth	"86"
+					TabStop	"true"
+					Tag	"10004"
+					Tooltip	""
+					UseUniqueHelp	"true"
+					Visible	"true"
+					ZOrder	"117"
+					Zoom	"false"
+				}
+				WindowControl	"(L) strVendorName"				
+				{
+					Alignment	"left"
+					Appearance	"2D Border"
+					AutoComplete	"false"
+					AutoCopy	"false"
+					BackColor	"System - Window Background"
+					Border	"true"
+					ControlType	"String"
+					DisableLookup	"false"
+					Editable	"false"
+					Field	"(L) strVendorName"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Window Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					LinkedFormat	"0"
+					LinkedLookup	"0"
+					LinkedPrompt	"0"
+					Password	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"365"
+					PositionTop	"110"
+					ReadingOrder	"LeftToRight"
+					Required	"false"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SavedOnRestart	"false"
+					SetChangeFlag	"true"
+					SizeHeight	"20"
+					SizeWidth	"188"
+					TabStop	"true"
+					Tag	"10006"
+					Tooltip	""
+					UseUniqueHelp	"true"
+					Visible	"true"
+					ZOrder	"119"
+					Zoom	"false"
+				}
+				= ScrollingWindow	"0033-Transaction_Scroll"
+				{
+					LastTag	"10000"
+					PositionTop	"231"
+				}
+				WindowPrompt	"10002"				
+				{
+					Alignment	"left"
+					Appearance	"3D Highlight"
+					BackColor	"System - Button Face"
+					Border	"true"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Button Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"10"
+					PositionTop	"110"
+					ReadingOrder	"LeftToRight"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SizeHeight	"20"
+					SizeWidth	"117"
+					Text	"Vendor ID"
+					Visible	"true"
+					ZOrder	"116"
+					Zoom	"false"
+				}
+				WindowPrompt	"10005"				
+				{
+					Alignment	"left"
+					Appearance	"3D Highlight"
+					BackColor	"System - Button Face"
+					Border	"true"
+					Font	"System (generic)"
+					FontBold	"false"
+					FontColor	"System - Button Text"
+					FontItalic	"false"
+					FontUnderline	"false"
+					Pattern	"(none)"
+					PatternColor	"White"
+					PositionLeft	"255"
+					PositionTop	"110"
+					ReadingOrder	"LeftToRight"
+					ResizeHoriz	"StayLeft"
+					ResizeVert	"StayTop"
+					SizeHeight	"20"
+					SizeWidth	"110"
+					Text	"Vendor Name"
+					Visible	"true"
+					ZOrder	"118"
+					Zoom	"false"
+				}
+				= WindowPrompt	"171"
+				{
+					PositionTop	"403"
+				}
+				= WindowLine	"172"
+				{
+					PositionTop	"174"
+				}
+				= WindowPrompt	"179"
+				{
+					PositionTop	"174"
+				}
+				= WindowPrompt	"180"
+				{
+					PositionTop	"174"
+				}
+				= WindowPrompt	"183"
+				{
+					PositionTop	"174"
+				}
+				= WindowPrompt	"195"
+				{
+					PositionTop	"212"
+				}
+				= WindowPrompt	"246"
+				{
+					PositionTop	"193"
+				}
+				= WindowPrompt	"267"
+				{
+					PositionTop	"193"
+				}
+				= WindowPrompt	"269"
+				{
+					PositionTop	"129"
+				}
+				= WindowLine	"271"
+				{
+					PositionTop	"457"
+				}
+				= WindowPrompt	"298"
+				{
+					PositionTop	"148"
+				}
+				= WindowPrompt	"299"
+				{
+					PositionTop	"148"
+				}
+				= WindowPrompt	"300"
+				{
+					PositionTop	"148"
+				}
+				= WindowPrompt	"305"
+				{
+					PositionTop	"129"
+				}
+				= WindowPrompt	"98"
+				{
+					PositionTop	"422"
+				}
+				= WindowShape	"99"
+				{
+					PositionTop	"696"
+				}
+				= WindowControl	"Allow Reporting Ledgers"
+				{
+					PositionTop	"665"
+				}
+				= WindowControl	"Back Out JE"
+				{
+					PositionTop	"148"
+				}
+				= WindowControl	"Back Out JE Year"
+				{
+					PositionTop	"597"
+				}
+				= WindowControl	"BrowseBox"
+				{
+					PositionTop	"465"
+				}
+				= WindowControl	"Correcting JE"
+				{
+					PositionTop	"148"
+				}
+				= WindowControl	"Correcting JE Year"
+				{
+					PositionTop	"616"
+				}
+				= WindowControl	"Currency Index"
+				{
+					PositionTop	"646"
+				}
+				= WindowControl	"Currency View"
+				{
+					PositionTop	"629"
+				}
+				= WindowControl	"Currency View Button Reference"
+				{
+					PositionTop	"527"
+				}
+				= WindowControl	"Denomination Exchange Rate"
+				{
+					PositionTop	"629"
+				}
+				= WindowControl	"Distribution Amount"
+				{
+					PositionTop	"663"
+				}
+				= WindowControl	"Dummy Record Note Show Hide"
+				{
+					PositionTop	"527"
+				}
+				= WindowControl	"End of File Button - Toolbar"
+				{
+					PositionTop	"466"
+				}
+				= WindowControl	"Exchange Rate"
+				{
+					PositionTop	"595"
+				}
+				= WindowControl	"Exchange Table ID"
+				{
+					PositionTop	"612"
+				}
+				= WindowControl	"Expansion Button"
+				{
+					PositionTop	"174"
+				}
+				= WindowControl	"MC Transaction State"
+				{
+					PositionTop	"646"
+				}
+				= WindowControl	"MDA Expansion Button"
+				{
+					PositionTop	"174"
+				}
+				= WindowControl	"Next Button - Toolbar"
+				{
+					PositionTop	"466"
+				}
+				= WindowControl	"Note Absent Button - Toolbar"
+				{
+					PositionTop	"462"
+				}
+				= WindowControl	"Note Array Absent - Window Area[2]"
+				{
+					PositionTop	"148"
+				}
+				= WindowControl	"Note Array Absent - Window Area[3]"
+				{
+					PositionTop	"148"
+				}
+				= WindowControl	"Note Array Present - Window Area[2]"
+				{
+					PositionTop	"148"
+				}
+				= WindowControl	"Note Array Present - Window Area[3]"
+				{
+					PositionTop	"148"
+				}
+				= WindowControl	"Note Index"
+				{
+					PositionTop	"527"
+				}
+				= WindowControl	"Note Present Button - Toolbar"
+				{
+					PositionTop	"462"
+				}
+				= WindowControl	"NoteObject"
+				{
+					PositionTop	"578"
+				}
+				= WindowControl	"Original JE"
+				{
+					PositionTop	"148"
+				}
+				= WindowControl	"Original JE Year"
+				{
+					PositionTop	"635"
+				}
+				= WindowControl	"Previous Button - Toolbar"
+				{
+					PositionTop	"466"
+				}
+				= WindowControl	"Rate Calculation Method"
+				{
+					PositionTop	"561"
+				}
+				= WindowControl	"Rate Type ID"
+				{
+					PositionTop	"578"
+				}
+				= WindowControl	"Recurring TRX Sequence"
+				{
+					PositionTop	"597"
+				}
+				= WindowControl	"Scroll Expand Switch"
+				{
+					PositionTop	"193"
+				}
+				= WindowControl	"Scroll Shrink Switch"
+				{
+					PositionTop	"174"
+				}
+				= WindowControl	"Scrolling Window Expand Button"
+				{
+					PositionTop	"193"
+				}
+				= WindowControl	"Scrolling Window Shrink"
+				{
+					PositionTop	"174"
+				}
+				= WindowControl	"Top of File Button - Toolbar"
+				{
+					PositionTop	"466"
+				}
+				= WindowControl	"View Menu Reference"
+				{
+					PositionTop	"544"
+				}
+				= WindowControl	"WindowHelp"
+				{
+					PositionTop	"462"
+				}
+				= WindowControl	"Zoom Buttons[1]"
+				{
+					PositionTop	"148"
+				}
+				= WindowControl	"Zoom Buttons[2]"
+				{
+					PositionTop	"148"
+				}
+			}
+			LastTag	"10006"
+			SizeHeight	"520"
+		}
+	}
+}
+</Component>

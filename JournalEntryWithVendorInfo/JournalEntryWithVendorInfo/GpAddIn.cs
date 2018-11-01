@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.Dexterity.Bridge;
 using Microsoft.Dexterity.Applications;
 //using Microsoft.Dexterity.Applications.DynamicsDictionary;
-using Microsoft.Dexterity.Applications.VvfDictionary;
+using Microsoft.Dexterity.Applications.DynamicsModifiedDictionary;
 using Microsoft.Dexterity.Applications.SmartListDictionary;
 using System.Windows.Forms;
 
@@ -16,8 +16,8 @@ namespace JournalEntryWithVendorInfo
         //for original forms use
         //static GlTransactionEntryForm GLTrxEntryForm = Dynamics.Forms.GlTransactionEntry;
         //static GlJournalEntryInquiryForm GLJournalEntryInquiryForm = Dynamics.Forms.GlJournalEntryInquiry;
-        static GlTransactionEntryForm GLTrxEntryForm = Vvf.Forms.GlTransactionEntry;
-        static GlJournalEntryInquiryForm GLJEInquiryForm = Vvf.Forms.GlJournalEntryInquiry;
+        static GlTransactionEntryForm GLTrxEntryForm = DynamicsModified.Forms.GlTransactionEntry;
+        static GlJournalEntryInquiryForm GLJEInquiryForm = DynamicsModified.Forms.GlJournalEntryInquiry;
 
         static GlTransactionEntryForm.GlTransactionEntryWindow GLTrxEntryWindow = GLTrxEntryForm.GlTransactionEntry;
         static GlJournalEntryInquiryForm.GlJournalEntryInquiryWindow GLJEInquiryWindow = GLJEInquiryForm.GlJournalEntryInquiry;
@@ -29,8 +29,8 @@ namespace JournalEntryWithVendorInfo
 
         public void Initialize()
         {
-            VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalCustomerIdLookup.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(CustomerID_Lookup_BeforeOriginal);
-            VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalVendorIdLookup.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(VendorID_Lookup_BeforeOriginal);
+            GLTrxEntryWindow.LocalCustomerIdLookup.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(CustomerID_Lookup_BeforeOriginal);
+            GLTrxEntryWindow.LocalVendorIdLookup.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(VendorID_Lookup_BeforeOriginal);
             // Select button on the Customers lookup window
             CustomerLookupForm customerLookupForm = SmartList.Forms.CustomerLookup;
             customerLookupForm.CustomerLookup.SelectButton.ClickBeforeOriginal += new System.ComponentModel.CancelEventHandler(CustomerSelectButton_ClickBeforeOriginal);
@@ -50,19 +50,19 @@ namespace JournalEntryWithVendorInfo
 
         void GLJEInquiryWindow_JournalEntry_Change(object sender, EventArgs e)
         {
-            VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorId.Value = "";
-            VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorName.Value = "";
+            GLJEInquiryWindow.LocalStrVendorId.Value = "";
+            GLJEInquiryWindow.LocalStrVendorName.Value = "";
             if (GLJEInquiryWindow.JournalEntry.Value > 0)
             {
                 if(GLJEInquiryWindow.LocalFiscalYear.Value == GLJEInquiryForm.Tables.GlAccountTrxHist.HistoryYear.Value.ToString())//history year trx
                 {
-                    VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorId.Value = GLJEInquiryForm.Tables.GlAccountTrxHist.OriginatingMasterId.Value;
-                    VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorName.Value = GLJEInquiryForm.Tables.GlAccountTrxHist.OriginatingMasterName.Value;
+                    GLJEInquiryWindow.LocalStrVendorId.Value = GLJEInquiryForm.Tables.GlAccountTrxHist.OriginatingMasterId.Value;
+                    GLJEInquiryWindow.LocalStrVendorName.Value = GLJEInquiryForm.Tables.GlAccountTrxHist.OriginatingMasterName.Value;
                 }
                 else if(GLJEInquiryWindow.LocalFiscalYear.Value == GLJEInquiryForm.Tables.GlYtdTrxOpen.OpenYear.Value.ToString())//current ytd trx
                 {
-                    VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorId.Value = GLJEInquiryForm.Tables.GlYtdTrxOpen.OriginatingMasterId.Value;
-                    VvfModified.Forms.GlJournalEntryInquiry.GlJournalEntryInquiry.LocalStrVendorName.Value = GLJEInquiryForm.Tables.GlYtdTrxOpen.OriginatingMasterName.Value;
+                    GLJEInquiryWindow.LocalStrVendorId.Value = GLJEInquiryForm.Tables.GlYtdTrxOpen.OriginatingMasterId.Value;
+                    GLJEInquiryWindow.LocalStrVendorName.Value = GLJEInquiryForm.Tables.GlYtdTrxOpen.OriginatingMasterName.Value;
                 }
             }
         }
@@ -72,17 +72,11 @@ namespace JournalEntryWithVendorInfo
             TableError err;
             string orID = "", orName = "";
 
-            //if (GLTrxEntryWindow.JournalEntry.Value == jrnEntryToUpdate)
-            //{
-            //    VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value = orIDToSave;
-            //    VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value = orNameToSave;
-            //}
-            //else
             if (GLTrxEntryWindow.JournalEntry.Value != jrnEntryToUpdate)
             {
                 err = DataAccessHelper.GetGLTrxLineByJournalEntry(GLTrxEntryWindow.JournalEntry.Value, out orID, out orName);
-                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value = orID;
-                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value = orName;
+                GLTrxEntryWindow.LocalStrVendorId.Value = orID;
+                GLTrxEntryWindow.LocalStrVendorName.Value = orName;
             }
        }
 
@@ -91,7 +85,7 @@ namespace JournalEntryWithVendorInfo
             DialogResult answer;
             TableError err;
 
-            if (VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value.Trim() == String.Empty)
+            if (GLTrxEntryWindow.LocalStrVendorId.Value.Trim() == String.Empty)
             {
                 answer = MessageBox.Show("VendorID/CustomerID tidak diisi, Mau dilanjutkan?", "Vendor/Customer tidak diisi", MessageBoxButtons.YesNo);
                 if (answer == DialogResult.No)
@@ -102,7 +96,7 @@ namespace JournalEntryWithVendorInfo
             }
             else
             {
-                err = DataAccessHelper.UpdateGLTrxLineByJournalEntry(GLTrxEntryWindow.JournalEntry.Value, VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value.Trim(), VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value.Trim());
+                err = DataAccessHelper.UpdateGLTrxLineByJournalEntry(GLTrxEntryWindow.JournalEntry.Value, GLTrxEntryWindow.LocalStrVendorId.Value.Trim(), GLTrxEntryWindow.LocalStrVendorName.Value.Trim());
                 if (err != TableError.NoError)
                 {
                     MessageBox.Show(err.ToString());
@@ -118,8 +112,8 @@ namespace JournalEntryWithVendorInfo
                 case "Do you want to save changes or delete this transaction?":
                     GLTrxEntryWindow.BatchNumber.Value = Dynamics.Globals.UserId;
                     jrnEntryToUpdate = GLTrxEntryWindow.JournalEntry.Value;
-                    orIDToSave = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value.Trim();
-                    orNameToSave = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value.Trim();
+                    orIDToSave = GLTrxEntryWindow.LocalStrVendorId.Value.Trim();
+                    orNameToSave = GLTrxEntryWindow.LocalStrVendorName.Value.Trim();
                     break;
 
             }
@@ -170,7 +164,7 @@ namespace JournalEntryWithVendorInfo
         {
             DialogResult answer;
 
-            if (VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value.Trim() == String.Empty)
+            if (GLTrxEntryWindow.LocalStrVendorId.Value.Trim() == String.Empty)
             {
                 answer = MessageBox.Show("VendorID/CustomerID tidak diisi, Mau dilanjutkan?", "Vendor/Customer tidak diisi", MessageBoxButtons.YesNo);
                 if (answer == DialogResult.No)
@@ -181,8 +175,8 @@ namespace JournalEntryWithVendorInfo
             else
             {
                 jrnEntryToUpdate = GLTrxEntryWindow.JournalEntry.Value;
-                orIDToSave = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value.Trim();
-                orNameToSave = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value.Trim();
+                orIDToSave = GLTrxEntryWindow.LocalStrVendorId.Value.Trim();
+                orNameToSave = GLTrxEntryWindow.LocalStrVendorName.Value.Trim();
             }
         }
 
@@ -198,7 +192,7 @@ namespace JournalEntryWithVendorInfo
             customerLookup.Open();
 
             //set the field
-            customerLookup.CustomerLookup.CustomerNumber.Value = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value;
+            customerLookup.CustomerLookup.CustomerNumber.Value = GLTrxEntryWindow.LocalStrVendorId.Value;
             customerLookup.CustomerLookup.CustomerName.Value = "";
             customerLookup.CustomerLookup.CustomerSortBy.Value = 2; //sort by 1 = customer id, 2 = customer name
 
@@ -218,7 +212,7 @@ namespace JournalEntryWithVendorInfo
             vendorLookup.Open();
 
             // Set the field values on the lookup window
-            vendorLookup.VendorLookup.VendorId.Value = VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value;
+            vendorLookup.VendorLookup.VendorId.Value = GLTrxEntryWindow.LocalStrVendorId.Value;
             vendorLookup.VendorLookup.VendorName.Value = "";     //Vendor Name 
             vendorLookup.VendorLookup.VendorClassId.Value = "";  //Vendor Class
             vendorLookup.VendorLookup.UserDefined1.Value = "";   //User Defined 1
@@ -240,8 +234,8 @@ namespace JournalEntryWithVendorInfo
                 string customerName = customerLookupForm.CustomerLookup.CustomerLookupScroll.CustomerName.Value;
 
                 // Display the value retrieved
-                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value = customerNumber;
-                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value = customerName;
+                GLTrxEntryWindow.LocalStrVendorId.Value = customerNumber;
+                GLTrxEntryWindow.LocalStrVendorName.Value = customerName;
 
 
                 // Clear the flag that indicates a value is to be retrieved from the lookup.
@@ -262,8 +256,8 @@ namespace JournalEntryWithVendorInfo
                 string vendorName = vendorLookupForm.VendorLookup.VendorLookupScroll.VendorName;
 
                 // Display the value retrieved
-                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorId.Value = vendorID;
-                VvfModified.Forms.GlTransactionEntry.GlTransactionEntry.LocalStrVendorName.Value = vendorName;
+                GLTrxEntryWindow.LocalStrVendorId.Value = vendorID;
+                GLTrxEntryWindow.LocalStrVendorName.Value = vendorName;
 
                 // Clear the flag that indicates a value is to be retrieved from the lookup.
                 GPAddIn.ReturnToLookup = false;
