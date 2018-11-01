@@ -37,35 +37,46 @@ namespace DJBCReports
 
             // Get a reference to the default credentials  
             System.Net.ICredentials credentials = System.Net.CredentialCache.DefaultCredentials;
-
+            
+            // testing user login credentials
+            // Ensure Directory Security settings for default web site in IIS is "Windows Authentication".
+            string url = "http://vvfi-db01/Reports";
+            // Create a 'HttpWebRequest' object with the specified url. 
+            HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            // Assign the credentials of the logged in user or the user being impersonated.
+            myHttpWebRequest.Credentials = credentials;
+            // Send the 'HttpWebRequest' and wait for response.
+            try
+            {
+                HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+            }
+            catch (System.Net.WebException ex)
+            {
+                if (((HttpWebResponse)ex.Response).StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    rptViewer.Visible = false;
+                    cboLaporan.Visible = false;
+                    rptViewer.Enabled = false;
+                    cboLaporan.Enabled = false;
+                    this.Text += " Unauthorized";
+                    //maybe we can ask for user cred here, but for now, just disable the form
+                    //ICredentials credentials = new NetworkCredential("user", "pass", "domain");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                rptViewer.Visible = false;
+                cboLaporan.Visible = false;
+                rptViewer.Enabled = false;
+                cboLaporan.Enabled = false;
+                this.Text += " ERROR";
+            }
+            
             // Set the credentials for the server report  
-            //rsCredentials.NetworkCredentials = credentials;
-            rptViewer.ServerReport.ReportServerCredentials.NetworkCredentials = credentials;
+            if (rptViewer.Enabled) rptViewer.ServerReport.ReportServerCredentials.NetworkCredentials = credentials;
 
-            //// Set the report server URL and report path  
-            //serverReport.ReportServerUrl =
-            //    new Uri("http://vvfi-db01/reportserver");
-            //serverReport.ReportPath =
-            //    "/ReportBC/BC_1";
-
-            //// Create the sales order number report parameter  
-            //ReportParameter startDate = new ReportParameter();
-            //startDate.Name = "startDate";
-            //startDate.Values.Add("05/01/2018");
-
-            //ReportParameter endDate = new ReportParameter();
-            //endDate.Name = "endDate";
-            //endDate.Values.Add("08/31/2018");
-
-
-            //// Set the report parameters for the report  
-            //rptViewer.ServerReport.SetParameters(
-            //    new ReportParameter[] { startDate, endDate });
-
-            //// Refresh the report  
-            //rptViewer.RefreshReport();
-
-            cboLaporan.SelectedIndex = 0; //this must comes after initializing rptViewer
+            if (cboLaporan.Enabled) cboLaporan.SelectedIndex = 0; //this must comes after initializing rptViewer
         }
 
         private void cboLaporan_SelectedIndexChanged(object sender, EventArgs e)
